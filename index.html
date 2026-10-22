@@ -3,829 +3,474 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>CV Generator - Multi-designs</title>
+<title>CV Studio</title>
+<link id="favicon" rel="icon" type="image/svg+xml" href="">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,500&family=Lato:wght@400;700;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Lato:wght@400;700;900&family=Poppins:wght@400;500;600;700;800&family=Source+Sans+3:wght@400;600;700;800&family=Merriweather:wght@400;700&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
 
 <style id="cv-styles">
-:root { --accent: #1d5c63; }
-* { box-sizing: border-box; margin: 0; padding: 0; }
-.page { font-family: 'Lato', sans-serif; width: 210mm; min-height: 297mm; background: #fff; color: #2b2b28; box-shadow: 0 10px 40px rgba(0,0,0,0.5); }
-.page a { color: inherit; text-decoration: none; }
-.page ul { list-style: none; }
+*{box-sizing:border-box;margin:0;padding:0}
+.page{font-family:var(--font);font-size:calc(var(--fs)*1px);line-height:1.5;width:210mm;min-height:297mm;background:var(--bg);color:var(--soft);box-shadow:0 10px 40px rgba(0,0,0,.5)}
+.page a{color:inherit;text-decoration:none}.page ul{list-style:none}
+.page h1{font-size:2.5em;font-weight:800;color:var(--ink);line-height:1.1;letter-spacing:-.02em}
+.role{margin-top:.3em;font-size:1.05em;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+.contact-line,.availability{margin-top:.5em}.availability{font-style:italic}
+.links-line{display:flex;flex-wrap:wrap;gap:.2em 1.2em;margin-top:.2em;color:var(--accent)}
+.stats{display:flex;flex-wrap:wrap;gap:.8em;margin-top:1.2em}
+.stat{flex:1;min-width:8em;background:var(--tint);border-left:3px solid var(--accent);padding:.7em 1em;border-radius:3px}
+.stat-value{font-size:1.8em;font-weight:800;color:var(--accent);line-height:1}
+.stat-label{font-size:.88em;margin-top:.3em;line-height:1.3}
+.section{margin-top:calc(1.3em*var(--sp))}
+.section-title{font-size:.95em;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);padding-bottom:.4em;margin-bottom:.8em;border-bottom:1.5px solid var(--accent)}
+.profil-text{text-align:justify}
+.entry{margin-bottom:calc(.9em*var(--sp))}
+.entry-head{display:flex;justify-content:space-between;align-items:baseline;gap:1em}
+.entry-title{font-size:1.08em;font-weight:700;color:var(--ink)}
+.entry-date{font-size:.92em;font-weight:600;color:var(--accent);white-space:nowrap}
+.entry-org{font-style:italic}
+.bullets{margin-top:.3em}.bullets li{position:relative;padding-left:1em;margin-bottom:.15em}
+.bullets li:before{content:'';position:absolute;left:0;top:.6em;width:.33em;height:.33em;border-radius:50%;background:var(--accent)}
+.bullets li strong{color:var(--ink)}
+.skills-grid{display:grid;grid-template-columns:1fr 1fr;gap:.7em 1.5em}
+.skill-name,.formation-title{font-weight:700;color:var(--ink)}
+.formation-year{font-weight:700;color:var(--accent);font-size:.9em}.formation-entry{margin-bottom:.5em}
+.two-cols{display:grid;grid-template-columns:1fr 1fr;gap:0 1.5em}
+.chips{display:flex;flex-wrap:wrap;gap:.5em}
+.chip{font-size:.9em;font-weight:600;padding:.25em .75em;border-radius:99px;background:var(--tint);color:var(--accent);border:1px solid var(--rule)}
+.single{padding:var(--pad)}
+.head{display:flex;justify-content:space-between;gap:1em;align-items:center}
+.avatar{width:5.5em;height:5.5em;border-radius:50%;overflow:hidden;border:2px solid var(--accent);flex:none}
+.avatar img{width:100%;height:100%;object-fit:cover}
 
-/* ============ THEME : PDF (colonne unique, bandeau de chiffres) ============ */
-.theme-pdf { --ink:#1b2430; --soft:#4a5563; --rule:#dfe4ea; --tint:#f3f6f8; padding: 14mm 16mm; font-family:'Inter',sans-serif; }
-.theme-pdf h1 { font-size: 30px; font-weight: 800; color: var(--ink); letter-spacing: -0.5px; }
-.theme-pdf .role { margin-top: 4px; font-size: 12.5px; font-weight: 700; letter-spacing: 1.6px; text-transform: uppercase; color: var(--accent); }
-.theme-pdf .contact-line { margin-top: 8px; font-size: 11.5px; color: var(--soft); }
-.theme-pdf .links-line { margin-top: 3px; font-size: 11.5px; color: var(--accent); display:flex; flex-wrap:wrap; gap:4px 14px; }
-.theme-pdf .availability { margin-top: 6px; font-size: 11.5px; color: var(--soft); font-style: italic; }
-.theme-pdf .stats { display:grid; grid-template-columns: repeat(3,1fr); gap: 10px; margin: 16px 0 6px; }
-.theme-pdf .stat { background: var(--tint); border-left: 3px solid var(--accent); padding: 9px 12px; border-radius: 3px; }
-.theme-pdf .stat-value { font-size: 22px; font-weight: 800; color: var(--accent); line-height: 1; }
-.theme-pdf .stat-label { margin-top: 4px; font-size: 10.5px; line-height: 1.35; color: var(--soft); }
-.theme-pdf .section { margin-top: 15px; }
-.theme-pdf .section-title { font-size: 11.5px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; color: var(--accent); padding-bottom: 5px; margin-bottom: 9px; border-bottom: 1.5px solid var(--accent); }
-.theme-pdf .section-num { display:none; }
-.theme-pdf .profil-text { font-size: 12px; line-height: 1.6; color: var(--soft); }
-.theme-pdf .entry { margin-bottom: 11px; }
-.theme-pdf .entry-head { display:flex; justify-content: space-between; align-items: baseline; gap: 10px; }
-.theme-pdf .entry-title { font-size: 13px; font-weight: 700; color: var(--ink); }
-.theme-pdf .entry-date { font-size: 11px; font-weight: 600; color: var(--accent); white-space: nowrap; }
-.theme-pdf .entry-org { font-size: 11.5px; font-style: italic; color: var(--soft); }
-.theme-pdf .bullets { margin-top: 4px; }
-.theme-pdf .bullets li { position: relative; padding-left: 12px; font-size: 11.5px; line-height: 1.5; color: var(--soft); margin-bottom: 2px; }
-.theme-pdf .bullets li::before { content:''; position:absolute; left:0; top:7px; width:4px; height:4px; border-radius:50%; background: var(--accent); }
-.theme-pdf .bullets li strong { color: var(--ink); }
-.theme-pdf .skills-grid { display:grid; grid-template-columns: 1fr 1fr; gap: 8px 18px; }
-.theme-pdf .skill-name { font-size: 11.5px; font-weight: 700; color: var(--ink); }
-.theme-pdf .skill-value { font-size: 11px; line-height: 1.4; color: var(--soft); }
-.theme-pdf .two-cols { display:grid; grid-template-columns: 1fr 1fr; gap: 18px; }
-.theme-pdf .formation-title { font-size: 12.5px; font-weight: 700; color: var(--ink); }
-.theme-pdf .formation-school { font-size: 11px; color: var(--soft); }
-.theme-pdf .formation-year { font-size: 10.5px; font-weight: 700; color: var(--accent); }
-.theme-pdf .chips { display:flex; flex-wrap:wrap; gap: 6px; }
-.theme-pdf .chip { font-size: 10.5px; font-weight: 600; padding: 3px 9px; border-radius: 999px; background: var(--tint); color: var(--accent); border: 1px solid var(--rule); }
-
-/* ============ THEME : SIDEBAR (design d'origine, vert & or) ============ */
-.theme-sidebar { --sidebar-bg:#1f2e26; --sidebar-text:#e8e4d8; --sidebar-muted:#9fae9f; --paper-bg:#f7f3ea; --ink:#2b2b28; --ink-soft:#55534c; --gold: var(--accent); --rule:#d8d0bd; background: var(--paper-bg); display:grid; grid-template-columns: 290px 1fr; }
-.theme-sidebar .sidebar { background: var(--sidebar-bg); color: var(--sidebar-text); padding: 38px 28px; }
-.theme-sidebar .avatar { width: 96px; height: 96px; border-radius: 50%; border: 2px solid var(--gold); margin: 0 auto 28px; overflow: hidden; }
-.theme-sidebar .avatar img { width:100%; height:100%; object-fit: cover; }
-.theme-sidebar .side-block { margin-bottom: 26px; }
-.theme-sidebar .side-label { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); font-weight: 700; margin-bottom: 10px; }
-.theme-sidebar .side-item { font-size: 12.5px; line-height: 1.5; margin-bottom: 9px; }
-.theme-sidebar .side-item strong { color: #fff; display:block; }
-.theme-sidebar .side-links { display:flex; flex-direction:column; gap: 7px; font-size: 12.5px; }
-.theme-sidebar .formation-entry { border-left: 2px solid var(--gold); padding-left: 12px; margin-bottom: 14px; }
-.theme-sidebar .formation-year { font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--gold); font-weight: 700; }
-.theme-sidebar .formation-title { font-size: 13px; font-weight: 700; color: #fff; }
-.theme-sidebar .formation-school { font-size: 12px; color: var(--sidebar-muted); margin-top: 2px; }
-.theme-sidebar .side-chips li { font-size: 12.5px; margin-bottom: 4px; }
-.theme-sidebar .side-chips li::before { content:'— '; color: var(--gold); }
-.theme-sidebar .content { padding: 42px 42px; }
-.theme-sidebar h1 { font-family:'Playfair Display', serif; font-size: 32px; font-weight: 600; color: var(--ink); }
-.theme-sidebar .role { color: var(--gold); font-size: 12.5px; letter-spacing: 2.2px; text-transform: uppercase; font-weight: 700; margin-top: 4px; }
-.theme-sidebar .availability { font-size: 12px; color: var(--ink-soft); margin-top: 4px; }
-.theme-sidebar .header-rule { width: 60px; height: 2px; background: var(--gold); margin: 16px 0 22px; }
-.theme-sidebar .stats { display:flex; gap: 20px; margin-bottom: 22px; }
-.theme-sidebar .stat-value { font-family:'Playfair Display',serif; font-size: 24px; color: var(--gold); line-height:1; }
-.theme-sidebar .stat-label { font-size: 10.5px; color: var(--ink-soft); line-height: 1.35; margin-top: 3px; max-width: 120px; }
-.theme-sidebar .section { margin-bottom: 24px; }
-.theme-sidebar .section-title { display:flex; align-items: baseline; gap: 10px; margin-bottom: 12px; }
-.theme-sidebar .section-num { font-family:'Playfair Display',serif; font-style: italic; color: var(--gold); font-size: 19px; }
-.theme-sidebar .section-name { font-size: 12px; letter-spacing: 2.5px; text-transform: uppercase; font-weight: 700; color: var(--ink); }
-.theme-sidebar .profil-text { font-size: 13px; line-height: 1.6; color: var(--ink-soft); }
-.theme-sidebar .entry { position: relative; padding-left: 18px; margin-bottom: 18px; border-left: 1px solid var(--rule); }
-.theme-sidebar .entry::before { content:''; position:absolute; left:-5px; top:4px; width:9px; height:9px; border-radius:50%; background: var(--paper-bg); border: 2px solid var(--gold); }
-.theme-sidebar .entry-date { font-size: 11px; letter-spacing: 1.5px; color: var(--gold); font-weight: 700; }
-.theme-sidebar .entry-title { font-size: 14.5px; font-weight: 700; color: var(--ink); }
-.theme-sidebar .entry-org { font-size: 12.5px; font-style: italic; color: var(--ink-soft); }
-.theme-sidebar .bullets { margin-top: 6px; padding-left: 14px; list-style: disc; }
-.theme-sidebar .bullets li { font-size: 12px; color: var(--ink-soft); line-height: 1.5; margin-bottom: 3px; }
-.theme-sidebar .bullets li::marker { color: var(--gold); }
-.theme-sidebar .entry-head { display:block; }
-.theme-sidebar .skills-grid, .theme-sidebar .two-cols { display:block; }
-
-/* ============ THEME : MODERN (bandeau sombre + colonne claire) ============ */
-.theme-modern { --ink:#14202b; --soft:#475666; --rule:#e2e8ee; --tint:#eef2f6; font-family:'Inter',sans-serif; display:grid; grid-template-columns: 1fr 70mm; grid-template-rows: auto 1fr; }
-.theme-modern .m-head { grid-column: 1 / -1; background: #14202b; color:#fff; padding: 14mm 16mm 9mm; }
-.theme-modern .m-head h1 { font-size: 31px; font-weight: 800; letter-spacing:-0.5px; }
-.theme-modern .m-head .role { margin-top: 5px; font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--accent-light, #7fd1d8); }
-.theme-modern .m-head .availability { margin-top: 6px; font-size: 11.5px; color: #b9c4cf; }
-.theme-modern .m-head .stats { display:flex; gap: 26px; margin-top: 14px; }
-.theme-modern .m-head .stat-value { font-size: 21px; font-weight: 800; color: #fff; line-height:1; }
-.theme-modern .m-head .stat-label { font-size: 10px; color: #b9c4cf; margin-top: 3px; max-width: 130px; line-height: 1.3; }
-.theme-modern .main { padding: 8mm 8mm 12mm 16mm; }
-.theme-modern .aside { background: var(--tint); padding: 8mm 10mm 12mm 8mm; }
-.theme-modern .section { margin-bottom: 15px; }
-.theme-modern .section-title { font-size: 11px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; display:flex; align-items:center; gap:8px; }
-.theme-modern .section-title::after { content:''; flex:1; height:1px; background: var(--rule); }
-.theme-modern .section-num { display:none; }
-.theme-modern .profil-text { font-size: 11.8px; line-height: 1.6; color: var(--soft); }
-.theme-modern .entry { margin-bottom: 11px; padding-left: 11px; border-left: 2px solid var(--accent); }
-.theme-modern .entry-head { display:block; }
-.theme-modern .entry-title { font-size: 12.8px; font-weight: 700; color: var(--ink); }
-.theme-modern .entry-org { font-size: 11.3px; color: var(--soft); font-style: italic; }
-.theme-modern .entry-date { font-size: 10.5px; font-weight: 700; color: var(--accent); }
-.theme-modern .bullets { margin-top: 4px; }
-.theme-modern .bullets li { position:relative; padding-left: 11px; font-size: 11.2px; line-height:1.5; color: var(--soft); margin-bottom: 2px; }
-.theme-modern .bullets li::before { content:'›'; position:absolute; left:0; color: var(--accent); font-weight:800; }
-.theme-modern .bullets li strong { color: var(--ink); }
-.theme-modern .skills-grid, .theme-modern .two-cols { display:block; }
-.theme-modern .skill { margin-bottom: 8px; }
-.theme-modern .skill-name { font-size: 11px; font-weight: 700; color: var(--ink); }
-.theme-modern .skill-value { font-size: 10.8px; line-height: 1.4; color: var(--soft); }
-.theme-modern .side-item { font-size: 11px; color: var(--soft); margin-bottom: 5px; word-break: break-word; }
-.theme-modern .side-item strong { display:block; color: var(--ink); font-size: 10px; letter-spacing:1px; text-transform: uppercase; }
-.theme-modern .formation-title { font-size: 11.8px; font-weight: 700; color: var(--ink); }
-.theme-modern .formation-school { font-size: 10.8px; color: var(--soft); }
-.theme-modern .formation-year { font-size: 10.3px; font-weight:700; color: var(--accent); }
-.theme-modern .formation-entry { margin-bottom: 8px; }
-.theme-modern .chips { display:flex; flex-wrap:wrap; gap: 5px; }
-.theme-modern .chip { font-size: 10px; font-weight: 600; padding: 3px 8px; border-radius: 999px; background:#fff; color: var(--accent); border: 1px solid var(--rule); }
-.theme-modern .links-col { display:flex; flex-direction:column; gap: 4px; font-size: 10.8px; color: var(--accent); word-break: break-all; }
-
-/* ============ THEME : MINIMAL (sobre, noir & blanc) ============ */
-.theme-minimal { --ink:#111; --soft:#444; --rule:#cfcfcf; font-family:'Lato',sans-serif; padding: 16mm 18mm; }
-.theme-minimal h1 { font-family:'Playfair Display',serif; font-size: 34px; font-weight: 500; color: var(--ink); text-align:center; }
-.theme-minimal .role { text-align:center; margin-top: 4px; font-size: 12px; letter-spacing: 3px; text-transform: uppercase; color: var(--soft); }
-.theme-minimal .contact-line, .theme-minimal .links-line, .theme-minimal .availability { text-align:center; font-size: 11.3px; color: var(--soft); margin-top: 5px; justify-content:center; }
-.theme-minimal .links-line { display:flex; flex-wrap:wrap; gap: 4px 14px; }
-.theme-minimal .stats { display:flex; justify-content:center; gap: 34px; margin: 14px 0 4px; padding: 10px 0; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
-.theme-minimal .stat { text-align:center; }
-.theme-minimal .stat-value { font-family:'Playfair Display',serif; font-size: 22px; color: var(--ink); line-height:1; }
-.theme-minimal .stat-label { font-size: 10px; color: var(--soft); margin-top: 3px; max-width: 150px; line-height:1.3; }
-.theme-minimal .section { margin-top: 15px; }
-.theme-minimal .section-title { font-size: 11.5px; letter-spacing: 3px; text-transform: uppercase; font-weight: 900; color: var(--ink); margin-bottom: 8px; border-bottom: 1px solid var(--ink); padding-bottom: 3px; }
-.theme-minimal .section-num { display:none; }
-.theme-minimal .profil-text { font-size: 12px; line-height: 1.6; color: var(--soft); }
-.theme-minimal .entry { margin-bottom: 10px; }
-.theme-minimal .entry-head { display:flex; justify-content:space-between; align-items:baseline; gap:10px; }
-.theme-minimal .entry-title { font-size: 12.8px; font-weight: 700; color: var(--ink); }
-.theme-minimal .entry-date { font-size: 11px; color: var(--soft); white-space: nowrap; }
-.theme-minimal .entry-org { font-size: 11.5px; font-style: italic; color: var(--soft); }
-.theme-minimal .bullets { margin-top: 3px; padding-left: 14px; list-style: disc; }
-.theme-minimal .bullets li { font-size: 11.5px; line-height: 1.5; color: var(--soft); margin-bottom: 1px; }
-.theme-minimal .bullets li strong { color: var(--ink); }
-.theme-minimal .skills-grid { display:grid; grid-template-columns: 1fr 1fr; gap: 6px 20px; }
-.theme-minimal .skill-name { font-size: 11.5px; font-weight: 700; color: var(--ink); }
-.theme-minimal .skill-value { font-size: 11px; color: var(--soft); line-height:1.4; }
-.theme-minimal .two-cols { display:grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-.theme-minimal .formation-title { font-size: 12.3px; font-weight: 700; color: var(--ink); }
-.theme-minimal .formation-school, .theme-minimal .formation-year { font-size: 11px; color: var(--soft); }
-.theme-minimal .chips { font-size: 11.3px; color: var(--soft); }
-.theme-minimal .chip { display:inline; }
-.theme-minimal .chip:not(:last-child)::after { content:'  ·  '; }
-
-@media print { .page { box-shadow: none; } }
+/* Minimal */
+.t-minimal .head{flex-direction:column;text-align:center}
+.t-minimal h1{font-family:'Playfair Display',serif;font-weight:500;font-size:2.8em}
+.t-minimal .role{color:var(--soft);letter-spacing:.25em}.t-minimal .links-line{justify-content:center}
+.t-minimal .stats{justify-content:center;padding:.8em 0;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+.t-minimal .stat{background:none;border:0;text-align:center;flex:none}
+.t-minimal .stat-value{color:var(--ink);font-family:'Playfair Display',serif}
+.t-minimal .section-title{color:var(--ink);border-bottom:1px solid var(--ink)}
+.t-minimal .bullets li:before{border-radius:0;background:var(--ink)}
+.t-minimal .chip{background:none;border:0;color:var(--soft);padding:0}
+.t-minimal .chip:not(:last-child):after{content:' ·';margin-left:.5em}
+/* Bold */
+.t-bold .head{background:var(--band);color:#fff;margin:calc(-1*var(--pad)) calc(-1*var(--pad)) 0;padding:var(--pad)}
+.t-bold h1{color:#fff}.t-bold .role,.t-bold .links-line{color:var(--accent-light)}
+.t-bold .section-title{border:0;background:var(--tint);border-left:4px solid var(--accent);padding:.4em .7em}
+/* Classic */
+.t-classic h1{font-family:'Merriweather',serif;font-weight:700;font-size:2.2em;letter-spacing:0}
+.t-classic .head{border-bottom:3px double var(--ink);padding-bottom:.8em}
+.t-classic .role{letter-spacing:.05em;text-transform:none;color:var(--ink);font-weight:600}
+.t-classic .stat{background:none;border:0;padding:0;border-radius:0}.t-classic .stat-value{color:var(--ink);font-size:1.4em}
+.t-classic .section-title{color:var(--ink);border-bottom:1px solid var(--ink)}
+.t-classic .bullets li:before{background:var(--ink)}
+/* Sidebar */
+.t-sidebar{display:grid;grid-template-columns:30% 1fr}
+.t-sidebar .sidebar{background:var(--band);color:#e8ecef;padding:calc(var(--pad)*1.6) calc(var(--pad)*.8)}
+.side-label{font-size:.9em;letter-spacing:.16em;text-transform:uppercase;color:var(--accent-light);font-weight:700;margin-bottom:.6em}
+.side-block{margin-bottom:1.5em}.side-item{margin-bottom:.6em;word-break:break-word}.side-item strong{display:block;color:#fff}
+.side-links{display:flex;flex-direction:column;gap:.5em;word-break:break-all}
+.t-sidebar .sidebar .avatar{margin:0 auto 1.8em;width:7em;height:7em}
+.t-sidebar .formation-title{color:#fff}.t-sidebar .formation-year{color:var(--accent-light)}.t-sidebar .formation-school{opacity:.8}
+.t-sidebar .chip{background:rgba(255,255,255,.12);color:#fff;border-color:transparent}
+.t-sidebar .content{padding:calc(var(--pad)*1.6) var(--pad)}
+.t-sidebar .entry{padding-left:1em;border-left:2px solid var(--accent)}
+.t-sidebar .entry-head{display:block}
+/* Modern */
+.t-modern{display:grid;grid-template-columns:1fr 32%;grid-template-rows:auto 1fr}
+.t-modern .m-head{grid-column:1/-1;background:var(--band);color:#fff;padding:var(--pad) var(--pad) calc(var(--pad)*.7)}
+.t-modern .m-head h1{color:#fff}.t-modern .m-head .role{color:var(--accent-light)}
+.t-modern .m-head .stat{background:rgba(255,255,255,.08);border-color:var(--accent-light)}.t-modern .m-head .stat-value{color:#fff}
+.t-modern .main{padding:calc(var(--pad)*.6) calc(var(--pad)*.6) var(--pad) var(--pad)}
+.t-modern .aside{background:var(--tint);padding:calc(var(--pad)*.6) var(--pad) var(--pad) calc(var(--pad)*.6)}
+.t-modern .section-title{border:0;display:flex;gap:.6em;align-items:center}
+.t-modern .section-title:after{content:'';flex:1;height:1px;background:var(--rule)}
+.t-modern .entry{padding-left:.9em;border-left:2px solid var(--accent)}.t-modern .entry-head{display:block}
+.t-modern .skills-grid,.t-modern .two-cols{display:block}.t-modern .skill{margin-bottom:.6em}
+.t-modern .links-col{display:flex;flex-direction:column;gap:.3em;color:var(--accent);word-break:break-all}
+.t-modern .side-item strong{font-size:.9em;text-transform:uppercase;letter-spacing:.08em;color:var(--ink)}
+@media print{.page{box-shadow:none}}
 </style>
 
 <style>
-body { font-family:'Lato',sans-serif; background:#14181a; color:#d7dadb; display:flex; height:100vh; margin:0; overflow:hidden; }
-.editor { width: 480px; flex-shrink:0; background:#1c2226; display:flex; flex-direction:column; border-right:1px solid #2a3236; }
-.editor-header { padding:14px 18px; border-bottom:1px solid #2a3236; display:flex; align-items:center; justify-content:space-between; gap:8px; flex-wrap:wrap; }
-h2 { margin:0; color:#a8763c; font-size:14px; text-transform:uppercase; letter-spacing:1px; }
-.btns { display:flex; gap:6px; flex-wrap:wrap; }
-.controls { padding:12px 18px; border-bottom:1px solid #2a3236; display:flex; flex-direction:column; gap:10px; font-size:12.5px; color:#9aa3a7; }
-.theme-picker { display:grid; grid-template-columns: repeat(4, 1fr); gap:6px; }
-.theme-btn { padding:8px 4px; font-size:12px; text-align:center; }
-.theme-btn.active { background:#a8763c; border-color:#a8763c; color:#fff; }
-.color-row { display:flex; align-items:center; gap:10px; }
-.color-row input[type=color] { width:36px; height:26px; border:none; background:none; padding:0; cursor:pointer; }
-.swatches { display:flex; gap:6px; }
-.swatch { width:20px; height:20px; border-radius:50%; border:2px solid #3a444a; cursor:pointer; padding:0; }
-#jsonInput { flex:1; background:#0e1113; color:#c5e3c8; border:none; padding:16px; font-family:monospace; font-size:12.5px; line-height:1.5; resize:none; outline:none; }
-.preview-wrap { flex:1; overflow:auto; padding:30px 20px; background:#0f1214; display:flex; justify-content:center; align-items:flex-start; }
-button { background:#2a3236; color:#d7dadb; border:1px solid #3a444a; border-radius:4px; padding:7px 11px; cursor:pointer; font-family:inherit; font-size:12.5px; }
-button:hover { background:#3a444a; }
-#status { padding:10px 18px; font-size:12px; border-top:1px solid #2a3236; }
-#status.ok { color:#7fbf82; }
-#status.error { color:#d9776a; }
-#toast { position:fixed; top:18px; left:50%; transform:translateX(-50%) translateY(-12px); background:#3a1f1f; color:#f2b8ae; border:1px solid #6b3630; padding:10px 18px; border-radius:6px; font-size:13px; max-width:80vw; text-align:center; opacity:0; pointer-events:none; transition:opacity .25s ease, transform .25s ease; z-index:1000; }
-#toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
-
-.page-box { position: relative; flex-shrink: 0; }
-.page-box .page { position: absolute; left: 0; top: 0; transform-origin: 0 0; }
-.page-guides { position: absolute; left: 0; right: 0; top: 0; pointer-events: none; z-index: 5;
-  background: repeating-linear-gradient(to bottom, transparent 0, transparent calc(297mm - 2px), #e11d48 calc(297mm - 2px), #e11d48 297mm);
-  -webkit-mask-image: repeating-linear-gradient(90deg, #000 0 8px, transparent 8px 14px);
-  mask-image: repeating-linear-gradient(90deg, #000 0 8px, transparent 8px 14px); }
-.check-row { display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
-.check-row input { accent-color:#a8763c; }
-#pageInfo { margin-left:auto; font-weight:700; color:#7fbf82; }
-#pageInfo.warn { color:#e0a84f; }
-
-@media print {
-  @page { size: A4; margin: 0; }
-  .page-guides { display:none !important; }
-  .page-box { width:210mm !important; }
-  body { display:block; height:auto; overflow:visible; background:#fff; }
-  .editor, #toast { display:none !important; }
-  .preview-wrap { padding:0; overflow:visible; display:block; background:#fff; }
-  .page { box-shadow:none; margin:0; }
-  * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-}
+body{font-family:'Lato',sans-serif;background:#14181a;color:#d7dadb;display:flex;height:100vh;margin:0;overflow:hidden}
+.editor{width:480px;flex-shrink:0;background:#1c2226;display:flex;flex-direction:column;border-right:1px solid #2a3236}
+.editor-header{padding:12px 16px;border-bottom:1px solid #2a3236;display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}
+h2{margin:0;color:#a8763c;font-size:14px;text-transform:uppercase;letter-spacing:1px}
+.btns{display:flex;gap:6px;flex-wrap:wrap}
+.controls{padding:10px 16px;border-bottom:1px solid #2a3236;display:flex;flex-direction:column;gap:8px;font-size:12.5px;color:#9aa3a7;max-height:48vh;overflow:auto}
+.theme-picker{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.theme-btn{padding:7px 4px;font-size:12px}.theme-btn.active{background:#a8763c;border-color:#a8763c;color:#fff}
+details{border:1px solid #2a3236;border-radius:5px;padding:6px 10px}summary{cursor:pointer;color:#d7dadb;font-weight:700}
+.grid2{display:grid;grid-template-columns:1fr auto;gap:8px 10px;align-items:center;margin-top:8px}
+input[type=color]{width:38px;height:24px;border:none;background:none;padding:0;cursor:pointer}
+input[type=range]{width:160px;accent-color:#a8763c}select{background:#0e1113;color:#d7dadb;border:1px solid #3a444a;border-radius:4px;padding:5px}
+.palettes{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.pal{display:flex;align-items:center;gap:6px;padding:4px 8px;font-size:11.5px}.pal i{width:12px;height:12px;border-radius:50%;display:inline-block}
+.checks{display:grid;grid-template-columns:1fr 1fr;gap:4px 10px;margin-top:8px}.checks label,.check-row{display:flex;align-items:center;gap:7px}
+.check-row input,.checks input{accent-color:#a8763c}
+#pageInfo{margin-left:auto;font-weight:700;color:#7fbf82}#pageInfo.warn{color:#e0a84f}
+#jsonInput{flex:1;background:#0e1113;color:#c5e3c8;border:none;padding:16px;font-family:monospace;font-size:12.5px;line-height:1.5;resize:none;outline:none}
+.preview-wrap{flex:1;overflow:auto;padding:30px 20px;background:#0f1214;display:flex;justify-content:center;align-items:flex-start}
+button{background:#2a3236;color:#d7dadb;border:1px solid #3a444a;border-radius:4px;padding:7px 11px;cursor:pointer;font-family:inherit;font-size:12.5px}button:hover{background:#3a444a}
+#status{padding:9px 16px;font-size:12px;border-top:1px solid #2a3236}#status.ok{color:#7fbf82}#status.error{color:#d9776a}
+#toast{position:fixed;top:18px;left:50%;transform:translateX(-50%) translateY(-12px);background:#3a1f1f;color:#f2b8ae;border:1px solid #6b3630;padding:10px 18px;border-radius:6px;font-size:13px;max-width:80vw;opacity:0;pointer-events:none;transition:.25s;z-index:1000}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.page-box{position:relative;flex-shrink:0}.page-box .page{position:absolute;left:0;top:0;transform-origin:0 0}
+.page-guides{position:absolute;left:0;right:0;top:0;pointer-events:none;z-index:5;background:repeating-linear-gradient(to bottom,transparent 0,transparent calc(297mm - 2px),#e11d48 calc(297mm - 2px),#e11d48 297mm);-webkit-mask-image:repeating-linear-gradient(90deg,#000 0 8px,transparent 8px 14px);mask-image:repeating-linear-gradient(90deg,#000 0 8px,transparent 8px 14px)}
+@media print{@page{size:A4;margin:0}.page-guides,.editor,#toast{display:none!important}.page-box{width:210mm!important}body{display:block;height:auto;overflow:visible;background:#fff}.preview-wrap{padding:0;overflow:visible;display:block;background:#fff}.page{box-shadow:none}*{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
 </style>
 </head>
 <body>
-
 <div class="editor">
   <div class="editor-header">
-    <h2>Éditeur CV</h2>
+    <h2>CV Studio</h2>
     <div class="btns">
-      <button id="btnReset" title="Revenir aux données par défaut">Réinitialiser</button>
-      <button id="btnCopy">📋 Copier HTML</button>
+      <select id="presetSel" title="Modèles de contenu"></select>
+      <button id="btnReset" title="Recharger le modèle choisi">↺</button>
+      <button id="btnCopy">📋 HTML</button>
       <button id="btnDownload">⬇️ HTML</button>
-      <button id="btnPdf" title="Télécharge un vrai PDF A4 (texte sélectionnable, liens cliquables)">⬇️ PDF</button>
-      <button id="btnPrint" title="Alternative : impression du navigateur">🖨️</button>
+      <button id="btnPdf" title="PDF A4 (texte sélectionnable, liens cliquables)">⬇️ PDF</button>
+      <button id="btnPrint" title="Impression du navigateur">🖨️</button>
     </div>
   </div>
-
   <div class="controls">
     <div>Design</div>
     <div class="theme-picker" id="themePicker"></div>
-    <div class="color-row">
-      <span>Couleur d'accent</span>
-      <input type="color" id="accentInput" value="#1d5c63">
-      <div class="swatches" id="swatches"></div>
-    </div>
-    <div class="check-row">
-      <input type="checkbox" id="onePage" checked>
-      <label for="onePage">Tout tenir sur 1 page (réduit légèrement si besoin)</label>
-      <span id="pageInfo"></span>
-    </div>
+    <details open><summary>🎨 Couleurs</summary>
+      <div class="palettes" id="palettes"></div>
+      <div class="grid2">
+        <span>Accent</span><input type="color" id="accentInput">
+        <span>Titres (nom, intitulés)</span><input type="color" id="cInk">
+        <span>Texte courant</span><input type="color" id="cText">
+        <span>Bandeaux / colonne latérale (foncé conseillé)</span><input type="color" id="cBand">
+        <span>Fond de la page</span><input type="color" id="cBg">
+      </div>
+    </details>
+    <details><summary>🔤 Police et mise en page</summary>
+      <div class="grid2">
+        <span>Police</span><select id="cFont"></select>
+        <span>Taille du texte</span><input type="range" id="cSize" min="9.5" max="14" step=".25">
+        <span>Espacement</span><input type="range" id="cSpace" min=".6" max="1.6" step=".05">
+        <span>Marges</span><input type="range" id="cMargin" min="8" max="24" step="1">
+      </div>
+    </details>
+    <details><summary>👁️ Sections affichées</summary><div class="checks" id="sectionChecks"></div></details>
+    <div class="check-row"><input type="checkbox" id="onePage"><label for="onePage">Tout sur 1 page (réduit si besoin)</label><span id="pageInfo"></span></div>
   </div>
-
   <textarea id="jsonInput" spellcheck="false"></textarea>
   <div id="status">Prêt</div>
 </div>
-
-<div class="preview-wrap">
-  <div class="page-box" id="pageBox">
-    <div class="page theme-pdf" id="preview"></div>
-    <div class="page-guides" id="pageGuides" title="Fin de page A4"></div>
-  </div>
-</div>
-
+<div class="preview-wrap"><div class="page-box" id="pageBox"><div class="page" id="preview"></div><div class="page-guides" id="pageGuides" title="Fin de page A4"></div></div></div>
 <div id="toast"></div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
 const FIXED = { fullName: "El Habib Benaboud" };
-
 const THEMES = {
-  pdf:     { label: "Pro",     accent: "#1d5c63" },
-  sidebar: { label: "Élégant", accent: "#a8763c" },
-  modern:  { label: "Moderne", accent: "#2563eb" },
-  minimal: { label: "Sobre",   accent: "#111111" }
+  pdf:{label:"Pro",accent:"#1d5c63"}, modern:{label:"Moderne",accent:"#2563eb"}, sidebar:{label:"Élégant",accent:"#a8763c"},
+  bold:{label:"Bandeau",accent:"#be123c"}, classic:{label:"Classique",accent:"#111111"}, minimal:{label:"Sobre",accent:"#111111"}
+};
+const SINGLE = ["pdf","bold","classic","minimal"];
+const FONTS = {Inter:"'Inter',sans-serif",Lato:"'Lato',sans-serif",Poppins:"'Poppins',sans-serif","Source Sans":"'Source Sans 3',sans-serif",Merriweather:"'Merriweather',serif",Playfair:"'Playfair Display',serif"};
+const PALETTES = [
+  {n:"Océan",a:"#1d5c63",i:"#16313a",b:"#14202b"},{n:"Royal",a:"#2563eb",i:"#14202b",b:"#14202b"},
+  {n:"Forêt",a:"#2f6f4e",i:"#1f2e26",b:"#1f2e26"},{n:"Bordeaux",a:"#be123c",i:"#2a1218",b:"#2a1218"},
+  {n:"Violet",a:"#7c3aed",i:"#1e1b3a",b:"#1e1b3a"},{n:"Or",a:"#a8763c",i:"#2b2b28",b:"#1f2e26"},{n:"Mono",a:"#111111",i:"#111111",b:"#111111"}
+];
+const SECTIONS = {stats:"Chiffres clés",profil:"Profil",experience:"Expérience",projets:"Projets",competences:"Compétences",formation:"Formation",softskills:"Savoir-être",liens:"Liens"};
+const STYLE_DEF = {ink:"#1b2430",text:"#4a5563",band:"#14202b",bg:"#ffffff",font:"Inter",size:12,space:1,margin:15};
+
+const PRESETS = {
+  elivie: { label:"ELIVIE · Support médical", data:{
+    theme:"pdf", accent:"#2563eb", onePage:true, role:"Support technique · Environnement médical · Qualité de service", availability:"", avatarUrl:"",
+    contact:{location:"Lyon",phone:"06 52 68 72 55",email:"elh.benaboud@gmail.com"},
+    links:[{label:"LinkedIn",url:"https://www.linkedin.com/in/el-habib-benaboud/?isSelfProfile=true"}],
+    stats:[{value:"6 mois",label:"Stage en hôpital privé"},{value:"20 % +",label:"Objectifs dépassés"}],
+    profile:"Professionnel informatique ayant effectué un stage de six mois en hôpital privé, où j'ai accompagné les patients, écouté leurs besoins et participé à la gestion de leurs données. Rigoureux, organisé et à l'écoute, je souhaite mettre mes compétences techniques et relationnelles au service d'ELIVIE et contribuer à la qualité de l'accompagnement des patients.",
+    experience:[
+      {date:"6 mois",title:"Stagiaire en milieu hospitalier privé",org:"Hôpital privé",bullets:["Écoute et accompagnement des patients selon leurs besoins.","Participation à la gestion des données liées à leur situation.","Attention portée à la confidentialité et à la fiabilité des informations."]},
+      {date:"2025 – 2026",title:"Technicien support technique",org:"Entreprise cloud, Lyon",bullets:["Échanges avec les utilisateurs pour comprendre leurs demandes et contribuer à leur résolution.","Diagnostic et résolution de problèmes techniques.","Suivi des systèmes et des données en production.","Documentation des interventions et amélioration des procédures.","Dépassement des objectifs fixés d'au moins 20 %."]},
+      {date:"2026",title:"Administrateur système bénévole",org:"Association à but non lucratif",bullets:["Administration et suivi des systèmes informatiques de l'association à titre bénévole.","Maintenance du serveur et résolution de problèmes techniques.","Automatisation de certaines tâches pour faciliter les activités de l'association."]}
+    ],
+    projects:[{name:"Server Monitoring",desc:"Surveillance du fonctionnement des systèmes informatiques."},{name:"Gestion de données",desc:"Organisation et traitement de données avec des outils informatiques."}],
+    skills:[{name:"Support technique",value:"Écoute, diagnostic, résolution de problèmes et suivi des demandes"},{name:"Organisation",value:"Rigueur, autonomie, suivi des activités et respect des procédures"},{name:"Environnement informatique",value:"Support systèmes, serveurs et gestion de données"},{name:"Relationnel",value:"Écoute des patients, sens du service et travail en équipe"}],
+    formation:[{year:"",title:"Formation en informatique",school:"Développement web et bases de données"},{year:"",title:"Baccalauréat scientifique",school:""}],
+    softSkills:["Écoute et empathie","Organisation","Rigueur","Autonomie","Sens des responsabilités","Esprit d'équipe"]
+  }},
+  forsee: { label:"Forsee Power · Technicien IT", data:{
+    theme:"pdf", accent:"#1d5c63", onePage:true, role:"Alternance Technicien Informatique · Support utilisateurs · Linux · Systèmes", availability:"", avatarUrl:"",
+    contact:{location:"Lyon",phone:"06 52 68 72 55",email:"elh.benaboud@gmail.com"},
+    links:[{label:"linkedin.com/in/el-habib-benaboud-data",url:"https://linkedin.com/in/el-habib-benaboud-data"},{label:"github.com/Abib-44",url:"https://github.com/Abib-44"},{label:"abib-44.github.io/portfolio",url:"https://abib-44.github.io/portfolio"}],
+    stats:[{value:"50+",label:"projets backend et data publiés sur GitHub"},{value:"4",label:"expériences techniques : stage, open source, bénévolat, entreprise"},{value:"Prod",label:"serveurs, datacenters et bases de données en production"}],
+    profile:"Technicien et développeur backend ayant exploité des serveurs Linux, des datacenters et des bases de données en production, en contact direct avec les utilisateurs pour traiter leurs demandes. Je remonte de l'API à la base de données pour isoler la cause d'un incident, je le résous, puis je documente la solution. Je recherche une alternance de technicien informatique chez Forsee Power pour renforcer le support utilisateurs, la gestion de parc et les réseaux, en interface entre les utilisateurs et les équipes techniques.",
+    experience:[
+      {date:"2025 – 2026",title:"Développeur backend et DevOps",org:"Entreprise cloud, Lyon",bullets:["Échanges directs avec les utilisateurs pour comprendre et traiter leurs demandes.","Diagnostic et correction d'anomalies, de l'API jusqu'à la base de données.","Exploitation de serveurs en datacenter et de bases de données en production.","Automatisation des tests et du déploiement via CI/CD (Docker, GitLab).","Conception et maintenance d'APIs REST, requêtes SQL optimisées.","Documentation technique à destination de l'équipe."]},
+      {date:"2026",title:"Bénévole développeur et administrateur système",org:"Fondation à but non lucratif",bullets:["Administration et supervision du serveur de la fondation.","Scripts Python pour automatiser des tâches internes.","Création de leur site web avec PHP / Laravel."]},
+      {date:"2024 – 2025",title:"Contributeur open source full-stack",org:"",bullets:["Travail en équipe sur des projets partagés : revues de code, refactoring, amélioration continue."]},
+      {date:"2024",title:"Stagiaire développeur full-stack",org:"",bullets:["Développement d'un site PHP / MySQL en équipe, puis mise en production sur serveur distant."]}
+    ],
+    projects:[{name:"Server-Monitoring",desc:"suivi système en Bash et génération de logs pour l'analyse d'incidents."},{name:"FastAPI + PostgreSQL",desc:"backend REST conteneurisé et modulaire."},{name:"Airflow",desc:"orchestration de workflows ETL avec PostgreSQL et pgAdmin, sous Docker."},{name:"Pipeline CSV",desc:"import, nettoyage et transformation automatisés avec Python et Pandas, chargement dans SQLite."}],
+    skills:[{name:"Support utilisateurs",value:"Prise en charge des demandes, diagnostic, résolution, suivi, documentation"},{name:"Systèmes",value:"Linux, serveurs, datacenter, supervision, analyse de logs, Bash"},{name:"Automatisation",value:"GitLab CI/CD, Docker, Python, tests automatisés"},{name:"Bases de données",value:"PostgreSQL, MySQL, SQLite, optimisation de requêtes"},{name:"Outils",value:"Git, GitLab, Airflow, MinIO, Amazon S3"}],
+    formation:[{year:"",title:"Master Data Engineering",school:"École de data, Lyon"},{year:"",title:"Baccalauréat scientifique",school:"puis formation full-stack"}],
+    softSkills:["Sens du service","Rigueur","Pédagogie","Capacité d'analyse","Esprit d'équipe","Communication claire"]
+  }}
 };
 
-const DEFAULT_DATA = {
-  theme: "pdf",
-  accent: "#1d5c63",
-  onePage: true,
-  role: "Alternance Technicien Informatique · Support utilisateurs · Linux · Systèmes",
-  availability: "",
-  avatarUrl: "",
-  contact: { location: "Lyon", phone: "06 52 68 72 55", email: "elh.benaboud@gmail.com" },
-  links: [
-    { label: "linkedin.com/in/el-habib-benaboud-data", url: "https://linkedin.com/in/el-habib-benaboud-data" },
-    { label: "github.com/Abib-44", url: "https://github.com/Abib-44" },
-    { label: "abib-44.github.io/portfolio", url: "https://abib-44.github.io/portfolio" }
-  ],
-  stats: [
-    { value: "50+", label: "projets backend et data publiés sur GitHub" },
-    { value: "4", label: "expériences techniques : stage, open source, bénévolat, entreprise" },
-    { value: "Prod", label: "serveurs, datacenters et bases de données en production" }
-  ],
-  profile: "Technicien et développeur backend ayant exploité des serveurs Linux, des datacenters et des bases de données en production, en contact direct avec les utilisateurs pour traiter leurs demandes. Je remonte de l'API à la base de données pour isoler la cause d'un incident, je le résous, puis je documente la solution. Je recherche une alternance de technicien informatique chez Forsee Power pour renforcer le support utilisateurs, la gestion de parc et les réseaux, en interface entre les utilisateurs et les équipes techniques.",
-  experience: [
-    {
-      date: "2025 – 2026",
-      title: "Développeur backend et DevOps",
-      org: "Entreprise cloud, Lyon",
-      bullets: [
-        "Échanges directs avec les utilisateurs pour comprendre et traiter leurs demandes.",
-        "Diagnostic et correction d'anomalies, de l'API jusqu'à la base de données.",
-        "Exploitation de serveurs en datacenter et de bases de données en production.",
-        "Automatisation des tests et du déploiement via CI/CD (Docker, GitLab).",
-        "Conception et maintenance d'APIs REST, requêtes SQL optimisées.",
-        "Documentation technique à destination de l'équipe."
-      ]
-    },
-    {
-      date: "2026",
-      title: "Bénévole développeur et administrateur système",
-      org: "Fondation à but non lucratif",
-      bullets: [
-        "Administration et supervision du serveur de la fondation.",
-        "Scripts Python pour automatiser des tâches internes.",
-        "Création de leur site web avec PHP / Laravel."
-      ]
-    },
-    {
-      date: "2024 – 2025",
-      title: "Contributeur open source full-stack",
-      org: "",
-      bullets: [
-        "Travail en équipe sur des projets partagés : revues de code, refactoring, amélioration continue."
-      ]
-    },
-    {
-      date: "2024",
-      title: "Stagiaire développeur full-stack",
-      org: "",
-      bullets: [
-        "Développement d'un site PHP / MySQL en équipe, puis mise en production sur serveur distant."
-      ]
-    }
-  ],
-  projects: [
-    { name: "Server-Monitoring", desc: "suivi système en Bash et génération de logs pour l'analyse d'incidents." },
-    { name: "FastAPI + PostgreSQL", desc: "backend REST conteneurisé et modulaire." },
-    { name: "Airflow", desc: "orchestration de workflows ETL avec PostgreSQL et pgAdmin, sous Docker." },
-    { name: "Pipeline CSV", desc: "import, nettoyage et transformation automatisés avec Python et Pandas, chargement dans SQLite." }
-  ],
-  skills: [
-    { name: "Support utilisateurs", value: "Prise en charge des demandes, diagnostic, résolution, suivi, documentation" },
-    { name: "Systèmes", value: "Linux, serveurs, datacenter, supervision, analyse de logs, Bash" },
-    { name: "Automatisation", value: "GitLab CI/CD, Docker, Python, tests automatisés" },
-    { name: "Bases de données", value: "PostgreSQL, MySQL, SQLite, optimisation de requêtes" },
-    { name: "Outils", value: "Git, GitLab, Airflow, MinIO, Amazon S3" }
-  ],
-  formation: [
-    { year: "", title: "Master Data Engineering", school: "École de data, Lyon" },
-    { year: "", title: "Baccalauréat scientifique", school: "puis formation full-stack" }
-  ],
-  softSkills: ["Sens du service", "Rigueur", "Pédagogie", "Capacité d'analyse", "Esprit d'équipe", "Communication claire"]
-};
+const $ = id => document.getElementById(id);
+const clone = o => JSON.parse(JSON.stringify(o));
+const esc = v => String(v ?? "").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+const has = v => typeof v === "string" && v.trim().length > 0;
+const arr = v => Array.isArray(v) ? v : [];
+let currentData = clone(PRESETS.elivie.data), currentPreset = "elivie";
+const show = (d,k) => !arr(d.hide).includes(k);
+const ST = () => (currentData.style = currentData.style || {});
 
-let currentData = clone(DEFAULT_DATA);
-function clone(o) { return JSON.parse(JSON.stringify(o)); }
-function esc(v) { return String(v ?? "").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); }
-function has(v) { return typeof v === "string" && v.trim().length > 0; }
-function arr(v) { return Array.isArray(v) ? v : []; }
-
-/* ---------- Blocs partagés ---------- */
-function contactParts(d) {
-  const c = d.contact || {};
-  return [c.location, c.phone, c.email].filter(has);
+/* ---------- Couleurs, favicon ---------- */
+const mix = (hex,t) => { const n=parseInt(hex.slice(1),16); return "#"+[n>>16,(n>>8)&255,n&255].map(v=>Math.round(255+(v-255)*t).toString(16).padStart(2,"0")).join(""); };
+const themeOf = d => THEMES[d.theme] ? d.theme : "pdf";
+const accentOf = d => /^#[0-9a-f]{6}$/i.test(d.accent||"") ? d.accent : THEMES[themeOf(d)].accent;
+function vars(d){
+  const s = Object.assign({}, STYLE_DEF, d.style||{}), a = accentOf(d);
+  return `--accent:${a};--accent-light:${mix(a,.45)};--tint:${mix(a,.09)};--rule:${mix(a,.22)};--ink:${s.ink};--soft:${s.text};--band:${s.band};--bg:${s.bg};--font:${FONTS[s.font]||FONTS.Inter};--fs:${s.size};--sp:${s.space};--pad:${s.margin}mm;`;
 }
-function statsHtml(d) {
-  const s = arr(d.stats);
-  if (!s.length) return "";
-  return `<div class="stats">${s.map(x => `<div class="stat"><div class="stat-value">${esc(x.value)}</div><div class="stat-label">${esc(x.label)}</div></div>`).join("")}</div>`;
-}
-function linksInline(d) {
-  const l = arr(d.links);
-  return l.length ? `<div class="links-line">${l.map(x => `<a href="${esc(x.url)}">${esc(x.label)}</a>`).join("")}</div>` : "";
-}
-function expHtml(d) {
-  return arr(d.experience).map(e => `
-    <div class="entry">
-      <div class="entry-head">
-        <div class="entry-title">${esc(e.title)}</div>
-        <div class="entry-date">${esc(e.date)}</div>
-      </div>
-      ${has(e.org) ? `<div class="entry-org">${esc(e.org)}</div>` : ""}
-      ${arr(e.bullets).length ? `<ul class="bullets">${e.bullets.map(b => `<li>${esc(b)}</li>`).join("")}</ul>` : ""}
-    </div>`).join("");
-}
-function projHtml(d) {
-  const p = arr(d.projects);
-  return p.length ? `<ul class="bullets">${p.map(x => `<li><strong>${esc(x.name)}</strong> : ${esc(x.desc)}</li>`).join("")}</ul>` : "";
-}
-function skillsHtml(d) {
-  const s = arr(d.skills);
-  return s.length ? `<div class="skills-grid">${s.map(x => `<div class="skill"><div class="skill-name">${esc(x.name)}</div><div class="skill-value">${esc(x.value)}</div></div>`).join("")}</div>` : "";
-}
-function formHtml(d) {
-  return arr(d.formation).map(f => `
-    <div class="formation-entry">
-      ${has(f.year) ? `<div class="formation-year">${esc(f.year)}</div>` : ""}
-      <div class="formation-title">${esc(f.title)}</div>
-      <div class="formation-school">${esc(f.school)}</div>
-    </div>`).join("");
-}
-function softHtml(d) {
-  const s = arr(d.softSkills);
-  return s.length ? `<div class="chips">${s.map(x => `<span class="chip">${esc(x)}</span>`).join("")}</div>` : "";
-}
-function sec(title, body, num) {
-  if (!body) return "";
-  return `<section class="section"><div class="section-title">${num ? `<span class="section-num">${num}</span>` : ""}<span class="section-name">${esc(title)}</span></div>${body}</section>`;
-}
-function profileHtml(d) {
-  return has(d.profile) ? `<p class="profil-text">${esc(d.profile)}</p>` : "";
-}
-function headerHtml(d) {
-  return `
-    <h1>${esc(FIXED.fullName)}</h1>
-    ${has(d.role) ? `<div class="role">${esc(d.role)}</div>` : ""}
-    ${has(d.availability) ? `<div class="availability">${esc(d.availability)}</div>` : ""}`;
+function faviconUrl(a){
+  const svg = `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='${a}'/><rect x='15' y='10' width='34' height='44' rx='4' fill='#fff'/><circle cx='26' cy='24' r='5' fill='${a}'/><rect x='34' y='20' width='10' height='3' rx='1.5' fill='${a}'/><rect x='34' y='26' width='8' height='2.5' rx='1.2' fill='#b8c0c6'/><rect x='20' y='36' width='24' height='3' rx='1.5' fill='#b8c0c6'/><rect x='20' y='43' width='18' height='3' rx='1.5' fill='#b8c0c6'/></svg>`;
+  return "data:image/svg+xml," + encodeURIComponent(svg);
 }
 
-/* ---------- Renderers par thème ---------- */
-function renderPdf(d) {
-  return `
-    ${headerHtml(d)}
-    <div class="contact-line">${contactParts(d).map(esc).join(" · ")}</div>
-    ${linksInline(d)}
-    ${statsHtml(d)}
-    ${sec("Profil", profileHtml(d))}
-    ${sec("Expérience", expHtml(d))}
-    ${sec("Projets", projHtml(d))}
-    ${sec("Compétences", skillsHtml(d))}
-    <div class="two-cols">
-      ${sec("Formation", formHtml(d))}
-      ${sec("Savoir-être", softHtml(d))}
-    </div>`;
+/* ---------- Blocs ---------- */
+const contactParts = d => { const c=d.contact||{}; return [c.location,c.phone,c.email].filter(has); };
+const statsHtml = d => arr(d.stats).length ? `<div class="stats">${d.stats.map(x=>`<div class="stat"><div class="stat-value">${esc(x.value)}</div><div class="stat-label">${esc(x.label)}</div></div>`).join("")}</div>` : "";
+const linksInline = d => arr(d.links).length ? `<div class="links-line">${d.links.map(x=>`<a href="${esc(x.url)}">${esc(x.label)}</a>`).join("")}</div>` : "";
+const expHtml = d => arr(d.experience).map(e=>`<div class="entry"><div class="entry-head"><div class="entry-title">${esc(e.title)}</div><div class="entry-date">${esc(e.date)}</div></div>${has(e.org)?`<div class="entry-org">${esc(e.org)}</div>`:""}${arr(e.bullets).length?`<ul class="bullets">${e.bullets.map(b=>`<li>${esc(b)}</li>`).join("")}</ul>`:""}</div>`).join("");
+const projHtml = d => arr(d.projects).length ? `<ul class="bullets">${d.projects.map(x=>`<li><strong>${esc(x.name)}</strong> : ${esc(x.desc)}</li>`).join("")}</ul>` : "";
+const skillsHtml = d => arr(d.skills).length ? `<div class="skills-grid">${d.skills.map(x=>`<div class="skill"><div class="skill-name">${esc(x.name)}</div><div class="skill-value">${esc(x.value)}</div></div>`).join("")}</div>` : "";
+const formHtml = d => arr(d.formation).map(f=>`<div class="formation-entry">${has(f.year)?`<div class="formation-year">${esc(f.year)}</div>`:""}<div class="formation-title">${esc(f.title)}</div><div class="formation-school">${esc(f.school)}</div></div>`).join("");
+const softHtml = d => arr(d.softSkills).length ? `<div class="chips">${d.softSkills.map(x=>`<span class="chip">${esc(x)}</span>`).join("")}</div>` : "";
+const profileHtml = d => has(d.profile) ? `<p class="profil-text">${esc(d.profile)}</p>` : "";
+const sec = (d,key,title,body) => (body && show(d,key)) ? `<section class="section"><div class="section-title">${esc(title)}</div>${body}</section>` : "";
+const headerHtml = d => `<h1>${esc(FIXED.fullName)}</h1>${has(d.role)?`<div class="role">${esc(d.role)}</div>`:""}${has(d.availability)?`<div class="availability">${esc(d.availability)}</div>`:""}`;
+const avatarHtml = d => has(d.avatarUrl) ? `<div class="avatar"><img src="${esc(d.avatarUrl)}" alt=""></div>` : "";
+const sideItems = (pairs) => pairs.filter(x=>has(x[1])).map(x=>`<div class="side-item"><strong>${esc(x[0])}</strong>${esc(x[1])}</div>`).join("");
+
+function renderSingle(d){
+  return `<div class="single"><header class="head"><div>${headerHtml(d)}<div class="contact-line">${contactParts(d).map(esc).join(" · ")}</div>${show(d,"liens")?linksInline(d):""}</div>${avatarHtml(d)}</header>
+  ${show(d,"stats")?statsHtml(d):""}
+  ${sec(d,"profil","Profil",profileHtml(d))}${sec(d,"experience","Expérience",expHtml(d))}${sec(d,"projets","Projets",projHtml(d))}${sec(d,"competences","Compétences",skillsHtml(d))}
+  <div class="two-cols">${sec(d,"formation","Formation",formHtml(d))}${sec(d,"softskills","Savoir-être",softHtml(d))}</div></div>`;
 }
-
-function renderMinimal(d) { return renderPdf(d); }
-
-function renderSidebar(d) {
-  const c = d.contact || {};
-  const avatar = has(d.avatarUrl) ? `<div class="avatar"><img src="${esc(d.avatarUrl)}" alt=""></div>` : "";
-  const contactItems = [["Localisation", c.location], ["Téléphone", c.phone], ["Email", c.email]]
-    .filter(x => has(x[1])).map(x => `<div class="side-item"><strong>${x[0]}</strong>${esc(x[1])}</div>`).join("");
-  const skills = arr(d.skills).map(s => `<div class="side-item"><strong>${esc(s.name)}</strong>${esc(s.value)}</div>`).join("");
-  const links = arr(d.links).map(l => `<a href="${esc(l.url)}">${esc(l.label)}</a>`).join("");
-  const soft = arr(d.softSkills).length ? `<ul class="side-chips">${d.softSkills.map(s => `<li>${esc(s)}</li>`).join("")}</ul>` : "";
-  const side = (label, body) => body ? `<div class="side-block"><div class="side-label">${label}</div>${body}</div>` : "";
-  let n = 0; const num = () => String(++n).padStart(2, "0");
-  return `
-    <aside class="sidebar">
-      ${avatar}
-      ${side("Contact", contactItems)}
-      ${side("Compétences", skills)}
-      ${side("Liens", links ? `<div class="side-links">${links}</div>` : "")}
-      ${side("Formation", formHtml(d))}
-      ${side("Savoir-être", soft)}
-    </aside>
-    <main class="content">
-      ${headerHtml(d)}
-      <div class="header-rule"></div>
-      ${statsHtml(d)}
-      ${sec("Profil", profileHtml(d), has(d.profile) ? num() : "")}
-      ${sec("Expérience", expHtml(d), arr(d.experience).length ? num() : "")}
-      ${sec("Projets", projHtml(d), arr(d.projects).length ? num() : "")}
-    </main>`;
+function renderSidebar(d){
+  const c = d.contact||{};
+  const side = (key,label,body) => (body && show(d,key)) ? `<div class="side-block"><div class="side-label">${label}</div>${body}</div>` : "";
+  const links = arr(d.links).map(l=>`<a href="${esc(l.url)}">${esc(l.label)}</a>`).join("");
+  return `<aside class="sidebar">${avatarHtml(d)}
+    ${side("contact","Contact",sideItems([["Localisation",c.location],["Téléphone",c.phone],["Email",c.email]]))}
+    ${side("competences","Compétences",arr(d.skills).map(s=>`<div class="side-item"><strong>${esc(s.name)}</strong>${esc(s.value)}</div>`).join(""))}
+    ${side("liens","Liens",links?`<div class="side-links">${links}</div>`:"")}
+    ${side("formation","Formation",formHtml(d))}${side("softskills","Savoir-être",softHtml(d))}</aside>
+    <main class="content">${headerHtml(d)}${show(d,"stats")?statsHtml(d):""}
+    ${sec(d,"profil","Profil",profileHtml(d))}${sec(d,"experience","Expérience",expHtml(d))}${sec(d,"projets","Projets",projHtml(d))}</main>`;
 }
-
-function renderModern(d) {
-  const c = d.contact || {};
-  const contactItems = [["Localisation", c.location], ["Téléphone", c.phone], ["Email", c.email]]
-    .filter(x => has(x[1])).map(x => `<div class="side-item"><strong>${x[0]}</strong>${esc(x[1])}</div>`).join("");
-  const links = arr(d.links).length ? `<div class="links-col">${d.links.map(l => `<a href="${esc(l.url)}">${esc(l.label)}</a>`).join("")}</div>` : "";
-  return `
-    <header class="m-head">
-      ${headerHtml(d)}
-      ${statsHtml(d)}
-    </header>
-    <main class="main">
-      ${sec("Profil", profileHtml(d))}
-      ${sec("Expérience", expHtml(d))}
-      ${sec("Projets", projHtml(d))}
-    </main>
-    <aside class="aside">
-      ${sec("Contact", contactItems)}
-      ${sec("Liens", links)}
-      ${sec("Compétences", skillsHtml(d))}
-      ${sec("Formation", formHtml(d))}
-      ${sec("Savoir-être", softHtml(d))}
-    </aside>`;
+function renderModern(d){
+  const c = d.contact||{};
+  const links = arr(d.links).length ? `<div class="links-col">${d.links.map(l=>`<a href="${esc(l.url)}">${esc(l.label)}</a>`).join("")}</div>` : "";
+  return `<header class="m-head">${headerHtml(d)}${show(d,"stats")?statsHtml(d):""}</header>
+    <main class="main">${sec(d,"profil","Profil",profileHtml(d))}${sec(d,"experience","Expérience",expHtml(d))}${sec(d,"projets","Projets",projHtml(d))}</main>
+    <aside class="aside">${sec(d,"contact","Contact",sideItems([["Localisation",c.location],["Téléphone",c.phone],["Email",c.email]]))}${sec(d,"liens","Liens",links)}${sec(d,"competences","Compétences",skillsHtml(d))}${sec(d,"formation","Formation",formHtml(d))}${sec(d,"softskills","Savoir-être",softHtml(d))}</aside>`;
 }
+const RENDERERS = {pdf:renderSingle,bold:renderSingle,classic:renderSingle,minimal:renderSingle,sidebar:renderSidebar,modern:renderModern};
 
-const RENDERERS = { pdf: renderPdf, sidebar: renderSidebar, modern: renderModern, minimal: renderMinimal };
-
-function themeOf(d) { return RENDERERS[d.theme] ? d.theme : "pdf"; }
-function accentOf(d) { return /^#[0-9a-f]{6}$/i.test(d.accent || "") ? d.accent : THEMES[themeOf(d)].accent; }
-
-function renderCV(d) {
+function renderCV(d){
   const t = themeOf(d);
-  preview.className = "page theme-" + t;
-  preview.style.setProperty("--accent", accentOf(d));
-  preview.style.setProperty("--accent-light", lighten(accentOf(d)));
+  preview.className = "page t-" + t;
+  preview.style.cssText = vars(d);
   return RENDERERS[t](d);
 }
-
-function lighten(hex) {
-  const n = parseInt(hex.slice(1), 16);
-  const mix = v => Math.round(v + (255 - v) * 0.55);
-  const r = mix(n >> 16), g = mix((n >> 8) & 255), b = mix(n & 255);
-  return "#" + [r, g, b].map(v => v.toString(16).padStart(2, "0")).join("");
-}
-
-function buildStandaloneHtml(d, forPdf) {
-  const styles = document.getElementById("cv-styles").outerHTML;
-  const t = themeOf(d), a = accentOf(d);
-  const inner = RENDERERS[t](d);
+function buildStandaloneHtml(d, forPdf){
+  const t = themeOf(d);
   return `<!DOCTYPE html>
-<html lang="fr">
-<head>
-<meta charset="UTF-8">
-<title>CV - ${esc(FIXED.fullName)}</title>
+<html lang="fr"><head><meta charset="UTF-8"><title>CV - ${esc(FIXED.fullName)}</title>
+<link rel="icon" type="image/svg+xml" href="${faviconUrl(accentOf(d))}">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,500&family=Lato:wght@400;700;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-${styles}
-${forPdf
-  ? `<style>html,body{margin:0;background:#fff} body{display:block} .page{box-shadow:none;margin:0}</style>`
-  : `<style>@page{size:A4;margin:0} body{margin:0;background:#e9ecef;display:flex;justify-content:center} .page{box-shadow:none} @media print{body{background:#fff} *{-webkit-print-color-adjust:exact;print-color-adjust:exact}}</style>`}
-</head>
-<body>
-<div class="page theme-${t}" style="--accent:${a};--accent-light:${lighten(a)}">${inner}</div>
-</body>
-</html>`;
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Lato:wght@400;700;900&family=Poppins:wght@400;500;600;700;800&family=Source+Sans+3:wght@400;600;700;800&family=Merriweather:wght@400;700&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
+${$("cv-styles").outerHTML}
+${forPdf ? `<style>html,body{margin:0;background:#fff}.page{box-shadow:none}</style>` : `<style>@page{size:A4;margin:0}body{margin:0;background:#e9ecef;display:flex;justify-content:center}.page{box-shadow:none}@media print{body{background:#fff}*{-webkit-print-color-adjust:exact;print-color-adjust:exact}}</style>`}
+</head><body><div class="page t-${t}" style="${vars(d)}">${RENDERERS[t](d)}</div></body></html>`;
 }
 
 /* ---------- UI ---------- */
-const jsonInput = document.getElementById("jsonInput");
-const preview = document.getElementById("preview");
-const statusEl = document.getElementById("status");
-const toastEl = document.getElementById("toast");
-const accentInput = document.getElementById("accentInput");
+const jsonInput=$("jsonInput"), preview=$("preview"), statusEl=$("status"), toastEl=$("toast"), pageBox=$("pageBox"), pageGuides=$("pageGuides"), pageInfo=$("pageInfo");
 let toastTimer;
+const setStatus=(t,e)=>{statusEl.textContent=t;statusEl.className=e?"error":"ok"};
+const showToast=(m,ms)=>{clearTimeout(toastTimer);toastEl.textContent=m;toastEl.classList.add("show");toastTimer=setTimeout(()=>toastEl.classList.remove("show"),ms)};
+const save=()=>{try{localStorage.setItem("cv-data",JSON.stringify(currentData))}catch(e){}};
 
-function setStatus(text, isError) { statusEl.textContent = text; statusEl.className = isError ? "error" : "ok"; }
-function showToast(msg, ms) { clearTimeout(toastTimer); toastEl.textContent = msg; toastEl.classList.add("show"); toastTimer = setTimeout(() => toastEl.classList.remove("show"), ms); }
-
-function save() { try { localStorage.setItem("cv-data", JSON.stringify(currentData)); } catch (e) {} }
-
-/* ---------- Mise en page A4 : 1 page si possible, repères de fin de page ---------- */
-const PAGE_W_PX = 210 * 96 / 25.4, PAGE_H_PX = 297 * 96 / 25.4;
-const pageBox = document.getElementById("pageBox");
-const pageGuides = document.getElementById("pageGuides");
-const pageInfo = document.getElementById("pageInfo");
-const onePageOn = () => currentData.onePage !== false;
-
-// Élargit la zone de mise en page (puis le tout est rétréci) jusqu'à ce que ça tienne sur 1 page.
-function fitPage(el, enabled) {
-  el.style.transform = "none";
-  el.style.width = PAGE_W_PX + "px";
-  el.style.minHeight = PAGE_H_PX + "px";
-  let k = 1;
-  if (enabled && el.offsetHeight > PAGE_H_PX + 1) {
-    let ok = false;
-    for (let t = 0.98; t >= 0.70; t -= 0.02) {
-      el.style.width = (PAGE_W_PX / t) + "px";
-      el.style.minHeight = (PAGE_H_PX / t) + "px";
-      if (el.offsetHeight <= PAGE_H_PX / t + 1) { k = t; ok = true; break; }
+const PAGE_W_PX=210*96/25.4, PAGE_H_PX=297*96/25.4;
+const onePageOn=()=>currentData.onePage!==false;
+function fitPage(el,enabled){
+  el.style.transform="none"; el.style.width=PAGE_W_PX+"px"; el.style.minHeight=PAGE_H_PX+"px";
+  let k=1;
+  if(enabled && el.offsetHeight>PAGE_H_PX+1){
+    let ok=false;
+    for(let t=.98;t>=.70;t-=.02){
+      el.style.width=(PAGE_W_PX/t)+"px"; el.style.minHeight=(PAGE_H_PX/t)+"px";
+      if(el.offsetHeight<=PAGE_H_PX/t+1){k=t;ok=true;break}
     }
-    if (!ok) {
-      k = 0.70;
-      el.style.width = (PAGE_W_PX / k) + "px";
-      el.style.minHeight = (PAGE_H_PX / k) + "px";
-    }
+    if(!ok){k=.70;el.style.width=(PAGE_W_PX/k)+"px";el.style.minHeight=(PAGE_H_PX/k)+"px"}
   }
   return k;
 }
-
-function updatePreviewLayout() {
-  const k = fitPage(preview, onePageOn());
-  const h = preview.offsetHeight * k;
-  preview.style.transform = k < 1 ? `scale(${k})` : "none";
-  pageBox.style.width = PAGE_W_PX + "px";
-  pageBox.style.height = h + "px";
-  pageGuides.style.height = h + "px";
-  const pages = Math.max(1, Math.ceil((h - 2) / PAGE_H_PX));
-  pageInfo.textContent = pages + (pages === 1 ? " page" : " pages") + (k < 1 ? " · réduit à " + Math.round(k * 100) + "%" : "");
-  pageInfo.className = pages > 1 ? "warn" : "";
+function updatePreviewLayout(){
+  const k=fitPage(preview,onePageOn()), h=preview.offsetHeight*k;
+  preview.style.transform=k<1?`scale(${k})`:"none";
+  pageBox.style.width=PAGE_W_PX+"px"; pageBox.style.height=h+"px"; pageGuides.style.height=h+"px";
+  const pages=Math.max(1,Math.ceil((h-2)/PAGE_H_PX));
+  pageInfo.textContent=pages+(pages===1?" page":" pages")+(k<1?" · "+Math.round(k*100)+"%":"");
+  pageInfo.className=pages>1?"warn":"";
 }
 
-function refresh(writeJson) {
-  preview.innerHTML = renderCV(currentData);
+// Contrôles de style (couleurs, police, tailles)
+const CTRL=[["cInk","ink"],["cText","text"],["cBand","band"],["cBg","bg"],["cFont","font"],["cSize","size"],["cSpace","space"],["cMargin","margin"]];
+Object.keys(FONTS).forEach(f=>{const o=document.createElement("option");o.value=o.textContent=f;$("cFont").appendChild(o)});
+CTRL.forEach(([id,k])=>$(id).addEventListener("input",e=>{ST()[k]=e.target.type==="range"?+e.target.value:e.target.value;refresh(true)}));
+$("accentInput").addEventListener("input",e=>{currentData.accent=e.target.value;refresh(true)});
+PALETTES.forEach(p=>{
+  const b=document.createElement("button");b.className="pal";b.innerHTML=`<i style="background:${p.a}"></i>${p.n}`;
+  b.onclick=()=>{currentData.accent=p.a;Object.assign(ST(),{ink:p.i,band:p.b});refresh(true)};
+  $("palettes").appendChild(b);
+});
+Object.entries(SECTIONS).forEach(([k,l])=>{
+  const lb=document.createElement("label");lb.innerHTML=`<input type="checkbox" data-sec="${k}"> ${l}`;
+  lb.firstChild.addEventListener("change",e=>{
+    const h=new Set(arr(currentData.hide)); e.target.checked?h.delete(k):h.add(k); currentData.hide=[...h]; refresh(true);
+  });
+  $("sectionChecks").appendChild(lb);
+});
+Object.entries(THEMES).forEach(([key,t])=>{
+  const b=document.createElement("button");b.className="theme-btn";b.dataset.theme=key;b.textContent=t.label;
+  b.onclick=()=>{currentData.theme=key;currentData.accent=t.accent;refresh(true);setStatus("✅ Design : "+t.label,false)};
+  $("themePicker").appendChild(b);
+});
+Object.entries(PRESETS).forEach(([k,p])=>{const o=document.createElement("option");o.value=k;o.textContent=p.label;$("presetSel").appendChild(o)});
+$("presetSel").onchange=e=>{currentPreset=e.target.value;currentData=clone(PRESETS[currentPreset].data);refresh(true);setStatus("✅ Modèle : "+PRESETS[currentPreset].label,false)};
+$("btnReset").onclick=()=>{currentData=clone(PRESETS[currentPreset].data);refresh(true);setStatus("Modèle rechargé",false)};
+$("onePage").addEventListener("change",e=>{currentData.onePage=e.target.checked;refresh(true)});
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(updatePreviewLayout);
+
+function refresh(writeJson){
+  preview.innerHTML=renderCV(currentData);
   updatePreviewLayout();
-  document.getElementById("onePage").checked = onePageOn();
-  if (writeJson) jsonInput.value = JSON.stringify(currentData, null, 2);
-  accentInput.value = accentOf(currentData);
-  document.querySelectorAll(".theme-btn").forEach(b => b.classList.toggle("active", b.dataset.theme === themeOf(currentData)));
+  $("onePage").checked=onePageOn();
+  if(writeJson)jsonInput.value=JSON.stringify(currentData,null,2);
+  const s=Object.assign({},STYLE_DEF,currentData.style||{});
+  CTRL.forEach(([id,k])=>{$(id).value=s[k]});
+  $("accentInput").value=accentOf(currentData);
+  document.querySelectorAll("[data-sec]").forEach(c=>c.checked=show(currentData,c.dataset.sec));
+  document.querySelectorAll(".theme-btn").forEach(b=>b.classList.toggle("active",b.dataset.theme===themeOf(currentData)));
+  $("favicon").href=faviconUrl(accentOf(currentData));
   save();
 }
 
-// Sélecteur de design
-const picker = document.getElementById("themePicker");
-Object.entries(THEMES).forEach(([key, t]) => {
-  const b = document.createElement("button");
-  b.className = "theme-btn"; b.dataset.theme = key; b.textContent = t.label;
-  b.onclick = () => {
-    currentData.theme = key;
-    currentData.accent = t.accent;
-    refresh(true);
-    setStatus("✅ Design : " + t.label, false);
-  };
-  picker.appendChild(b);
-});
-
-document.getElementById("onePage").addEventListener("change", e => {
-  currentData.onePage = e.target.checked;
-  refresh(true);
-});
-if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => updatePreviewLayout());
-
-// Couleur d'accent
-accentInput.addEventListener("input", () => { currentData.accent = accentInput.value; refresh(true); });
-const swatches = document.getElementById("swatches");
-["#1d5c63", "#a8763c", "#2563eb", "#7c3aed", "#be123c", "#111111"].forEach(c => {
-  const s = document.createElement("button");
-  s.className = "swatch"; s.style.background = c; s.title = c;
-  s.onclick = () => { currentData.accent = c; refresh(true); };
-  swatches.appendChild(s);
-});
-
-// Édition JSON
 let debounceTimer;
-jsonInput.addEventListener("input", () => {
+jsonInput.addEventListener("input",()=>{
   clearTimeout(debounceTimer);
-  debounceTimer = setTimeout(() => {
-    try {
-      currentData = JSON.parse(jsonInput.value);
-      refresh(false);
-      setStatus("✅ Mise à jour", false);
-    } catch (e) {
-      setStatus("❌ Erreur JSON : " + e.message, true);
-      showToast("❌ JSON invalide : " + e.message, 3500);
-    }
-  }, 300);
+  debounceTimer=setTimeout(()=>{
+    try{currentData=JSON.parse(jsonInput.value);refresh(false);setStatus("✅ Mise à jour",false)}
+    catch(e){setStatus("❌ Erreur JSON : "+e.message,true);showToast("❌ JSON invalide : "+e.message,3500)}
+  },300);
 });
 
-document.getElementById("btnReset").onclick = () => {
-  currentData = clone(DEFAULT_DATA);
-  refresh(true);
-  setStatus("Prêt", false);
+$("btnCopy").onclick=async()=>{
+  const html=buildStandaloneHtml(currentData);
+  try{await navigator.clipboard.writeText(html);setStatus("✅ HTML copié",false)}
+  catch(e){const ta=document.createElement("textarea");ta.value=html;ta.style.cssText="position:fixed;opacity:0";document.body.appendChild(ta);ta.select();document.execCommand("copy");ta.remove();setStatus("✅ HTML copié",false)}
 };
-
-document.getElementById("btnCopy").onclick = async () => {
-  const html = buildStandaloneHtml(currentData);
-  try {
-    await navigator.clipboard.writeText(html);
-    setStatus("✅ HTML copié dans le presse-papiers", false);
-  } catch (e) {
-    const ta = document.createElement("textarea");
-    ta.value = html; ta.style.position = "fixed"; ta.style.opacity = "0";
-    document.body.appendChild(ta); ta.select(); document.execCommand("copy"); document.body.removeChild(ta);
-    setStatus("✅ HTML copié (méthode alternative)", false);
-  }
+$("btnDownload").onclick=()=>{
+  const a=document.createElement("a");
+  a.href=URL.createObjectURL(new Blob([buildStandaloneHtml(currentData)],{type:"text/html"}));
+  a.download="cv-"+themeOf(currentData)+".html";a.click();
+  setTimeout(()=>URL.revokeObjectURL(a.href),1000);setStatus("✅ HTML téléchargé",false);
 };
-
-document.getElementById("btnDownload").onclick = () => {
-  const blob = new Blob([buildStandaloneHtml(currentData)], { type: "text/html" });
-  const a = document.createElement("a");
-  a.href = URL.createObjectURL(blob);
-  a.download = "cv-" + themeOf(currentData) + ".html";
-  a.click();
-  setTimeout(() => URL.revokeObjectURL(a.href), 1000);
-  setStatus("✅ HTML téléchargé", false);
-};
-
-document.getElementById("btnPrint").onclick = () => {
-  setStatus("Dans la fenêtre d'impression, choisis « Enregistrer au format PDF »", false);
-  window.print();
-};
+$("btnPrint").onclick=()=>{setStatus("Choisis « Enregistrer au format PDF » dans la fenêtre d'impression",false);window.print()};
 
 /* ---------- Export PDF réel (html2canvas + jsPDF) ---------- */
-const MM = 96 / 25.4;
-
-function isBlankRow(ctx, w, row, bg) {
-  const d = ctx.getImageData(0, row, w, 1).data;
-  for (let i = 0; i < d.length; i += 4) {
-    if (Math.abs(d[i] - bg[0]) > 6 || Math.abs(d[i+1] - bg[1]) > 6 || Math.abs(d[i+2] - bg[2]) > 6) return false;
-  }
-  return true;
-}
-function findCut(ctx, w, y, end, back, bg) {
-  let run = 0;
-  for (let r = end - 1; r > end - back && r > y + 60; r--) {
-    if (isBlankRow(ctx, w, r, bg)) { run++; if (run >= 4) return r + 2; } else run = 0;
-  }
-  return end;
-}
-
-// Position de chaque mot et de chaque lien dans l'iframe (px CSS)
-function collectLayer(doc) {
-  const words = [], links = [], win = doc.defaultView;
-  const walker = doc.createTreeWalker(doc.body, NodeFilter.SHOW_TEXT);
-  const rng = doc.createRange();
-  let n;
-  while ((n = walker.nextNode())) {
-    const t = n.nodeValue;
-    if (!t.trim() || !n.parentElement) continue;
-    const cs = win.getComputedStyle(n.parentElement);
-    if (cs.visibility === "hidden" || cs.display === "none") continue;
-    const re = /\S+/g; let m;
-    while ((m = re.exec(t))) {
-      rng.setStart(n, m.index); rng.setEnd(n, m.index + m[0].length);
-      const b = rng.getClientRects()[0];
-      if (!b || !b.width) continue;
-      let s = m[0];
-      if (cs.textTransform === "uppercase") s = s.toUpperCase();
-      else if (cs.textTransform === "lowercase") s = s.toLowerCase();
-      s = s.replace(/[^\u0020-\u00FF\u20AC\u2013\u2014\u2018\u2019\u201C\u201D\u2022]/g, "");
-      if (!s) continue;
-      words.push({ s, x: b.left, top: b.top, bottom: b.bottom, w: b.width,
-        fs: parseFloat(cs.fontSize) || 12, bold: parseInt(cs.fontWeight, 10) >= 600 });
+const MM=96/25.4;
+function isBlankRow(ctx,w,row,bg){const d=ctx.getImageData(0,row,w,1).data;for(let i=0;i<d.length;i+=4){if(Math.abs(d[i]-bg[0])>6||Math.abs(d[i+1]-bg[1])>6||Math.abs(d[i+2]-bg[2])>6)return false}return true}
+function findCut(ctx,w,y,end,back,bg){let run=0;for(let r=end-1;r>end-back&&r>y+60;r--){if(isBlankRow(ctx,w,r,bg)){run++;if(run>=4)return r+2}else run=0}return end}
+function collectLayer(doc){
+  const words=[],links=[],win=doc.defaultView,walker=doc.createTreeWalker(doc.body,NodeFilter.SHOW_TEXT),rng=doc.createRange();let n;
+  while((n=walker.nextNode())){
+    const t=n.nodeValue;if(!t.trim()||!n.parentElement)continue;
+    const cs=win.getComputedStyle(n.parentElement);if(cs.visibility==="hidden"||cs.display==="none")continue;
+    const re=/\S+/g;let m;
+    while((m=re.exec(t))){
+      rng.setStart(n,m.index);rng.setEnd(n,m.index+m[0].length);
+      const b=rng.getClientRects()[0];if(!b||!b.width)continue;
+      let s=m[0];if(cs.textTransform==="uppercase")s=s.toUpperCase();else if(cs.textTransform==="lowercase")s=s.toLowerCase();
+      s=s.replace(/[^\u0020-\u00FF\u20AC\u2013\u2014\u2018\u2019\u201C\u201D\u2022]/g,"");if(!s)continue;
+      words.push({s,x:b.left,top:b.top,bottom:b.bottom,w:b.width,fs:parseFloat(cs.fontSize)||12,bold:parseInt(cs.fontWeight,10)>=600});
     }
   }
-  doc.querySelectorAll("a[href]").forEach(a => {
-    const href = a.getAttribute("href") || "";
-    if (!/^(https?:|mailto:|tel:)/i.test(href)) return;
-    Array.from(a.getClientRects()).forEach(b => {
-      if (b.width > 1 && b.height > 1) links.push({ url: href, x: b.left, top: b.top, w: b.width, h: b.height });
-    });
+  doc.querySelectorAll("a[href]").forEach(a=>{
+    const href=a.getAttribute("href")||"";if(!/^(https?:|mailto:|tel:)/i.test(href))return;
+    Array.from(a.getClientRects()).forEach(b=>{if(b.width>1&&b.height>1)links.push({url:href,x:b.left,top:b.top,w:b.width,h:b.height})});
   });
-  return { words, links };
+  return {words,links};
 }
-
-// Texte invisible (sélectionnable, lisible par les ATS) + zones de liens cliquables
-function addLayer(pdf, layer, k, y0, y1) {
-  const PT = 72 / 25.4;
-  layer.words.forEach(w => {
-    const mid = (w.top + w.bottom) / 2;
-    if (mid < y0 || mid >= y1) return;
-    pdf.setFont("helvetica", w.bold ? "bold" : "normal");
-    pdf.setFontSize(w.fs * k * PT);
-    const tw = pdf.getTextWidth(w.s);
-    const cs = w.s.length > 1 ? (w.w * k - tw) / (w.s.length - 1) : 0;
-    pdf.text(w.s + " ", w.x * k, (w.bottom - y0) * k, { baseline: "bottom", renderingMode: "invisible", charSpace: cs });
+function addLayer(pdf,layer,k,y0,y1){
+  const PT=72/25.4;
+  layer.words.forEach(w=>{
+    const mid=(w.top+w.bottom)/2;if(mid<y0||mid>=y1)return;
+    pdf.setFont("helvetica",w.bold?"bold":"normal");pdf.setFontSize(w.fs*k*PT);
+    const tw=pdf.getTextWidth(w.s),cs=w.s.length>1?(w.w*k-tw)/(w.s.length-1):0;
+    pdf.text(w.s+" ",w.x*k,(w.bottom-y0)*k,{baseline:"bottom",renderingMode:"invisible",charSpace:cs});
   });
-  layer.links.forEach(l => {
-    const mid = l.top + l.h / 2;
-    if (mid < y0 || mid >= y1) return;
-    pdf.link(l.x * k, (l.top - y0) * k, l.w * k, l.h * k, { url: l.url });
-  });
+  layer.links.forEach(l=>{const mid=l.top+l.h/2;if(mid<y0||mid>=y1)return;pdf.link(l.x*k,(l.top-y0)*k,l.w*k,l.h*k,{url:l.url})});
 }
-
-async function exportPdf() {
-  const btn = document.getElementById("btnPdf");
-  btn.disabled = true;
-  setStatus("Création du PDF…", false);
-  let holder = null;
-  try {
-    if (!window.html2canvas || !window.jspdf) throw new Error("Librairies PDF non chargées : vérifie ta connexion et recharge la page.");
-
-    const PW = 210, PH = 297;
-    const W = Math.ceil(PW * MM);
-    holder = document.createElement("iframe");
-    holder.setAttribute("sandbox", "allow-same-origin");
-    holder.setAttribute("aria-hidden", "true");
-    holder.style.cssText = `position:fixed;left:-20000px;top:0;border:0;width:${W}px;height:10px`;
-    await new Promise((res, rej) => {
-      holder.onload = res; holder.onerror = rej;
-      holder.srcdoc = buildStandaloneHtml(currentData, true);
-      document.body.appendChild(holder);
-    });
-    const doc = holder.contentDocument;
-    if (doc.fonts && doc.fonts.ready) await doc.fonts.ready;
-    await Promise.all(Array.from(doc.images).map(i => i.decode ? i.decode().catch(() => {}) : Promise.resolve()));
-
-    // Même mise en page que l'aperçu : 1 page si possible
-    const k = fitPage(doc.querySelector(".page"), onePageOn());
-    const Wn = Math.ceil(PAGE_W_PX / k);
-    holder.style.width = Wn + "px";
-    holder.style.height = "10px";
-    const H = Math.max(Math.ceil(doc.documentElement.scrollHeight), 20);
-    holder.style.height = H + "px";
-    const layer = collectLayer(doc);
-
-    const scale = Math.max(1, Math.min(2, 30000 / H));
-    const canvas = await window.html2canvas(doc.documentElement, {
-      scale, backgroundColor: "#ffffff", width: Wn, height: H,
-      windowWidth: Wn, windowHeight: H, useCORS: true, logging: false
-    });
-
-    const pdf = new window.jspdf.jsPDF({ unit: "mm", format: [PW, PH], orientation: "portrait", compress: true });
-    const cw = canvas.width, chh = canvas.height;
-    const pagePx = Math.floor(cw * PH / PW);
-    const mmPerPx = PW / Wn;
-    const ctx = canvas.getContext("2d", { willReadFrequently: true });
-    const bg = ctx.getImageData(0, 0, 1, 1).data;
-    let y = 0, first = true, pages = 0;
-    while (y < chh - 1) {
-      let end = Math.min(chh, y + pagePx);
-      if (chh - y - pagePx < 4 * scale) end = chh;           // évite une page presque vide
-      else if (end < chh) end = findCut(ctx, cw, y, end, Math.floor(pagePx * 0.18), bg);
-      const sh = end - y;
-      const part = document.createElement("canvas");
-      part.width = cw; part.height = sh;
-      const pc = part.getContext("2d");
-      pc.fillStyle = "#ffffff"; pc.fillRect(0, 0, cw, sh);
-      pc.drawImage(canvas, 0, y, cw, sh, 0, 0, cw, sh);
-      if (!first) pdf.addPage([PW, PH], "portrait");
-      first = false;
-      pdf.addImage(part.toDataURL("image/jpeg", 0.95), "JPEG", 0, 0, PW, sh * PW / cw, undefined, "FAST");
-      addLayer(pdf, layer, mmPerPx, y / scale, end / scale);
-      pages++;
-      y = end;
+async function exportPdf(){
+  const btn=$("btnPdf");btn.disabled=true;setStatus("Création du PDF…",false);let holder=null;
+  try{
+    if(!window.html2canvas||!window.jspdf)throw new Error("Librairies PDF non chargées : vérifie ta connexion et recharge la page.");
+    const PW=210,PH=297,W=Math.ceil(PW*MM);
+    holder=document.createElement("iframe");
+    holder.setAttribute("sandbox","allow-same-origin");holder.setAttribute("aria-hidden","true");
+    holder.style.cssText=`position:fixed;left:-20000px;top:0;border:0;width:${W}px;height:10px`;
+    await new Promise((res,rej)=>{holder.onload=res;holder.onerror=rej;holder.srcdoc=buildStandaloneHtml(currentData,true);document.body.appendChild(holder)});
+    const doc=holder.contentDocument;
+    if(doc.fonts&&doc.fonts.ready)await doc.fonts.ready;
+    await Promise.all(Array.from(doc.images).map(i=>i.decode?i.decode().catch(()=>{}):Promise.resolve()));
+    const k=fitPage(doc.querySelector(".page"),onePageOn()),Wn=Math.ceil(PAGE_W_PX/k);
+    holder.style.width=Wn+"px";holder.style.height="10px";
+    const H=Math.max(Math.ceil(doc.documentElement.scrollHeight),20);holder.style.height=H+"px";
+    const layer=collectLayer(doc),scale=Math.max(1,Math.min(2,30000/H));
+    const canvas=await window.html2canvas(doc.documentElement,{scale,backgroundColor:"#ffffff",width:Wn,height:H,windowWidth:Wn,windowHeight:H,useCORS:true,logging:false});
+    const pdf=new window.jspdf.jsPDF({unit:"mm",format:[PW,PH],orientation:"portrait",compress:true});
+    const cw=canvas.width,chh=canvas.height,pagePx=Math.floor(cw*PH/PW),mmPerPx=PW/Wn;
+    const ctx=canvas.getContext("2d",{willReadFrequently:true}),bg=ctx.getImageData(0,0,1,1).data;
+    let y=0,first=true,pages=0;
+    while(y<chh-1){
+      let end=Math.min(chh,y+pagePx);
+      if(chh-y-pagePx<4*scale)end=chh;else if(end<chh)end=findCut(ctx,cw,y,end,Math.floor(pagePx*.18),bg);
+      const sh=end-y,part=document.createElement("canvas");part.width=cw;part.height=sh;
+      const pc=part.getContext("2d");pc.fillStyle="#ffffff";pc.fillRect(0,0,cw,sh);pc.drawImage(canvas,0,y,cw,sh,0,0,cw,sh);
+      if(!first)pdf.addPage([PW,PH],"portrait");first=false;
+      pdf.addImage(part.toDataURL("image/jpeg",.95),"JPEG",0,0,PW,sh*PW/cw,undefined,"FAST");
+      addLayer(pdf,layer,mmPerPx,y/scale,end/scale);pages++;y=end;
     }
-
-    const name = "CV-" + FIXED.fullName.replace(/\s+/g, "-") + ".pdf";
-    const blob = pdf.output("blob");
-    const a = document.createElement("a");
-    a.href = URL.createObjectURL(blob); a.download = name; a.style.display = "none";
-    document.body.appendChild(a); a.click(); a.remove();
-    setTimeout(() => URL.revokeObjectURL(a.href), 4000);
-    setStatus(`✅ PDF prêt : ${name} (${pages} page${pages > 1 ? "s" : ""})`, false);
-  } catch (err) {
-    setStatus("❌ " + (err && err.message ? err.message : "Impossible de créer le PDF"), true);
-    showToast("❌ " + (err && err.message ? err.message : "Impossible de créer le PDF"), 4000);
-  } finally {
-    if (holder && holder.parentNode) holder.parentNode.removeChild(holder);
-    btn.disabled = false;
-  }
+    const name="CV-"+FIXED.fullName.replace(/\s+/g,"-")+".pdf",a=document.createElement("a");
+    a.href=URL.createObjectURL(pdf.output("blob"));a.download=name;a.style.display="none";document.body.appendChild(a);a.click();a.remove();
+    setTimeout(()=>URL.revokeObjectURL(a.href),4000);
+    setStatus(`✅ PDF prêt : ${name} (${pages} page${pages>1?"s":""})`,false);
+  }catch(err){
+    const m=err&&err.message?err.message:"Impossible de créer le PDF";setStatus("❌ "+m,true);showToast("❌ "+m,4000);
+  }finally{if(holder&&holder.parentNode)holder.parentNode.removeChild(holder);btn.disabled=false}
 }
-document.getElementById("btnPdf").onclick = exportPdf;
+$("btnPdf").onclick=exportPdf;
 
-// Chargement initial (reprend la dernière sauvegarde si elle existe)
-try {
-  const saved = localStorage.getItem("cv-data");
-  if (saved) {
-    const parsed = JSON.parse(saved);
-    if (parsed && Array.isArray(parsed.experience)) currentData = parsed;
-  }
-} catch (e) {}
+// Chargement initial (reprend la dernière sauvegarde)
+try{const saved=localStorage.getItem("cv-data");if(saved){const p=JSON.parse(saved);if(p&&Array.isArray(p.experience))currentData=p}}catch(e){}
 refresh(true);
 </script>
 </body>
