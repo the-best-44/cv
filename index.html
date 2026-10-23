@@ -113,95 +113,164 @@
 
 <style>
 /* Interface de l'éditeur */
-body{font-family:'Lato',sans-serif;background:#14181a;color:#d7dadb;display:flex;height:100vh;margin:0;overflow:hidden}
-.editor{width:500px;flex-shrink:0;background:#1a2024;display:flex;flex-direction:column;border-right:1px solid #2a3236}
-.editor-header{padding:12px 16px;border-bottom:1px solid #2a3236;display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}
-h2{margin:0;color:#c9904f;font-size:14px;text-transform:uppercase;letter-spacing:1.5px}
+body{font-family:'Lato',sans-serif;background:#12161a;color:#ffffff;-webkit-font-smoothing:antialiased;display:flex;height:100vh;margin:0;overflow:hidden}
+.editor{width:420px;flex-shrink:0;background:#1c2328;display:flex;flex-direction:column;border-right:1px solid #3a464d}
+.panel{width:384px;flex-shrink:0;background:#1c2328;border-left:1px solid #3a464d;overflow:auto;scrollbar-width:thin;scrollbar-color:#3a444a transparent}
+.panel::-webkit-scrollbar{width:8px}.panel::-webkit-scrollbar-thumb{background:#3a444a;border-radius:4px}
+.editor-header{padding:20px 18px 16px;border-bottom:1px solid #3a464d;display:flex;flex-direction:column;gap:14px}
+h2{margin:0;font-family:'Playfair Display',serif;font-weight:600;font-size:22px;letter-spacing:.01em;color:#ffffff}
+.brand{display:flex;align-items:baseline;justify-content:space-between}
+.brand span{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#e8b370}
+.head-row{display:flex;gap:8px}.head-row select{flex:1;min-width:0}
+.icon-btn{width:42px;padding:0;font-size:18px;line-height:1}
+.toolbar{display:grid;grid-template-columns:1.35fr 1fr 1fr 1.15fr;gap:6px}
+.toolbar button{padding:9px 4px;font-weight:600;letter-spacing:.01em}
+button.primary{background:#e8b370;border-color:#e8b370;color:#1a1410;font-weight:700}
+button.primary:hover{background:#f3c68c}button.primary:disabled{opacity:.6;cursor:wait}
 .btns{display:flex;gap:6px;flex-wrap:wrap}
-.controls{padding:12px 16px;border-bottom:1px solid #2a3236;display:flex;flex-direction:column;gap:10px;font-size:12.5px;color:#9aa3a7;max-height:52vh;overflow:auto}
-.ctl-label{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#6f7b80;font-weight:700}
+/* Panneau de réglages (colonne de droite) */
+.panel-head{padding:22px 18px 4px;display:flex;align-items:baseline;justify-content:space-between}
+.panel-head h3{margin:0;font-family:'Playfair Display',serif;font-weight:600;font-size:22px;letter-spacing:.01em;color:#f7ead4}
+.panel-head span{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#e6ecef}
+.controls{padding:14px 18px 30px;display:flex;flex-direction:column;gap:20px;font-size:14px;color:#ffffff}
+.grp{display:flex;flex-direction:column;gap:9px}
+.ctl-label{font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:#e9eef0;font-weight:700}
 .theme-picker{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
-.theme-btn{padding:8px 4px;font-size:12px}.theme-btn.active{background:#c9904f;border-color:#c9904f;color:#14181a;font-weight:700}
-details{border:1px solid #2a3236;border-radius:6px;padding:7px 11px;background:#1d2327}summary{cursor:pointer;color:#d7dadb;font-weight:700}
-.grid2{display:grid;grid-template-columns:1fr auto;gap:8px 10px;align-items:center;margin-top:10px}
-input[type=color]{width:38px;height:24px;border:none;background:none;padding:0;cursor:pointer}
-input[type=range]{width:160px;accent-color:#c9904f}select{background:#0e1113;color:#d7dadb;border:1px solid #3a444a;border-radius:4px;padding:5px}
-.palettes{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
-.pal{display:flex;align-items:center;gap:6px;padding:4px 8px;font-size:11.5px}.pal i{width:12px;height:12px;border-radius:50%;display:inline-block;border:1px solid rgba(255,255,255,.25)}
-#sectionChecks{margin-top:8px}
-.chk-group{margin-top:6px;background:#171c1f;border-color:#262e33;padding:5px 9px}
-.chk-group summary{font-size:12px;font-weight:600;display:flex;justify-content:space-between;gap:8px}
-.chk-group summary em{font-style:normal;font-weight:400;color:#6f7b80}
-.chk-group .checks{margin-top:8px}
-.checks{display:grid;grid-template-columns:1fr 1fr;gap:4px 10px}.checks label,.check-row{display:flex;align-items:center;gap:7px}
+.theme-btn{padding:10px 4px;font-size:13px;background:#2a343b;border-color:#4a5860;border-radius:8px;color:#ffffff}
+.theme-btn:hover{background:#333f47}
+.theme-btn.active{background:rgba(232,179,112,.2);border-color:#e8b370;color:#ffd9a0;font-weight:700}
+details.card{border:1px solid #3d4a52;border-radius:12px;background:#242d34;overflow:hidden}
+details.card>summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;padding:13px 16px;font-family:'Playfair Display',serif;font-weight:600;font-size:16px;color:#ffffff}
+details.card>summary::-webkit-details-marker{display:none}
+details.card>summary:after{content:'';width:7px;height:7px;border-right:2px solid #e9eef0;border-bottom:2px solid #e9eef0;transform:rotate(45deg) translateY(-2px);transition:transform .2s}
+details.card[open]>summary:after{transform:rotate(-135deg) translateY(-2px)}
+details.card[open]>summary{border-bottom:1px solid #3d4a52}
+.card-body{padding:14px 16px 16px;display:flex;flex-direction:column;gap:14px}
+.palettes{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}
+.pal{display:flex;flex-direction:column;align-items:center;gap:6px;padding:10px 2px 8px;font-size:12px;background:#1c2328;border:1px solid #46545c;border-radius:9px;color:#ffffff}
+.pal:hover{background:#2a343b}
+.pal i{width:26px;height:26px;border-radius:50%;display:block;border:1.5px solid rgba(255,255,255,.5);box-shadow:0 1px 3px rgba(0,0,0,.4)}
+.pal.on{border-color:#e8b370;color:#ffd9a0;background:rgba(232,179,112,.18);font-weight:700}
+.rows{display:flex;flex-direction:column}
+.row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:11px 0;border-top:1px solid #3d4a52}
+.row:first-child{border-top:0;padding-top:0}.row:last-child{padding-bottom:0}
+.row>span{display:flex;flex-direction:column;gap:3px;color:#ffffff;font-size:14px}
+.row>span small{font-size:12px;color:#e6ecef}
+.row>span.ctl{flex-direction:row;align-items:center;gap:10px}
+.row.stack{flex-direction:column;align-items:stretch;gap:8px}
+.row output{min-width:52px;text-align:right;font-variant-numeric:tabular-nums;color:#ffcf8f;font-size:13px;font-weight:700}
+input[type=color]{-webkit-appearance:none;appearance:none;width:32px;height:32px;border:2px solid #8a979d;border-radius:50%;padding:0;background:none;cursor:pointer;flex:none}
+input[type=color]::-webkit-color-swatch-wrapper{padding:0}
+input[type=color]::-webkit-color-swatch{border:0;border-radius:50%}
+input[type=color]::-moz-color-swatch{border:0;border-radius:50%}
+input[type=range]{-webkit-appearance:none;appearance:none;width:130px;height:5px;border-radius:3px;background:#6a7a84;outline:none;cursor:pointer}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:15px;height:15px;border-radius:50%;background:#e8b370;border:2px solid #242d34;box-shadow:0 0 0 1px #e8b370}
+input[type=range]::-moz-range-thumb{width:11px;height:11px;border-radius:50%;background:#e8b370;border:2px solid #242d34;box-shadow:0 0 0 1px #e8b370}
+select{background:#161c20;color:#ffffff;border:1px solid #56656d;border-radius:8px;padding:9px 11px;font-family:inherit;font-size:14px}
+#catSel,#cFont{width:100%}
+input[type=checkbox]{-webkit-appearance:none;appearance:none;width:17px;height:17px;margin:0;border:1.5px solid #9aa7ad;border-radius:4px;background:#161c20;display:inline-grid;place-content:center;cursor:pointer;flex:none}
+input[type=checkbox]:checked{background:#e8b370;border-color:#e8b370}
+input[type=checkbox]:checked:after{content:'';width:8px;height:4px;border-left:2.5px solid #161c20;border-bottom:2.5px solid #161c20;transform:rotate(-45deg) translate(1px,-1px)}
+#sectionChecks{display:flex;flex-direction:column}
+.chk-group{border:0;border-top:1px solid #3d4a52}
+.chk-group:first-child{border-top:0}
+.chk-group summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:8px;padding:11px 0;font-size:14px;font-weight:700;color:#ffffff}
+.chk-group summary::-webkit-details-marker{display:none}
+.chk-group summary:before{content:'';width:5px;height:5px;border-right:2px solid #e9eef0;border-bottom:2px solid #e9eef0;transform:rotate(-45deg);margin:0 4px 0 2px;transition:transform .15s}
+.chk-group[open] summary:before{transform:rotate(45deg)}
+.chk-group summary span{flex:1}
+.chk-group summary em{font-style:normal;font-weight:700;font-size:12px;color:#ffd9a0;background:rgba(232,179,112,.2);padding:2px 10px;border-radius:99px}
+.chk-group .checks{margin:0 0 12px;padding-left:17px}
+.checks{display:grid;grid-template-columns:1fr;gap:8px}
+.checks label,.check-row{display:flex;align-items:center;gap:10px;cursor:pointer;color:#ffffff;font-size:14px}
 .checks label span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.check-row input,.checks input{accent-color:#c9904f}
-#pageInfo{margin-left:auto;font-weight:700;color:#7fbf82}#pageInfo.warn{color:#e0a84f}
-#jsonInput{flex:1;background:#0e1113;color:#c5e3c8;border:none;padding:16px;font-family:monospace;font-size:12.5px;line-height:1.5;resize:none;outline:none}
+.opts{display:flex;flex-direction:column;gap:14px;padding-top:18px;border-top:1px solid #3d4a52}
+#pageInfo{margin-left:auto;font-weight:700;font-size:12px;color:#a6e8a9;background:rgba(127,191,130,.2);padding:2px 9px;border-radius:99px}#pageInfo.warn{color:#ffc873;background:rgba(224,168,79,.22)}
+#jsonInput{flex:1;background:#0e1215;color:#eefaef;border:none;padding:16px;font-family:monospace;font-size:13.5px;line-height:1.55;resize:none;outline:none}
 .preview-wrap{flex:1;overflow:auto;padding:30px 20px;background:#0f1214;display:flex;justify-content:center;align-items:flex-start}
-button{background:#2a3236;color:#d7dadb;border:1px solid #3a444a;border-radius:4px;padding:7px 11px;cursor:pointer;font-family:inherit;font-size:12.5px}button:hover{background:#3a444a}
-#status{padding:9px 16px;font-size:12px;border-top:1px solid #2a3236}#status.ok{color:#7fbf82}#status.error{color:#d9776a}
+button{background:#313c43;color:#ffffff;border:1px solid #56656d;border-radius:7px;padding:8px 12px;cursor:pointer;font-family:inherit;font-size:13.5px}button:hover{background:#41505a}
+#status{padding:10px 16px;font-size:13px;border-top:1px solid #3a464d}#status.ok{color:#9be09e}#status.error{color:#ff9a8c}
 #toast{position:fixed;top:18px;left:50%;transform:translateX(-50%) translateY(-12px);background:#3a1f1f;color:#f2b8ae;border:1px solid #6b3630;padding:10px 18px;border-radius:6px;font-size:13px;max-width:80vw;opacity:0;pointer-events:none;transition:.25s;z-index:1000}
 #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 .page-box{position:relative;flex-shrink:0}.page-box .page{position:absolute;left:0;top:0;transform-origin:0 0}
 .page-guides{position:absolute;left:0;right:0;top:0;pointer-events:none;z-index:5;background:repeating-linear-gradient(to bottom,transparent 0,transparent calc(297mm - 2px),#e11d48 calc(297mm - 2px),#e11d48 297mm);-webkit-mask-image:repeating-linear-gradient(90deg,#000 0 8px,transparent 8px 14px);mask-image:repeating-linear-gradient(90deg,#000 0 8px,transparent 8px 14px)}
-@media print{@page{size:A4;margin:0}.page-guides,.editor,#toast{display:none!important}.page-box{width:210mm!important}body{display:block;height:auto;overflow:visible;background:#fff}.preview-wrap{padding:0;overflow:visible;display:block;background:#fff}.page{box-shadow:none}*{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+@media print{@page{size:A4;margin:0}.page-guides,.editor,.panel,#toast{display:none!important}.page-box{width:210mm!important}body{display:block;height:auto;overflow:visible;background:#fff}.preview-wrap{padding:0;overflow:visible;display:block;background:#fff}.page{box-shadow:none}*{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
 </style>
 </head>
 <body>
 <div class="editor">
   <div class="editor-header">
-    <h2>CV Studio</h2>
-    <div class="btns">
+    <div class="brand"><h2>CV Studio</h2><span>Éditeur de CV</span></div>
+    <div class="head-row">
       <select id="presetSel" title="Modèles de contenu (5 maximum)"></select>
-      <button id="btnReset" title="Recharger le modèle choisi">↺</button>
-      <button id="btnCopy">📋 HTML</button>
-      <button id="btnDownload">⬇️ HTML</button>
-      <button id="btnPdf" title="PDF A4 (texte sélectionnable, liens cliquables)">⬇️ PDF</button>
-      <button id="btnPrint" title="Impression du navigateur">🖨️</button>
+      <button id="btnReset" class="icon-btn" title="Recharger le modèle choisi">↺</button>
     </div>
-  </div>
-  <div class="controls">
-    <div class="ctl-label">Catégorie du poste</div>
-    <select id="catSel" title="Choisit ce qui est affiché par défaut (GitHub, projets, technologies...)"></select>
-    <div class="ctl-label">Design</div>
-    <div class="theme-picker" id="themePicker"></div>
-
-    <details open><summary>🎨 Couleur du CV</summary>
-      <div class="palettes" id="palettes"></div>
-      <div class="grid2">
-        <span>Accent (titres de section, dates, puces)</span><input type="color" id="accentInput">
-        <span>Bandeau / colonne latérale</span><input type="color" id="cBand">
-        <span>Texte sur le bandeau / la colonne</span><input type="color" id="cBandText">
-        <span>Fond de la page</span><input type="color" id="cBg">
-      </div>
-    </details>
-
-    <details open><summary>✍️ Couleur des textes</summary>
-      <div class="palettes" id="textPalettes"></div>
-      <div class="grid2">
-        <span>Titres (nom, intitulés de poste)</span><input type="color" id="cInk">
-        <span>Texte courant</span><input type="color" id="cText">
-      </div>
-    </details>
-
-    <details><summary>🔤 Police et mise en page</summary>
-      <div class="grid2">
-        <span>Police</span><select id="cFont"></select>
-        <span>Taille du texte</span><input type="range" id="cSize" min="9.5" max="14" step=".25">
-        <span>Espacement</span><input type="range" id="cSpace" min=".6" max="1.6" step=".05">
-        <span>Marges</span><input type="range" id="cMargin" min="8" max="24" step="1">
-      </div>
-    </details>
-
-    <details><summary>👁️ Sections affichées</summary><div id="sectionChecks"></div></details>
-    <div class="check-row"><input type="checkbox" id="showUrls"><label for="showUrls" title="Affiche l'adresse à côté du nom (ex. Portfolio · abib-44.github.io/portfolio), plus lisible pour les ATS">Afficher l'URL à côté du nom des liens</label></div>
-    <div class="check-row"><input type="checkbox" id="onePage"><label for="onePage">Tout sur 1 page (réduit si besoin)</label><span id="pageInfo"></span></div>
+    <div class="toolbar">
+      <button id="btnPdf" class="primary" title="PDF A4 (texte sélectionnable, liens cliquables)">Exporter PDF</button>
+      <button id="btnDownload" title="Télécharger le CV en fichier HTML">HTML</button>
+      <button id="btnCopy" title="Copier le code HTML du CV">Copier</button>
+      <button id="btnPrint" title="Impression du navigateur">Imprimer</button>
+    </div>
   </div>
   <textarea id="jsonInput" spellcheck="false"></textarea>
   <div id="status">Prêt</div>
 </div>
 <div class="preview-wrap"><div class="page-box" id="pageBox"><div class="page" id="preview"></div><div class="page-guides" id="pageGuides" title="Fin de page A4"></div></div></div>
+<aside class="panel">
+  <div class="panel-head"><h3>Réglages</h3><span>Aperçu en direct</span></div>
+  <div class="controls">
+    <section class="grp">
+      <div class="ctl-label">Catégorie du poste</div>
+      <select id="catSel" title="Choisit ce qui est affiché par défaut (GitHub, projets, technologies...)"></select>
+    </section>
+    <section class="grp">
+      <div class="ctl-label">Design</div>
+      <div class="theme-picker" id="themePicker"></div>
+    </section>
+
+    <details class="card" open><summary>Couleur du CV</summary>
+      <div class="card-body">
+        <div class="palettes" id="palettes"></div>
+        <div class="rows">
+          <label class="row"><span>Accent<small>Titres de section, dates, puces</small></span><input type="color" id="accentInput"></label>
+          <label class="row"><span>Bandeau<small>Colonne latérale ou en-tête</small></span><input type="color" id="cBand"></label>
+          <label class="row"><span>Texte sur le bandeau<small>À choisir lisible sur le bandeau</small></span><input type="color" id="cBandText"></label>
+          <label class="row"><span>Fond de la page</span><input type="color" id="cBg"></label>
+        </div>
+      </div>
+    </details>
+
+    <details class="card" open><summary>Couleur des textes</summary>
+      <div class="card-body">
+        <div class="palettes" id="textPalettes"></div>
+        <div class="rows">
+          <label class="row"><span>Titres<small>Nom, intitulés de poste</small></span><input type="color" id="cInk"></label>
+          <label class="row"><span>Texte courant</span><input type="color" id="cText"></label>
+        </div>
+      </div>
+    </details>
+
+    <details class="card"><summary>Police et mise en page</summary>
+      <div class="card-body">
+        <div class="rows">
+          <div class="row stack"><span>Police</span><select id="cFont"></select></div>
+          <label class="row"><span>Taille du texte</span><span class="ctl"><input type="range" id="cSize" min="9.5" max="14" step=".25"><output id="vSize"></output></span></label>
+          <label class="row"><span>Espacement</span><span class="ctl"><input type="range" id="cSpace" min=".6" max="1.6" step=".05"><output id="vSpace"></output></span></label>
+          <label class="row"><span>Marges</span><span class="ctl"><input type="range" id="cMargin" min="8" max="24" step="1"><output id="vMargin"></output></span></label>
+        </div>
+      </div>
+    </details>
+
+    <details class="card"><summary>Sections affichées</summary>
+      <div class="card-body"><div id="sectionChecks"></div></div>
+    </details>
+
+    <section class="opts">
+      <div class="check-row"><input type="checkbox" id="showUrls"><label for="showUrls" title="Affiche l'adresse à côté du nom (ex. Portfolio · abib-44.github.io/portfolio), plus lisible pour les ATS">Afficher l'URL à côté du nom des liens</label></div>
+      <div class="check-row"><input type="checkbox" id="onePage"><label for="onePage">Tout sur 1 page (réduit si besoin)</label><span id="pageInfo"></span></div>
+    </section>
+  </div>
+</aside>
 <div id="toast"></div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
@@ -415,12 +484,14 @@ Object.keys(FONTS).forEach(f=>{const o=document.createElement("option");o.value=
 CTRL.forEach(([id,k])=>$(id).addEventListener("input",e=>{ST()[k]=e.target.type==="range"?+e.target.value:e.target.value;refresh(true)}));
 $("accentInput").addEventListener("input",e=>{currentData.accent=e.target.value;refresh(true)});
 PALETTES.forEach(p=>{
-  const b=document.createElement("button");b.className="pal";b.innerHTML=`<i style="background:${p.a}"></i>${p.n}`;
+  const b=document.createElement("button");b.className="pal";b.title=p.n;b.dataset.a=p.a;b.dataset.b=p.b;
+  b.innerHTML=`<i style="background:linear-gradient(135deg,${p.b} 50%,${p.a} 50%)"></i>${p.n}`;
   b.onclick=()=>{currentData.accent=p.a;ST().band=p.b;refresh(true)};
   $("palettes").appendChild(b);
 });
 TEXT_PRESETS.forEach(p=>{
-  const b=document.createElement("button");b.className="pal";b.innerHTML=`<i style="background:${p.i}"></i>${p.n}`;
+  const b=document.createElement("button");b.className="pal";b.title=p.n;b.dataset.i=p.i;b.dataset.t=p.t;
+  b.innerHTML=`<i style="background:linear-gradient(135deg,${p.i} 50%,${p.t} 50%)"></i>${p.n}`;
   b.onclick=()=>{Object.assign(ST(),{ink:p.i,text:p.t});refresh(true)};
   $("textPalettes").appendChild(b);
 });
@@ -478,6 +549,10 @@ function refresh(writeJson){
   const s=styleOf(currentData);
   CTRL.forEach(([id,k])=>{$(id).value=s[k]});
   $("accentInput").value=accentOf(currentData);
+  const lc=v=>String(v||"").toLowerCase();
+  document.querySelectorAll("#palettes .pal").forEach(b=>b.classList.toggle("on",lc(b.dataset.a)===lc(accentOf(currentData))&&lc(b.dataset.b)===lc(s.band)));
+  document.querySelectorAll("#textPalettes .pal").forEach(b=>b.classList.toggle("on",lc(b.dataset.i)===lc(s.ink)&&lc(b.dataset.t)===lc(s.text)));
+  $("vSize").textContent=s.size+" px";$("vSpace").textContent="×"+Number(s.space).toFixed(2);$("vMargin").textContent=s.margin+" mm";
   $("catSel").value=CATEGORIES[currentData.category]?currentData.category:"info";
   buildChecks();
   document.querySelectorAll(".theme-btn").forEach(b=>b.classList.toggle("active",b.dataset.theme===themeOf(currentData)));
