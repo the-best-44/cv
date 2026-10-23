@@ -40,7 +40,8 @@
 .plain-line{color:var(--soft)}
 .single{padding:var(--pad)}
 .head{display:flex;justify-content:space-between;gap:1em;align-items:center}
-.avatar{width:5.5em;height:5.5em;border-radius:50%;overflow:hidden;border:2px solid var(--accent);flex:none}
+.avatar{width:7em;height:7em;border-radius:50%;overflow:hidden;border:2px solid var(--accent);flex:none}
+.avatar.sq{border-radius:8px}
 .avatar img{width:100%;height:100%;object-fit:cover}
 
 /* Pro (défaut) */
@@ -50,11 +51,13 @@
 .t-minimal h1{font-family:'Playfair Display',serif;font-weight:600;font-size:2.7em}
 .t-minimal .role{color:var(--soft);letter-spacing:.22em}.t-minimal .links-line{justify-content:center}
 .t-minimal .stats{justify-content:center}
+.t-minimal .avatar{order:-1;margin-bottom:.7em}
 .t-minimal .stat{text-align:center;flex:none}
 .t-minimal .stat-value{color:var(--ink)}
 .t-minimal .section-title{color:var(--ink);border-bottom:1px solid var(--ink)}
 .t-minimal .bullets li:before{background:var(--ink)}
 /* Bandeau */
+.t-bold .avatar{border-color:var(--accent-light)}
 .t-bold .head{background:var(--band);color:var(--band-text);margin:calc(-1*var(--pad)) calc(-1*var(--pad)) 0;padding:var(--pad)}
 .t-bold h1{color:var(--band-text)}.t-bold .role,.t-bold .links-line{color:var(--accent-light)}
 .t-bold .section-title{border:0;border-left:4px solid var(--accent);padding:.1em 0 .1em .6em;margin-bottom:.7em}
@@ -87,7 +90,7 @@
 .t-sidebar .entry-head{display:flex;flex-direction:column-reverse;align-items:flex-start;gap:0}
 .t-sidebar .entry-date{font-size:.8em;font-weight:700;letter-spacing:.14em;text-transform:uppercase}
 .t-sidebar .bullets li:before{border-radius:50%;width:.26em;height:.26em;background:var(--soft)}
-.t-sidebar .sidebar .avatar{margin:0 auto 1.6em;width:7em;height:7em;border-color:var(--accent-light)}
+.t-sidebar .sidebar .avatar{margin:0 auto 1.8em;width:8.5em;height:8.5em;border-color:var(--accent-light)}
 .side-block{margin-bottom:1.7em}
 .side-label{font-size:.8em;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);font-weight:700;margin-bottom:.8em}
 .side-item{margin-bottom:.7em;word-break:break-word}.side-item strong{display:block;color:var(--band-text)}
@@ -99,6 +102,7 @@
 /* Moderne */
 .t-modern{display:grid;grid-template-columns:1fr 32%;grid-template-rows:auto 1fr}
 .t-modern .m-head{grid-column:1/-1;background:var(--band);color:var(--band-text);padding:var(--pad) var(--pad) calc(var(--pad)*.7)}
+.t-modern .m-top{display:flex;justify-content:space-between;align-items:center;gap:1em}.t-modern .avatar{border-color:var(--accent-light)}
 .t-modern .m-head h1{color:var(--band-text)}.t-modern .m-head .role{color:var(--accent-light)}
 .t-modern .m-head .stats{border-color:rgba(255,255,255,.3)}.t-modern .m-head .stat{border-color:rgba(255,255,255,.3)}
 .t-modern .m-head .stat-value{color:var(--accent-light)}
@@ -178,6 +182,12 @@ select{background:#161c20;color:#ffffff;border:1px solid #56656d;border-radius:8
 input[type=checkbox]{-webkit-appearance:none;appearance:none;width:17px;height:17px;margin:0;border:1.5px solid #9aa7ad;border-radius:4px;background:#161c20;display:inline-grid;place-content:center;cursor:pointer;flex:none}
 input[type=checkbox]:checked{background:#e8b370;border-color:#e8b370}
 input[type=checkbox]:checked:after{content:'';width:8px;height:4px;border-left:2.5px solid #161c20;border-bottom:2.5px solid #161c20;transform:rotate(-45deg) translate(1px,-1px)}
+.photo-row{display:flex;align-items:center;gap:14px}
+.photo-thumb{width:68px;height:68px;border-radius:50%;overflow:hidden;border:2px solid #8a979d;background:#161c20;display:grid;place-items:center;flex:none;font-size:11px;color:#e6ecef}
+.photo-thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.photo-btns{display:flex;flex-direction:column;gap:7px;flex:1}
+button:disabled{opacity:.45;cursor:not-allowed}
+.hint{font-size:12px;line-height:1.5;color:#e6ecef;margin:0}
 #sectionChecks{display:flex;flex-direction:column}
 .chk-group{border:0;border-top:1px solid #3d4a52}
 .chk-group:first-child{border-top:0}
@@ -254,6 +264,24 @@ button{background:#313c43;color:#ffffff;border:1px solid #56656d;border-radius:7
           <label class="row"><span>Titres<small>Nom, intitulés de poste</small></span><input type="color" id="cInk"></label>
           <label class="row"><span>Texte courant</span><input type="color" id="cText"></label>
         </div>
+      </div>
+    </details>
+
+    <details class="card"><summary>Photo</summary>
+      <div class="card-body">
+        <div class="photo-row">
+          <div class="photo-thumb" id="photoThumb"></div>
+          <div class="photo-btns">
+            <button id="btnPhoto" class="primary" type="button">Ajouter une photo</button>
+            <button id="btnPhotoDel" type="button">Supprimer</button>
+          </div>
+        </div>
+        <input type="file" id="photoFile" accept="image/*" hidden>
+        <div class="rows">
+          <div class="row stack"><span>Forme</span><select id="avatarShape"><option value="round">Rond</option><option value="square">Carré arrondi</option></select></div>
+          <label class="row"><span>Cadrage vertical<small>Monte ou descend la photo dans le cadre</small></span><span class="ctl"><input type="range" id="avPos" min="0" max="100" step="1"><output id="vPos"></output></span></label>
+        </div>
+        <p class="hint">La photo reste sur cette page (rien n'est envoyé) et n'apparaît pas dans le JSON. Elle est incluse dans le PDF et dans l'export HTML, mais disparaît si tu recharges la page. Le texte du CV reste lisible par les ATS.</p>
       </div>
     </details>
 
@@ -404,7 +432,11 @@ const softList = d => { const s=vis(d,"soft:",d.softSkills); return s.length ? `
 const profileHtml = d => has(d.profile) ? `<p class="profil-text">${esc(d.profile)}</p>` : "";
 const sec = (d,key,title,body) => (body && show(d,key)) ? `<section class="section"><div class="section-title">${esc(title)}</div>${body}</section>` : "";
 const headerHtml = d => `<h1>${esc(FIXED.fullName)}</h1>${(has(d.role)&&show(d,"role"))?`<div class="role">${esc(d.role)}</div>`:""}${(has(d.availability)&&show(d,"availability"))?`<div class="availability">${esc(d.availability)}</div>`:""}`;
-const avatarHtml = d => (has(d.avatarUrl)&&show(d,"avatar")) ? `<div class="avatar"><img src="${esc(d.avatarUrl)}" alt=""></div>` : "";
+/* Photo : l'image importée est gardée en mémoire (photoData), hors du JSON. avatarUrl (adresse d'une image) reste possible dans le JSON. */
+let photoData = "";
+const photoSrc = d => photoData || (has(d.avatarUrl) ? d.avatarUrl : "");
+const posOf = d => { const v = Number(d.avatarPos); return (d.avatarPos === undefined || d.avatarPos === "" || !isFinite(v)) ? 30 : Math.max(0, Math.min(100, v)); };
+const avatarHtml = d => (photoSrc(d) && show(d,"avatar")) ? `<div class="avatar${d.avatarShape==="square"?" sq":""}"><img src="${esc(photoSrc(d))}" alt="" style="object-position:50% ${posOf(d)}%"></div>` : "";
 const sideItems = pairs => pairs.map(x=>`<div class="side-item"><strong>${esc(x[0])}</strong>${esc(x[1])}</div>`).join("");
 
 function renderSingle(d){
@@ -431,7 +463,7 @@ function renderModern(d){
   const l = vis(d,"link:",d.links), cp = contactPairs(d);
   const links = l.length ? `<div class="links-col">${l.map(x=>`<a href="${esc(x.url)}">${linkTxt(d,x)}</a>`).join("")}</div>` : "";
   const skills = vis(d,"skill:",d.skills).map(s=>`<div class="side-item"><strong>${esc(s.name)}</strong>${esc(s.value)}</div>`).join("");
-  return `<header class="m-head">${headerHtml(d)}${show(d,"stats")?statsHtml(d):""}</header>
+  return `<header class="m-head"><div class="m-top"><div>${headerHtml(d)}</div>${avatarHtml(d)}</div>${show(d,"stats")?statsHtml(d):""}</header>
     <main class="main">${sec(d,"profil","Profil",profileHtml(d))}${sec(d,"experience","Expérience",expHtml(d))}${sec(d,"projets","Projets",projHtml(d))}</main>
     <aside class="aside">${cp.length?`<section class="section"><div class="section-title">Contact</div>${sideItems(cp)}</section>`:""}${sec(d,"liens","Liens",links)}${sec(d,"competences","Compétences",skills)}${sec(d,"formation","Formation",formHtml(d))}${sec(d,"softskills","Savoir-être",softList(d))}</aside>`;
 }
@@ -514,6 +546,33 @@ Object.entries(CATEGORIES).forEach(([k,c])=>{const o=document.createElement("opt
 $("catSel").onchange=e=>{applyCategory(currentData,e.target.value);refresh(true);setStatus("✅ Catégorie : "+CATEGORIES[currentData.category].label+" (affichage par défaut appliqué)",false)};
 $("onePage").addEventListener("change",e=>{currentData.onePage=e.target.checked;refresh(true)});
 $("showUrls").addEventListener("change",e=>{currentData.showUrls=e.target.checked;refresh(true)});
+
+/* Photo : choix du fichier, réduction à 700 px max, JPEG */
+$("btnPhoto").onclick=()=>$("photoFile").click();
+$("photoFile").addEventListener("change",e=>{
+  const f=e.target.files&&e.target.files[0]; e.target.value="";
+  if(!f)return;
+  if(!/^image\//.test(f.type)){showToast("❌ Choisis un fichier image (JPG, PNG, WebP)",3500);return}
+  const fr=new FileReader();
+  fr.onerror=()=>showToast("❌ Impossible de lire ce fichier",3500);
+  fr.onload=()=>{
+    const img=new Image();
+    img.onerror=()=>showToast("❌ Image illisible",3500);
+    img.onload=()=>{
+      const M=700,r=Math.min(1,M/Math.max(img.naturalWidth,img.naturalHeight));
+      const c=document.createElement("canvas");c.width=Math.max(1,Math.round(img.naturalWidth*r));c.height=Math.max(1,Math.round(img.naturalHeight*r));
+      const x=c.getContext("2d");x.fillStyle="#ffffff";x.fillRect(0,0,c.width,c.height);x.drawImage(img,0,0,c.width,c.height);
+      photoData=c.toDataURL("image/jpeg",.9);
+      currentData.hide=arr(currentData.hide).filter(h=>h!=="avatar");
+      refresh(true);setStatus("✅ Photo ajoutée",false);
+    };
+    img.src=fr.result;
+  };
+  fr.readAsDataURL(f);
+});
+$("btnPhotoDel").onclick=()=>{photoData="";currentData.avatarUrl="";refresh(true);setStatus("Photo supprimée",false)};
+$("avatarShape").addEventListener("change",e=>{currentData.avatarShape=e.target.value;refresh(true)});
+$("avPos").addEventListener("input",e=>{currentData.avatarPos=+e.target.value;refresh(true)});
 if(document.fonts&&document.fonts.ready)document.fonts.ready.then(updatePreviewLayout);
 
 /* Sections affichées : sections, contact, en-tête, puis chaque lien / expérience / projet / compétence / formation / savoir-être */
@@ -552,6 +611,11 @@ function refresh(writeJson){
   updatePreviewLayout();
   $("onePage").checked=onePageOn();
   $("showUrls").checked=!!currentData.showUrls;
+  const _src=photoSrc(currentData);
+  $("photoThumb").innerHTML=_src?`<img src="${esc(_src)}" alt="" style="object-position:50% ${posOf(currentData)}%">`:"<span>Aucune</span>";
+  $("btnPhotoDel").disabled=!_src;
+  $("avatarShape").value=currentData.avatarShape==="square"?"square":"round";
+  $("avPos").value=posOf(currentData);$("vPos").textContent=posOf(currentData)+" %";
   if(writeJson)jsonInput.value=JSON.stringify(currentData,null,2);
   const s=styleOf(currentData);
   CTRL.forEach(([id,k])=>{$(id).value=s[k]});
