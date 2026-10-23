@@ -518,7 +518,7 @@ const PALETTES = [
 const TEXT_PRESETS = [
   {i:"#1b2430",t:"#4a5563"},{i:"#000000",t:"#222222"},{i:"#2b2b2b",t:"#555555"}
 ];
-const SECTION_KEYS = ["contact","stats","profil","experience","tags","projets","competences","formation","softskills","liens"];
+const SECTION_KEYS = ["contact","stats","profil","experience","tags","projets","competences","formation","certifs","langues","softskills","loisirs","infos","liens"];
 const STYLE_DEF = {ink:"#1b2430",text:"#4a5563",band:"#14202b",bandText:"#ffffff",bg:"#ffffff",font:"Inter",size:12,space:1,margin:15};
 const THEME_STYLE = {sidebar:{band:"#1f2e26",bg:"#f7f3ec"}};
 const MAX_PRESETS = 5;
@@ -648,6 +648,10 @@ const DICT = {
   "sec.formation":["Formation","Education","Formazione"],
   "sec.softskills":["Savoir-être","Soft skills","Soft skill"],
   "sec.liens":["Liens","Links","Link"],
+  "sec.certifs":["Certifications","Certifications","Certificazioni"],
+  "sec.langues":["Langues","Languages","Lingue"],
+  "sec.loisirs":["Loisirs","Hobbies","Hobby"],
+  "sec.infos":["Informations complémentaires","Additional information","Altre informazioni"],
   "grp.sections":["Sections","Sections","Sezioni"],
   "grp.contact":["Contact","Contact","Contatti"],
   "grp.header":["En-tête","Header","Intestazione"],
@@ -657,6 +661,10 @@ const DICT = {
   "grp.skills":["Compétences","Skills","Competenze"],
   "grp.formation":["Formation","Education","Formazione"],
   "grp.soft":["Savoir-être","Soft skills","Soft skill"],
+  "grp.languages":["Langues","Languages","Lingue"],
+  "grp.certifications":["Certifications","Certifications","Certificazioni"],
+  "grp.interests":["Loisirs","Hobbies","Hobby"],
+  "grp.extra":["Informations complémentaires","Additional information","Altre informazioni"],
   "fs.identity":["Identité","Identity","Identità"],
   "fs.contact":["Contact","Contact","Contatti"],
   "fs.profile":["Profil","Profile","Profilo"],
@@ -666,6 +674,10 @@ const DICT = {
   "fs.skills":["Compétences","Skills","Competenze"],
   "fs.formation":["Formation","Education","Formazione"],
   "fs.soft":["Savoir-être","Soft skills","Soft skill"],
+  "fs.languages":["Langues","Languages","Lingue"],
+  "fs.certifications":["Certifications","Certifications","Certificazioni"],
+  "fs.interests":["Loisirs","Hobbies","Hobby"],
+  "fs.extra":["Informations complémentaires","Additional information","Altre informazioni"],
   "fs.links":["Liens","Links","Link"],
   "f.role":["Titre / poste","Title / role","Titolo / ruolo"],
   "f.availability":["Disponibilité","Availability","Disponibilità"],
@@ -689,6 +701,12 @@ const DICT = {
   "f.degree":["Diplôme","Degree","Titolo di studio"],
   "f.school":["École / précision","School / detail","Scuola / dettaglio"],
   "f.quality":["Qualité","Quality","Qualità"],
+  "f.language":["Langue","Language","Lingua"],
+  "f.level":["Niveau (ex. Natif, B2)","Level (e.g. Native, B2)","Livello (es. Madrelingua, B2)"],
+  "f.certTitle":["Certification","Certification","Certificazione"],
+  "f.issuer":["Organisme","Issuer","Ente"],
+  "f.interest":["Loisir","Hobby","Hobby"],
+  "f.extraItem":["Information (ex. Permis B, Mobilité)","Item (e.g. Driving licence, Mobility)","Informazione (es. Patente B, Mobilità)"],
   "f.linkName":["Nom affiché","Display name","Nome visualizzato"],
   "f.linkUrl":["Adresse (URL)","Address (URL)","Indirizzo (URL)"],
   "n.stats":["Chiffre","Figure","Numero"],
@@ -697,6 +715,10 @@ const DICT = {
   "n.skills":["Compétence","Skill","Competenza"],
   "n.formation":["Formation","Education","Formazione"],
   "n.softSkills":["Savoir-être","Soft skill","Soft skill"],
+  "n.languages":["Langue","Language","Lingua"],
+  "n.certifications":["Certification","Certification","Certificazione"],
+  "n.interests":["Loisir","Hobby","Hobby"],
+  "n.extra":["Information","Item","Informazione"],
   "n.links":["Lien","Link","Link"],
   "add.stats":["+ Ajouter un chiffre","+ Add a figure","+ Aggiungi un numero"],
   "add.experience":["+ Ajouter une expérience","+ Add an experience","+ Aggiungi un'esperienza"],
@@ -704,6 +726,10 @@ const DICT = {
   "add.skills":["+ Ajouter une compétence","+ Add a skill","+ Aggiungi una competenza"],
   "add.formation":["+ Ajouter une formation","+ Add an education entry","+ Aggiungi una formazione"],
   "add.softSkills":["+ Ajouter un savoir-être","+ Add a soft skill","+ Aggiungi una soft skill"],
+  "add.languages":["+ Ajouter une langue","+ Add a language","+ Aggiungi una lingua"],
+  "add.certifications":["+ Ajouter une certification","+ Add a certification","+ Aggiungi una certificazione"],
+  "add.interests":["+ Ajouter un loisir","+ Add a hobby","+ Aggiungi un hobby"],
+  "add.extra":["+ Ajouter une information","+ Add an item","+ Aggiungi un'informazione"],
   "add.links":["+ Ajouter un lien","+ Add a link","+ Aggiungi un link"],
   "st.theme":["✅ Design : {n}","✅ Design: {n}","✅ Design: {n}"],
   "st.preset":["✅ Modèle : {n}","✅ Template: {n}","✅ Modello: {n}"],
@@ -737,9 +763,9 @@ const DICT = {
 const I18N = Object.fromEntries(LANGS.map((l,i)=>[l,Object.fromEntries(Object.entries(DICT).map(([k,v])=>[k,v[i]]))]));
 
 const CV_LABELS = {
-  fr:{contact:"Contact",links:"Liens",profile:"Profil",experience:"Expérience",projects:"Projets",skills:"Compétences",education:"Formation",soft:"Savoir-être",city:"Ville",phone:"Téléphone",email:"Email",viewProject:"Voir le projet",title:"CV"},
-  en:{contact:"Contact",links:"Links",profile:"Profile",experience:"Experience",projects:"Projects",skills:"Skills",education:"Education",soft:"Soft skills",city:"City",phone:"Phone",email:"Email",viewProject:"View the project",title:"Resume"},
-  it:{contact:"Contatti",links:"Link",profile:"Profilo",experience:"Esperienza",projects:"Progetti",skills:"Competenze",education:"Formazione",soft:"Soft skill",city:"Città",phone:"Telefono",email:"Email",viewProject:"Vedi il progetto",title:"CV"}
+  fr:{contact:"Contact",links:"Liens",profile:"Profil",experience:"Expérience",projects:"Projets",skills:"Compétences",education:"Formation",soft:"Savoir-être",languages:"Langues",certifications:"Certifications",interests:"Loisirs",extra:"Informations complémentaires",city:"Ville",phone:"Téléphone",email:"Email",viewProject:"Voir le projet",title:"CV"},
+  en:{contact:"Contact",links:"Links",profile:"Profile",experience:"Experience",projects:"Projects",skills:"Skills",education:"Education",soft:"Soft skills",languages:"Languages",certifications:"Certifications",interests:"Hobbies",extra:"Additional information",city:"City",phone:"Phone",email:"Email",viewProject:"View the project",title:"Resume"},
+  it:{contact:"Contatti",links:"Link",profile:"Profilo",experience:"Esperienza",projects:"Progetti",skills:"Competenze",education:"Formazione",soft:"Soft skill",languages:"Lingue",certifications:"Certificazioni",interests:"Hobby",extra:"Altre informazioni",city:"Città",phone:"Telefono",email:"Email",viewProject:"Vedi il progetto",title:"CV"}
 };
 
 let uiLang = "fr";
@@ -768,7 +794,8 @@ const PRESETS = {
     ],
     skills:[{name:"Support technique",value:"Écoute, diagnostic, résolution de problèmes et suivi des demandes"},{name:"Organisation",value:"Rigueur, autonomie, suivi des activités et respect des procédures"},{name:"Environnement informatique",value:"Support systèmes, serveurs et gestion de données"},{name:"Relationnel",value:"Écoute des patients, sens du service et travail en équipe"}],
     formation:[{year:"",title:"Formation en informatique",school:"Développement web et bases de données"},{year:"",title:"Baccalauréat scientifique",school:""}],
-    softSkills:["Écoute et empathie","Organisation","Rigueur","Autonomie","Sens des responsabilités","Esprit d'équipe"]
+    softSkills:["Écoute et empathie","Organisation","Rigueur","Autonomie","Sens des responsabilités","Esprit d'équipe"],
+    languages:[],certifications:[],interests:[],extra:[]
   }},
   forsee: { label:"Forsee Power · Technicien IT", data:{
     theme:"pdf", category:"info", lang:"fr", accent:"#1d5c63", onePage:true, role:"Alternance Technicien Informatique · Support utilisateurs · Linux · Systèmes", availability:"", avatarUrl:"",
@@ -790,7 +817,8 @@ const PRESETS = {
     ],
     skills:[{name:"Support utilisateurs",value:"Prise en charge des demandes, diagnostic, résolution, suivi, documentation"},{name:"Systèmes",value:"Linux, serveurs, datacenter, supervision, analyse de logs, Bash"},{name:"Automatisation",value:"GitLab CI/CD, Docker, Python, tests automatisés"},{name:"Bases de données",value:"PostgreSQL, MySQL, SQLite, optimisation de requêtes"},{name:"Outils",value:"Git, GitLab, Airflow, MinIO, Amazon S3"}],
     formation:[{year:"",title:"Master Data Engineering",school:"École de data, Lyon"},{year:"",title:"Baccalauréat scientifique",school:"puis formation full-stack"}],
-    softSkills:["Sens du service","Rigueur","Pédagogie","Capacité d'analyse","Esprit d'équipe","Communication claire"]
+    softSkills:["Sens du service","Rigueur","Pédagogie","Capacité d'analyse","Esprit d'équipe","Communication claire"],
+    languages:[],certifications:[],interests:[],extra:[]
   }}
 };
 
@@ -848,6 +876,12 @@ const skillsHtml = d => vis(d,"skill:",d.skills).map(x=>`<div class="skill"><spa
 const formHtml = d => vis(d,"form:",d.formation).map(f=>`<div class="formation-entry">${has(f.year)?`<div class="formation-year">${esc(f.year)}</div>`:""}<div class="formation-title">${esc(f.title)}</div>${has(f.school)?`<div class="formation-school">${esc(f.school)}</div>`:""}</div>`).join("");
 const softHtml = d => { const s=vis(d,"soft:",d.softSkills).filter(has); return s.length ? `<p class="plain-line">${s.map(esc).join(" · ")}</p>` : ""; };
 const softList = d => { const s=vis(d,"soft:",d.softSkills).filter(has); return s.length ? `<ul class="side-list">${s.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>` : ""; };
+const lvl = x => has(x.level) ? " · " + esc(x.level) : "";
+const langHtml = d => vis(d,"lang:",d.languages).filter(x=>x&&has(x.name)).map(x=>`<div class="skill"><span class="skill-name">${esc(x.name)}</span><span class="skill-value">${lvl(x)}</span></div>`).join("");
+const langSide = d => vis(d,"lang:",d.languages).filter(x=>x&&has(x.name)).map(x=>`<div class="side-item skill-inline"><strong>${esc(x.name)}</strong>${lvl(x)}</div>`).join("");
+const certHtml = d => vis(d,"cert:",d.certifications).filter(x=>x&&has(x.title)).map(c=>`<div class="formation-entry">${has(c.year)?`<div class="formation-year">${esc(c.year)}</div>`:""}<div class="formation-title">${esc(c.title)}</div>${has(c.issuer)?`<div class="formation-school">${esc(c.issuer)}</div>`:""}</div>`).join("");
+const dotLine = (d,p,l) => { const s=vis(d,p,l).filter(has); return s.length ? `<p class="plain-line">${s.map(esc).join(" · ")}</p>` : ""; };
+const dotList = (d,p,l) => { const s=vis(d,p,l).filter(has); return s.length ? `<ul class="side-list">${s.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>` : ""; };
 const profileHtml = d => has(d.profile) ? `<p class="profil-text">${esc(d.profile)}</p>` : "";
 const sec = (d,key,title,body) => (body && show(d,key)) ? `<section class="section"><div class="section-title">${esc(title)}</div>${body}</section>` : "";
 const headerHtml = d => `<h1>${esc(FIXED.fullName)}</h1>${(has(d.role)&&show(d,"role"))?`<div class="role">${esc(d.role)}</div>`:""}${(has(d.availability)&&show(d,"availability"))?`<div class="availability">${esc(d.availability)}</div>`:""}`;
@@ -864,7 +898,7 @@ function renderSingle(d){
   return `<div class="single"><header class="head"><div>${headerHtml(d)}${cl?`<div class="contact-line">${cl}</div>`:""}${show(d,"liens")?linksInline(d):""}</div>${avatarHtml(d)}</header>
   ${show(d,"stats")?statsHtml(d):""}
   ${sec(d,"profil",L.profile,profileHtml(d))}${sec(d,"experience",L.experience,expHtml(d))}${sec(d,"projets",L.projects,projHtml(d))}${sec(d,"competences",L.skills,skillsHtml(d))}
-  ${sec(d,"formation",L.education,formHtml(d))}${sec(d,"softskills",L.soft,softHtml(d))}</div>`;
+  ${sec(d,"formation",L.education,formHtml(d))}${sec(d,"certifs",L.certifications,certHtml(d))}${sec(d,"langues",L.languages,langHtml(d))}${sec(d,"softskills",L.soft,softHtml(d))}${sec(d,"loisirs",L.interests,dotLine(d,"int:",d.interests))}${sec(d,"infos",L.extra,dotLine(d,"info:",d.extra))}</div>`;
 }
 function renderSidebar(d){
   const L=Lc(d);
@@ -878,7 +912,7 @@ function renderSidebar(d){
     ${cp.length?`<div class="side-block"><div class="side-label">${esc(L.contact)}</div>${sideItems(cp)}</div>`:""}
     ${side("liens",L.links,links?`<div class="side-links">${links}</div>`:"")}
     ${side("competences",L.skills,skills)}
-    ${side("formation",L.education,formHtml(d))}${side("softskills",L.soft,softList(d))}</aside>`;
+    ${side("formation",L.education,formHtml(d))}${side("certifs",L.certifications,certHtml(d))}${side("langues",L.languages,langSide(d))}${side("softskills",L.soft,softList(d))}${side("loisirs",L.interests,dotList(d,"int:",d.interests))}${side("infos",L.extra,dotList(d,"info:",d.extra))}</aside>`;
 }
 function renderModern(d){
   const L=Lc(d);
@@ -887,7 +921,7 @@ function renderModern(d){
   const skills = vis(d,"skill:",d.skills).map(s=>`<div class="side-item"><strong>${esc(s.name)}</strong>${esc(s.value)}</div>`).join("");
   return `<header class="m-head"><div class="m-top"><div>${headerHtml(d)}</div>${avatarHtml(d)}</div>${show(d,"stats")?statsHtml(d):""}</header>
     <main class="main">${sec(d,"profil",L.profile,profileHtml(d))}${sec(d,"experience",L.experience,expHtml(d))}${sec(d,"projets",L.projects,projHtml(d))}</main>
-    <aside class="aside">${cp.length?`<section class="section"><div class="section-title">${esc(L.contact)}</div>${sideItems(cp)}</section>`:""}${sec(d,"liens",L.links,links)}${sec(d,"competences",L.skills,skills)}${sec(d,"formation",L.education,formHtml(d))}${sec(d,"softskills",L.soft,softList(d))}</aside>`;
+    <aside class="aside">${cp.length?`<section class="section"><div class="section-title">${esc(L.contact)}</div>${sideItems(cp)}</section>`:""}${sec(d,"liens",L.links,links)}${sec(d,"competences",L.skills,skills)}${sec(d,"formation",L.education,formHtml(d))}${sec(d,"certifs",L.certifications,certHtml(d))}${sec(d,"langues",L.languages,langSide(d))}${sec(d,"softskills",L.soft,softList(d))}${sec(d,"loisirs",L.interests,dotList(d,"int:",d.interests))}${sec(d,"infos",L.extra,dotList(d,"info:",d.extra))}</aside>`;
 }
 const RENDERERS = {pdf:renderSingle,bold:renderSingle,classic:renderSingle,minimal:renderSingle,sidebar:renderSidebar,modern:renderModern};
 
@@ -1018,8 +1052,8 @@ $("btnAvReset").onclick=()=>{["avatarShape","avatarSide","avatarSize","avatarZoo
 if(document.fonts&&document.fonts.ready)document.fonts.ready.then(updatePreviewLayout);
 
 const openGroups=new Set();
-const GP={contact:"contact",links:"liens",experience:"experience",projects:"projets",skills:"competences",formation:"formation",soft:"softskills"};
-const PARENT={"c:":"contact","link:":"liens","exp:":"experience","proj:":"projets","skill:":"competences","form:":"formation","soft:":"softskills"};
+const GP={contact:"contact",links:"liens",experience:"experience",projects:"projets",skills:"competences",formation:"formation",soft:"softskills",languages:"langues",certifications:"certifs",interests:"loisirs",extra:"infos"};
+const PARENT={"c:":"contact","link:":"liens","exp:":"experience","proj:":"projets","skill:":"competences","form:":"formation","soft:":"softskills","lang:":"langues","cert:":"certifs","int:":"loisirs","info:":"infos"};
 function buildChecks(){
   const d=currentData, c=contactObj(d);
   const lst=(p,l,f)=>arr(l).map((x,i)=>[p+i,f(x)||("#"+(i+1))]);
@@ -1032,7 +1066,11 @@ function buildChecks(){
     ["projects",lst("proj:",d.projects,x=>x.name)],
     ["skills",lst("skill:",d.skills,x=>x.name)],
     ["formation",lst("form:",d.formation,x=>x.title)],
-    ["soft",lst("soft:",d.softSkills,x=>x)]
+    ["soft",lst("soft:",d.softSkills,x=>x)],
+    ["languages",lst("lang:",d.languages,x=>x&&x.name)],
+    ["certifications",lst("cert:",d.certifications,x=>x&&x.title)],
+    ["interests",lst("int:",d.interests,x=>x)],
+    ["extra",lst("info:",d.extra,x=>x)]
   ];
   $("sectionChecks").innerHTML=groups.filter(g=>g[1].length).map(([id,items])=>{
     const on=items.filter(([k])=>show(d,k)).length, off=GP[id]&&!show(d,GP[id]);
@@ -1257,6 +1295,10 @@ const LISTS={
   skills:{h:"skill:",t:()=>({name:"",value:""})},
   formation:{h:"form:",t:()=>({year:"",title:"",school:""})},
   softSkills:{h:"soft:",t:()=>""},
+  languages:{h:"lang:",t:()=>({name:"",level:""})},
+  certifications:{h:"cert:",t:()=>({year:"",title:"",issuer:""})},
+  interests:{h:"int:",t:()=>""},
+  extra:{h:"info:",t:()=>""},
   links:{h:"link:",t:()=>({label:"",url:""})}
 };
 const getP=(o,p)=>p.split(".").reduce((a,k)=>a==null?undefined:a[k],o);
@@ -1290,6 +1332,10 @@ function buildForm(){
     fSec("skills",fList("skills",i=>fIn(t("f.skillCat"),`skills.${i}.name`,"text")+fIn(t("f.detail"),`skills.${i}.value`,"area",2))),
     fSec("formation",fList("formation",i=>fTwo(fIn(t("f.year"),`formation.${i}.year`,"text"),fIn(t("f.degree"),`formation.${i}.title`,"text"))+fIn(t("f.school"),`formation.${i}.school`,"text"))),
     fSec("soft",fList("softSkills",i=>fIn(t("f.quality"),`softSkills.${i}`,"text"))),
+    fSec("languages",fList("languages",i=>fTwo(fIn(t("f.language"),`languages.${i}.name`,"text"),fIn(t("f.level"),`languages.${i}.level`,"text")))),
+    fSec("certifications",fList("certifications",i=>fTwo(fIn(t("f.year"),`certifications.${i}.year`,"text"),fIn(t("f.certTitle"),`certifications.${i}.title`,"text"))+fIn(t("f.issuer"),`certifications.${i}.issuer`,"text"))),
+    fSec("interests",fList("interests",i=>fIn(t("f.interest"),`interests.${i}`,"text"))),
+    fSec("extra",fList("extra",i=>fIn(t("f.extraItem"),`extra.${i}`,"text"))),
     fSec("links",fList("links",i=>fTwo(fIn(t("f.linkName"),`links.${i}.label`,"text"),fIn(t("f.linkUrl"),`links.${i}.url`,"text"))))
   ].join("");
   formEl.scrollTop=sc;
