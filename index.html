@@ -117,8 +117,10 @@
 .lt-head{display:flex;justify-content:space-between;align-items:center;gap:var(--avg,1em);padding-bottom:.8em;border-bottom:2px solid var(--accent)}
 .lt-head>div:first-child{flex:1;min-width:0}
 .av-left .lt-head .avatar{order:-1}
-.lt-meta{display:flex;justify-content:space-between;align-items:flex-start;gap:2em;margin-top:2em}
-.lt-rec{line-height:1.45;color:var(--ink);font-weight:600}.lt-date{white-space:nowrap}
+.lt-from{line-height:1.5}.lt-from div{margin-top:.1em}.lt-from h1{margin-bottom:.25em}
+.lt-meta{margin-top:2.2em}
+.lt-rec{margin-left:auto;width:48%;line-height:1.45;color:var(--ink);font-weight:600}
+.lt-date{margin-top:1.4em;text-align:right}
 .lt-subj{margin-top:1.8em;color:var(--ink)}
 .lt-body{margin-top:1.6em}.lt-body p{margin-bottom:1em;text-align:justify;line-height:1.6}
 .lt-sign{margin-top:2.2em;font-weight:700;color:var(--ink)}
@@ -198,7 +200,9 @@ details.card>summary::-webkit-details-marker{display:none}
 details.card>summary:after{content:'';width:7px;height:7px;border-right:2px solid #e9eef0;border-bottom:2px solid #e9eef0;transform:rotate(45deg) translateY(-2px);transition:transform .2s}
 details.card[open]>summary:after{transform:rotate(-135deg) translateY(-2px)}
 details.card[open]>summary{border-bottom:1px solid #3d4a52}
-details.card>summary #btnFold{margin-left:auto;margin-right:14px;padding:5px 12px;min-height:0;border-radius:999px;font-family:'Lato',sans-serif;font-size:12.5px;font-weight:700}
+.cards-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:-6px}
+.cards-head h4{margin:0;font-family:'Playfair Display',serif;font-weight:600;font-size:18px;color:#f7ead4}
+.cards-head button{padding:6px 14px;border-radius:999px;font-size:12.5px;font-weight:700}
 .card-body{padding:14px 16px 16px;display:flex;flex-direction:column;gap:14px}
 .palettes{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}
 .pal{display:flex;flex-direction:column;align-items:center;gap:6px;padding:10px 2px 8px;font-size:12px;background:#1c2328;border:1px solid #46545c;border-radius:9px;color:#ffffff}
@@ -383,7 +387,8 @@ button{background:#313c43;color:#ffffff;border:1px solid #56656d;border-radius:7
   .theme-btn{min-height:50px;padding:0 4px;font-size:15px;border-radius:12px}
   details.card{border-radius:16px}
   details.card>summary{padding:17px 16px;font-size:17px}
-  details.card>summary #btnFold{min-height:36px;padding:0 14px;border-radius:999px}
+  .cards-head h4{font-size:20px}
+  .panel .cards-head button{min-height:40px;border-radius:999px}
   .card-body{padding:16px;gap:16px}
   .pal{padding:12px 2px 10px;border-radius:12px}
   .pal i{width:30px;height:30px}
@@ -469,16 +474,14 @@ button{background:#313c43;color:#ffffff;border:1px solid #56656d;border-radius:7
   </div>
   <div class="controls">
     <section class="grp">
-      <div class="ctl-label" data-i18n="category"></div>
-      <select id="catSel" data-i18n-title="categoryTitle"></select>
-    </section>
-    <section class="grp">
       <div class="ctl-label" data-i18n="cvLang"></div>
       <select id="cvLangSel"><option value="fr">Français</option><option value="en">English</option><option value="it">Italiano</option></select>
       <p class="hint" data-i18n="cvLangHint"></p>
     </section>
 
-    <details class="card" open><summary><span data-i18n="design"></span><button id="btnFold" type="button"></button></summary>
+    <div class="cards-head"><h4 data-i18n="cardsTitle"></h4><button id="btnFold" type="button"></button></div>
+
+    <details class="card" open><summary data-i18n="design"></summary>
       <div class="card-body">
         <div class="theme-picker" id="themePicker"></div>
       </div>
@@ -607,6 +610,7 @@ function categoryHide(d,cat){
 function applyCategory(d,cat){ d.category=CATEGORIES[cat]?cat:"info"; d.hide=categoryHide(d,d.category); }
 
 const DICT = {
+  cardsTitle:["Personnalisation","Customization","Personalizzazione"],
   brandSub:["Éditeur de CV","CV editor","Editor di CV"],
   presetTitle:["Modèles de contenu (5 maximum)","Content templates (5 max)","Modelli di contenuto (max 5)"],
   resetTitle:["Recharger le modèle choisi","Reload the selected template","Ricarica il modello scelto"],
@@ -1074,7 +1078,8 @@ function renderLetter(d){
   const city=has(l.city)?l.city:cval(c.location);
   const paras=String(l.body||"").split(/\n\s*\n/).filter(has).map(p=>`<p>${esc(p.trim()).replace(/\n/g,"<br>")}</p>`).join("");
   const rec=[l.recipient,l.company,l.address].filter(has).map(x=>`<div>${esc(x)}</div>`).join("");
-  return `<div class="letter"><header class="lt-head"><div>${headerHtml(d)}${cl?`<div class="contact-line">${cl}</div>`:""}${show(d,"liens")?linksInline(d):""}</div>${avatarHtml(d)}</header>
+  const from=contactPairs(d).map(x=>`<div>${contactHtml(x[1])}</div>`).join("");
+  return `<div class="letter"><header class="lt-head"><div class="lt-from"><h1>${esc(FIXED.fullName)}</h1>${from}</div>${avatarHtml(d)}</header>
   <div class="lt-meta"><div class="lt-rec">${rec}</div><div class="lt-date">${esc(city?city+", ":"")}${esc(dt)}</div></div>
   ${has(l.subject)?`<div class="lt-subj"><strong>${esc(L.ltSubject)} :</strong> ${esc(l.subject)}</div>`:""}
   <div class="lt-body"><p>${esc(has(l.greeting)?l.greeting:L.ltGreeting)}</p>${paras}<p>${esc(has(l.closing)?l.closing:L.ltClosing)}</p></div>
@@ -1177,14 +1182,11 @@ function buildLists(){
     b.onclick=()=>{currentData.theme=key;currentData.accent=th.accent;const s=ST();delete s.band;delete s.bg;refresh(true);setStatus(t("st.theme",{n:t("theme."+key)}),false)};
     $("themePicker").appendChild(b);
   });
-  $("catSel").innerHTML="";
-  Object.keys(CATEGORIES).forEach(k=>{const o=document.createElement("option");o.value=k;o.textContent=t("cat."+k);$("catSel").appendChild(o)});
 }
 $("presetSel").onchange=e=>{loadPreset(e.target.value);dirtyPaths.clear();buildForm();refresh(true);setStatus(t("st.preset",{n:presetLabel(currentPreset)}),false)};
 $("btnReset").onclick=()=>{loadPreset(currentPreset);dirtyPaths.clear();buildForm();refresh(true);setStatus(t("st.presetReload"),false)};
 $("btnUndo").onclick=()=>histGo(-1);
 $("btnRedo").onclick=()=>histGo(1);
-$("catSel").onchange=e=>{applyCategory(currentData,e.target.value);refresh(true);setStatus(t("st.category",{n:t("cat."+currentData.category)}),false)};
 $("cvLangSel").onchange=e=>{currentData.lang=e.target.value;refresh(true)};
 $("onePage").addEventListener("change",e=>{currentData.onePage=e.target.checked;refresh(true)});
 $("showUrls").addEventListener("change",e=>{currentData.showUrls=e.target.checked;refresh(true)});
@@ -1333,7 +1335,6 @@ function refresh(writeJson){
   document.querySelectorAll("#palettes .pal").forEach(b=>b.classList.toggle("on",lc(b.dataset.a)===lc(accentOf(currentData))&&lc(b.dataset.b)===lc(s.band)));
   document.querySelectorAll("#textPalettes .pal").forEach(b=>b.classList.toggle("on",lc(b.dataset.i)===lc(s.ink)&&lc(b.dataset.t)===lc(s.text)));
   $("vSize").textContent=s.size+" px";$("vSpace").textContent="×"+Number(s.space).toFixed(2);$("vMargin").textContent=s.margin+" mm";
-  $("catSel").value=CATEGORIES[currentData.category]?currentData.category:"info";
   $("cvLangSel").value=cvLang(currentData);
   buildChecks();
   document.querySelectorAll(".theme-btn").forEach(b=>b.classList.toggle("active",b.dataset.theme===themeOf(currentData)));
