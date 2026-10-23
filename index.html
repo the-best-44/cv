@@ -34,13 +34,14 @@
 .bullets{margin-top:.3em}.bullets li{position:relative;padding-left:1em;margin-bottom:.15em}
 .bullets li:before{content:'';position:absolute;left:0;top:.62em;width:.3em;height:.3em;background:var(--accent)}
 .bullets li strong{color:var(--ink)}
+.page .proj-link{margin-left:.35em;color:var(--accent);font-weight:600;white-space:nowrap;border-bottom:1px solid var(--rule)}
 .skill{margin-bottom:.3em}
 .skill-name,.formation-title{font-weight:700;color:var(--ink)}
 .formation-year{font-weight:700;color:var(--accent);font-size:.9em}.formation-entry{margin-bottom:.45em}
 .plain-line{color:var(--soft)}
 .single{padding:var(--pad)}
-.head{display:flex;justify-content:space-between;gap:1em;align-items:center}
-.avatar{width:7em;height:7em;border-radius:50%;overflow:hidden;border:2px solid var(--accent);flex:none}
+.head{display:flex;justify-content:space-between;gap:var(--avg,1em);align-items:center}
+.avatar{--b:7em;width:calc(var(--b)*var(--avk,1));height:calc(var(--b)*var(--avk,1));border-radius:50%;overflow:hidden;border:2px solid var(--accent);flex:none}
 .avatar.sq{border-radius:8px}
 .avatar img{width:100%;height:100%;object-fit:cover}
 
@@ -90,7 +91,7 @@
 .t-sidebar .entry-head{display:flex;flex-direction:column-reverse;align-items:flex-start;gap:0}
 .t-sidebar .entry-date{font-size:.8em;font-weight:700;letter-spacing:.14em;text-transform:uppercase}
 .t-sidebar .bullets li:before{border-radius:50%;width:.26em;height:.26em;background:var(--soft)}
-.t-sidebar .sidebar .avatar{margin:0 auto 1.8em;width:8.5em;height:8.5em;border-color:var(--accent-light)}
+.t-sidebar .sidebar .avatar{margin:0 auto 1.8em;--b:8.5em;border-color:var(--accent-light)}
 .side-block{margin-bottom:1.7em}
 .side-label{font-size:.8em;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);font-weight:700;margin-bottom:.8em}
 .side-item{margin-bottom:.7em;word-break:break-word}.side-item strong{display:block;color:var(--band-text)}
@@ -102,7 +103,7 @@
 /* Moderne */
 .t-modern{display:grid;grid-template-columns:1fr 32%;grid-template-rows:auto 1fr}
 .t-modern .m-head{grid-column:1/-1;background:var(--band);color:var(--band-text);padding:var(--pad) var(--pad) calc(var(--pad)*.7)}
-.t-modern .m-top{display:flex;justify-content:space-between;align-items:center;gap:1em}.t-modern .avatar{border-color:var(--accent-light)}
+.t-modern .m-top{display:flex;justify-content:space-between;align-items:center;gap:var(--avg,1em)}.t-modern .avatar{border-color:var(--accent-light)}
 .t-modern .m-head h1{color:var(--band-text)}.t-modern .m-head .role{color:var(--accent-light)}
 .t-modern .m-head .stats{border-color:rgba(255,255,255,.3)}.t-modern .m-head .stat{border-color:rgba(255,255,255,.3)}
 .t-modern .m-head .stat-value{color:var(--accent-light)}
@@ -112,11 +113,18 @@
 .t-modern .links-col{display:flex;flex-direction:column;gap:.3em;color:var(--accent);word-break:break-all}
 .t-modern .side-item strong{font-size:.9em;text-transform:uppercase;letter-spacing:.08em;color:var(--ink)}
 .t-modern .side-list li{margin-bottom:.2em}
+/* Photo à gauche / à droite (Sobre : toujours centrée au-dessus ; Élégant : alignée dans la colonne) */
+.page:not(.t-minimal):not(.t-sidebar) .head>div:first-child,.t-modern .m-top>div:first-child{flex:1;min-width:0}
+.page:not(.t-minimal) .head .avatar,.t-modern .m-top .avatar{margin-right:var(--ave,0mm)}
+.av-left:not(.t-minimal) .head .avatar,.t-modern.av-left .m-top .avatar{order:-1;margin-right:0;margin-left:var(--ave,0mm)}
+.t-sidebar.av-left .sidebar .avatar{margin-left:0;margin-right:auto}
+.t-sidebar.av-right .sidebar .avatar{margin-left:auto;margin-right:0}
 @media print{.page{box-shadow:none}}
 </style>
 
 <style>
 /* Interface de l'éditeur */
+[hidden]{display:none!important}
 body{font-family:'Lato',sans-serif;background:#12161a;color:#ffffff;-webkit-font-smoothing:antialiased;display:flex;height:100vh;margin:0;overflow:hidden}
 .editor{width:420px;flex-shrink:0;background:#1c2328;display:flex;flex-direction:column;border-right:1px solid #3a464d}
 .panel{width:384px;flex-shrink:0;background:#1c2328;border-left:1px solid #3a464d;overflow:auto;scrollbar-width:thin;scrollbar-color:#3a444a transparent}
@@ -196,6 +204,7 @@ button:disabled{opacity:.45;cursor:not-allowed}
 .chk-group summary:before{content:'';width:5px;height:5px;border-right:2px solid #e9eef0;border-bottom:2px solid #e9eef0;transform:rotate(-45deg);margin:0 4px 0 2px;transition:transform .15s}
 .chk-group[open] summary:before{transform:rotate(45deg)}
 .chk-group summary span{flex:1}
+.chk-group summary em.off{color:#ffb3a8;background:rgba(255,138,122,.18)}
 .chk-group summary em{font-style:normal;font-weight:700;font-size:12px;color:#ffd9a0;background:rgba(232,179,112,.2);padding:2px 10px;border-radius:99px}
 .chk-group .checks{margin:0 0 12px;padding-left:17px}
 .checks{display:grid;grid-template-columns:1fr;gap:8px}
@@ -203,7 +212,35 @@ button:disabled{opacity:.45;cursor:not-allowed}
 .checks label span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .opts{display:flex;flex-direction:column;gap:14px;padding-top:18px;border-top:1px solid #3d4a52}
 #pageInfo{margin-left:auto;font-weight:700;font-size:12px;color:#a6e8a9;background:rgba(127,191,130,.2);padding:2px 9px;border-radius:99px}#pageInfo.warn{color:#ffc873;background:rgba(224,168,79,.22)}
-#jsonInput{flex:1;background:#0e1215;color:#eefaef;border:none;padding:16px;font-family:monospace;font-size:13.5px;line-height:1.55;resize:none;outline:none}
+/* JSON coloré : le textarea (texte transparent) est posé sur une copie colorée */
+#jsonWrap{position:relative;flex:1;min-height:0;background:#0e1215;--jfs:13.5px}
+#jsonHl,#jsonInput{position:absolute;inset:0;width:100%;height:100%;margin:0;border:0;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:var(--jfs);line-height:1.55;letter-spacing:0;white-space:pre;tab-size:2}
+#jsonHl{padding:16px 28px 28px 16px;overflow:hidden;pointer-events:none;color:#cfd8dc}
+#jsonInput{padding:16px;overflow:auto;resize:none;outline:none;background:transparent;color:transparent;caret-color:#fff}
+#jsonInput::selection{background:rgba(232,179,112,.35)}
+.jk{color:#e8b370}.js{color:#9be09e}.jn{color:#7cc4ff}.jb{color:#ff9a8c}
+/* Onglets de l'éditeur : Formulaire / JSON / Les deux */
+.tabs{display:flex;gap:6px;padding:10px 18px;border-bottom:1px solid #3a464d}
+.tab{flex:1;padding:8px 4px;font-weight:600;background:#2a343b;border-color:#4a5860}
+.tab.active{background:rgba(232,179,112,.2);border-color:#e8b370;color:#ffd9a0}
+#formEditor{flex:1;min-height:0;overflow:auto;padding:14px 16px 24px;display:flex;flex-direction:column;gap:10px}
+.fe-sec{flex:none;border:1px solid #3d4a52;border-radius:10px;background:#242d34;overflow:hidden}
+.fe-sec>summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;padding:11px 14px;font-family:'Playfair Display',serif;font-weight:600;font-size:15px;color:#fff}
+.fe-sec>summary::-webkit-details-marker{display:none}
+.fe-sec>summary:after{content:'';width:6px;height:6px;border-right:2px solid #e9eef0;border-bottom:2px solid #e9eef0;transform:rotate(45deg) translateY(-2px);transition:transform .2s}
+.fe-sec[open]>summary:after{transform:rotate(-135deg) translateY(-2px)}
+.fe-sec[open]>summary{border-bottom:1px solid #3d4a52}
+.fe-body{padding:12px 14px 14px;display:flex;flex-direction:column;gap:10px}
+.fe-f{display:flex;flex-direction:column;gap:4px;font-size:12px;color:#e9eef0;font-weight:700;letter-spacing:.02em}
+.fe-f input,.fe-f textarea{width:100%;background:#161c20;color:#fff;border:1px solid #56656d;border-radius:7px;padding:8px 10px;font-family:inherit;font-size:14px;font-weight:400}
+.fe-f textarea{resize:vertical;min-height:64px;line-height:1.45}
+.fe-f input:focus,.fe-f textarea:focus{outline:none;border-color:#e8b370}
+.fe-row2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.fe-item{display:flex;flex-direction:column;gap:8px;padding:10px;border:1px solid #46545c;border-radius:9px;background:#1c2328}
+.fe-item-head{display:flex;align-items:center;justify-content:space-between;font-size:12px;font-weight:700;color:#ffd9a0}
+.fe-del{padding:3px 9px;font-size:12px}
+.fe-extra{display:flex;gap:8px;align-items:flex-end}.fe-extra .fe-f{flex:1;min-width:0}.fe-extra>input{flex:1;min-width:0;background:#161c20;color:#fff;border:1px solid #56656d;border-radius:7px;padding:8px 10px;font-family:inherit;font-size:14px}.fe-extra>input:focus{outline:none;border-color:#e8b370}.fe-extra .fe-add{flex:none}
+.fe-add{padding:9px;font-weight:600;border-style:dashed}
 .preview-wrap{flex:1;overflow:auto;padding:30px 20px;background:#0f1214;display:flex;justify-content:center;align-items:flex-start}
 button{background:#313c43;color:#ffffff;border:1px solid #56656d;border-radius:7px;padding:8px 12px;cursor:pointer;font-family:inherit;font-size:13.5px}button:hover{background:#41505a}
 #status{padding:10px 16px;font-size:13px;border-top:1px solid #3a464d}#status.ok{color:#9be09e}#status.error{color:#ff9a8c}
@@ -211,11 +248,87 @@ button{background:#313c43;color:#ffffff;border:1px solid #56656d;border-radius:7
 #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 .page-box{position:relative;flex-shrink:0}.page-box .page{position:absolute;left:0;top:0;transform-origin:0 0}
 .page-guides{position:absolute;left:0;right:0;top:0;pointer-events:none;z-index:5;background:repeating-linear-gradient(to bottom,transparent 0,transparent calc(297mm - 2px),#e11d48 calc(297mm - 2px),#e11d48 297mm);-webkit-mask-image:repeating-linear-gradient(90deg,#000 0 8px,transparent 8px 14px);mask-image:repeating-linear-gradient(90deg,#000 0 8px,transparent 8px 14px)}
-@media print{@page{size:A4;margin:0}.page-guides,.editor,.panel,#toast{display:none!important}.page-box{width:210mm!important}body{display:block;height:auto;overflow:visible;background:#fff}.preview-wrap{padding:0;overflow:visible;display:block;background:#fff}.page{box-shadow:none}*{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+/* Mobile : trois vues (Éditeur / Aperçu / Réglages), barre du bas translucide, gros boutons tactiles */
+.mnav,.mfab{display:none}
+@media (max-width:960px){
+  :root{--nav-h:64px}
+  body{display:block;height:100vh;height:100dvh;overflow:hidden;background:#0d1114}
+  .editor,.panel,.preview-wrap{display:none;width:100%;border:0;height:calc(100vh - var(--nav-h) - env(safe-area-inset-bottom,0px));height:calc(100dvh - var(--nav-h) - env(safe-area-inset-bottom,0px))}
+  body[data-view=edit] .editor{display:flex}
+  body[data-view=prev] .preview-wrap{display:flex}
+  body[data-view=set] .panel{display:block}
+  .mnav{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;position:fixed;left:0;right:0;bottom:0;z-index:60;padding:8px 12px calc(8px + env(safe-area-inset-bottom,0px));background:rgba(19,25,29,.9);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);border-top:1px solid #2c373e}
+  .mnav button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;height:48px;min-height:0;padding:0;border:0;border-radius:14px;background:none;color:#8fa1ab;font-size:11.5px;font-weight:700;letter-spacing:.05em;transition:background .15s,color .15s}
+  .mnav button:hover{background:none}
+  .mnav button svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+  .mnav button.on,.mnav button.on:hover{color:#ffd9a0;background:rgba(232,179,112,.16)}
+  /* Éditeur */
+  .editor{background:#161b1f}
+  .editor-header{padding:calc(16px + env(safe-area-inset-top,0px)) 16px 14px;gap:12px;background:linear-gradient(180deg,#242d34,#1a2025);border-bottom:1px solid #2c373e}
+  h2{font-size:25px}
+  .brand span{font-size:10px}
+  .head-row{gap:8px}
+  .head-row select{height:46px;border-radius:12px}
+  .icon-btn{width:46px;height:46px;border-radius:12px}
+  .toolbar{display:flex;gap:8px;overflow-x:auto;margin:0 -16px;padding:2px 16px 4px;scrollbar-width:none}
+  .toolbar::-webkit-scrollbar{display:none}
+  .toolbar button{flex:none;min-height:44px;padding:0 18px;border-radius:999px;font-size:14px;white-space:nowrap}
+  .toolbar button.primary{padding:0 22px}
+  .tabs{margin:14px 16px 0;padding:4px;gap:4px;border:1px solid #2c373e;border-radius:14px;background:#10151a}
+  .tab{min-height:42px;padding:0 4px;border:0;border-radius:10px;background:none;font-size:14.5px;color:#b8c5cc}
+  .tab:hover{background:none}
+  .tab.active,.tab.active:hover{background:rgba(232,179,112,.2);color:#ffd9a0}
+  #jsonWrap{margin:12px 16px 0;border:1px solid #2c373e;border-radius:14px;overflow:hidden;--jfs:15px}
+  #formEditor{padding:12px 16px 28px;gap:12px}
+  .fe-sec{border-radius:14px}
+  .fe-sec>summary{padding:16px;font-size:16.5px}
+  .fe-body{padding:14px 16px 16px;gap:12px}
+  .fe-row2{grid-template-columns:1fr}
+  .fe-f{font-size:12.5px}
+  .fe-f input,.fe-f textarea,.fe-extra>input{font-size:16px;min-height:46px;border-radius:10px;padding:10px 12px}
+  .fe-f textarea{min-height:76px}
+  .fe-item{border-radius:12px;padding:12px}
+  .fe-del{min-height:38px;padding:0 14px;border-radius:999px}
+  .fe-add{min-height:46px;border-radius:12px}
+  #status{padding:10px 16px calc(10px);font-size:13px;background:#12171a}
+  /* Aperçu */
+  .preview-wrap{padding:18px 12px 130px;background:radial-gradient(120% 70% at 50% 0,#1d252b 0,#0d1114 70%)}
+  body[data-view=prev] .mfab{display:flex;align-items:center;gap:8px;position:fixed;right:16px;bottom:calc(var(--nav-h) + env(safe-area-inset-bottom,0px) + 16px);z-index:55;min-height:50px;padding:0 22px;border:0;border-radius:999px;background:#e8b370;color:#1a1410;font-size:15px;font-weight:800;box-shadow:0 10px 28px rgba(0,0,0,.5)}
+  .mfab:hover{background:#f3c68c}
+  .mfab svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+  /* Réglages */
+  .panel{background:#161b1f}
+  .panel-head{padding:calc(20px + env(safe-area-inset-top,0px)) 16px 4px}
+  .panel-head h3{font-size:25px}
+  .controls{padding:14px 16px 32px;gap:20px}
+  .theme-picker{grid-template-columns:repeat(2,1fr);gap:8px}
+  .theme-btn{min-height:50px;padding:0 4px;font-size:15px;border-radius:12px}
+  details.card{border-radius:16px}
+  details.card>summary{padding:17px 16px;font-size:17px}
+  .card-body{padding:16px;gap:16px}
+  .pal{padding:12px 2px 10px;border-radius:12px}
+  .pal i{width:30px;height:30px}
+  .row{padding:14px 0}
+  .row:has(input[type=range]){flex-direction:column;align-items:stretch;gap:12px}
+  .row:has(input[type=range])>span.ctl{width:100%}
+  .row input[type=range]{flex:1;width:100%;height:6px}
+  input[type=range]::-webkit-slider-thumb{width:26px;height:26px}
+  input[type=range]::-moz-range-thumb{width:22px;height:22px}
+  .row output{min-width:64px;font-size:14px}
+  input[type=color]{width:40px;height:40px}
+  select{min-height:46px;border-radius:12px;font-size:16px}
+  input[type=checkbox]{width:22px;height:22px;border-radius:6px}
+  .checks{gap:4px}.checks label{min-height:40px}
+  .check-row{min-height:40px}
+  .panel button:not(.pal):not(.theme-btn){min-height:46px;border-radius:12px}
+  .photo-thumb{width:76px;height:76px}
+  #toast{top:calc(14px + env(safe-area-inset-top,0px));max-width:92vw}
+}
+@media print{@page{size:A4;margin:0}.page-guides,.editor,.panel,.mnav,#toast{display:none!important}.page-box{width:210mm!important;transform:none!important;margin:0!important}body{display:block;height:auto;overflow:visible;background:#fff}.preview-wrap{padding:0;overflow:visible;display:block;background:#fff}.page{box-shadow:none}*{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
 </style>
 </head>
-<body>
-<div class="editor">
+<body data-view="edit">
+<div class="editor" id="editorBox">
   <div class="editor-header">
     <div class="brand"><h2>CV Studio</h2><span>Éditeur de CV</span></div>
     <div class="head-row">
@@ -229,7 +342,12 @@ button{background:#313c43;color:#ffffff;border:1px solid #56656d;border-radius:7
       <button id="btnPrint" title="Impression du navigateur">Imprimer</button>
     </div>
   </div>
-  <textarea id="jsonInput" spellcheck="false"></textarea>
+  <div class="tabs">
+    <button class="tab active" id="tab_json" type="button" title="Modifier le code JSON (les clés sont colorées)">JSON</button>
+    <button class="tab" id="tab_form" type="button" title="Remplir les champs directement, sans JSON">Formulaire</button>
+  </div>
+  <div id="formEditor"></div>
+  <div id="jsonWrap"><pre id="jsonHl" aria-hidden="true"></pre><textarea id="jsonInput" spellcheck="false" wrap="off" autocapitalize="off" autocomplete="off"></textarea></div>
   <div id="status">Prêt</div>
 </div>
 <div class="preview-wrap"><div class="page-box" id="pageBox"><div class="page" id="preview"></div><div class="page-guides" id="pageGuides" title="Fin de page A4"></div></div></div>
@@ -279,8 +397,14 @@ button{background:#313c43;color:#ffffff;border:1px solid #56656d;border-radius:7
         <input type="file" id="photoFile" accept="image/*" hidden>
         <div class="rows">
           <div class="row stack"><span>Forme</span><select id="avatarShape"><option value="round">Rond</option><option value="square">Carré arrondi</option></select></div>
+          <div class="row stack"><span>Côté de la photo<small>Gauche ou droite (design Sobre : toujours centrée au-dessus)</small></span><select id="avatarSide"><option value="right">Droite</option><option value="left">Gauche</option></select></div>
+          <label class="row"><span>Taille de la photo<small>Agrandit ou réduit le cadre</small></span><span class="ctl"><input type="range" id="avSize" min="50" max="200" step="5"><output id="vAvSize"></output></span></label>
+          <label class="row"><span>Zoom dans le cadre<small>Rapproche le visage sans changer la taille du cadre</small></span><span class="ctl"><input type="range" id="avZoom" min="100" max="300" step="5"><output id="vAvZoom"></output></span></label>
           <label class="row"><span>Cadrage vertical<small>Monte ou descend la photo dans le cadre</small></span><span class="ctl"><input type="range" id="avPos" min="0" max="100" step="1"><output id="vPos"></output></span></label>
+          <label class="row"><span>Distance au bord<small>Entre la photo et le bord de la page (Pro, Moderne, Bandeau, Classique)</small></span><span class="ctl"><input type="range" id="avEdge" min="0" max="30" step="1"><output id="vAvEdge"></output></span></label>
+          <label class="row"><span>Espace photo / texte<small>Distance entre la photo et le nom</small></span><span class="ctl"><input type="range" id="avGap" min="0" max="25" step="1"><output id="vAvGap"></output></span></label>
         </div>
+        <button id="btnAvReset" type="button">↺ Réinitialiser les réglages de la photo</button>
         <p class="hint">La photo reste sur cette page (rien n'est envoyé) et n'apparaît pas dans le JSON. Elle est incluse dans le PDF et dans l'export HTML, mais disparaît si tu recharges la page. Le texte du CV reste lisible par les ATS.</p>
       </div>
     </details>
@@ -306,6 +430,8 @@ button{background:#313c43;color:#ffffff;border:1px solid #56656d;border-radius:7
     </section>
   </div>
 </aside>
+<nav class="mnav"><button data-v="edit" class="on" type="button"><svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 013 3L7 19l-4 1 1-4z"/></svg>Éditeur</button><button data-v="prev" type="button"><svg viewBox="0 0 24 24"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>Aperçu</button><button data-v="set" type="button"><svg viewBox="0 0 24 24"><path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3M1 14h6M9 8h6M17 16h6"/></svg>Réglages</button></nav>
+<button class="mfab" id="btnPdfM" type="button"><svg viewBox="0 0 24 24"><path d="M12 3v12M7 10l5 5 5-5M4 21h16"/></svg>Exporter PDF</button>
 <div id="toast"></div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
@@ -360,7 +486,7 @@ const PRESETS = {
       {date:"2025 – 2026",title:"Technicien support technique",org:"Entreprise cloud, Lyon",bullets:["Échanges avec les utilisateurs pour comprendre leurs demandes et contribuer à leur résolution.","Diagnostic et résolution de problèmes techniques.","Suivi des systèmes et des données en production.","Documentation des interventions et amélioration des procédures.","Dépassement des objectifs fixés d'au moins 20 %."]},
       {date:"2026",title:"Administrateur système bénévole",org:"Association à but non lucratif",bullets:["Administration et suivi des systèmes informatiques de l'association à titre bénévole.","Maintenance du serveur et résolution de problèmes techniques.","Automatisation de certaines tâches pour faciliter les activités de l'association."]}
     ],
-    projects:[{name:"Server Monitoring",desc:"Surveillance du fonctionnement des systèmes informatiques."},{name:"Gestion de données",desc:"Organisation et traitement de données avec des outils informatiques."}],
+    projects:[{name:"Server Monitoring",desc:"Surveillance du fonctionnement des systèmes informatiques.",url:""},{name:"Gestion de données",desc:"Organisation et traitement de données avec des outils informatiques.",url:""}],
     skills:[{name:"Support technique",value:"Écoute, diagnostic, résolution de problèmes et suivi des demandes"},{name:"Organisation",value:"Rigueur, autonomie, suivi des activités et respect des procédures"},{name:"Environnement informatique",value:"Support systèmes, serveurs et gestion de données"},{name:"Relationnel",value:"Écoute des patients, sens du service et travail en équipe"}],
     formation:[{year:"",title:"Formation en informatique",school:"Développement web et bases de données"},{year:"",title:"Baccalauréat scientifique",school:""}],
     softSkills:["Écoute et empathie","Organisation","Rigueur","Autonomie","Sens des responsabilités","Esprit d'équipe"]
@@ -377,7 +503,7 @@ const PRESETS = {
       {date:"2024 – 2025",title:"Contributeur open source full-stack",org:"",bullets:["Travail en équipe sur des projets partagés : revues de code, refactoring, amélioration continue."]},
       {date:"2024",title:"Stagiaire développeur full-stack",org:"",tags:["PHP","MySQL","HTML","CSS"],bullets:["Développement d'un site PHP / MySQL en équipe, puis mise en production sur serveur distant."]}
     ],
-    projects:[{name:"Server-Monitoring",desc:"suivi système en Bash et génération de logs pour l'analyse d'incidents."},{name:"FastAPI + PostgreSQL",desc:"backend REST conteneurisé et modulaire."},{name:"Airflow",desc:"orchestration de workflows ETL avec PostgreSQL et pgAdmin, sous Docker."},{name:"Pipeline CSV",desc:"import, nettoyage et transformation automatisés avec Python et Pandas, chargement dans SQLite."}],
+    projects:[{name:"Server-Monitoring",desc:"suivi système en Bash et génération de logs pour l'analyse d'incidents.",url:""},{name:"FastAPI + PostgreSQL",desc:"backend REST conteneurisé et modulaire.",url:""},{name:"Airflow",desc:"orchestration de workflows ETL avec PostgreSQL et pgAdmin, sous Docker.",url:""},{name:"Pipeline CSV",desc:"import, nettoyage et transformation automatisés avec Python et Pandas, chargement dans SQLite.",url:""}],
     skills:[{name:"Support utilisateurs",value:"Prise en charge des demandes, diagnostic, résolution, suivi, documentation"},{name:"Systèmes",value:"Linux, serveurs, datacenter, supervision, analyse de logs, Bash"},{name:"Automatisation",value:"GitLab CI/CD, Docker, Python, tests automatisés"},{name:"Bases de données",value:"PostgreSQL, MySQL, SQLite, optimisation de requêtes"},{name:"Outils",value:"Git, GitLab, Airflow, MinIO, Amazon S3"}],
     formation:[{year:"",title:"Master Data Engineering",school:"École de data, Lyon"},{year:"",title:"Baccalauréat scientifique",school:"puis formation full-stack"}],
     softSkills:["Sens du service","Rigueur","Pédagogie","Capacité d'analyse","Esprit d'équipe","Communication claire"]
@@ -407,9 +533,14 @@ const mix = (hex,t) => { const n=parseInt(hex.slice(1),16); return "#"+[n>>16,(n
 const themeOf = d => THEMES[d.theme] ? d.theme : "pdf";
 const accentOf = d => /^#[0-9a-f]{6}$/i.test(d.accent||"") ? d.accent : THEMES[themeOf(d)].accent;
 const styleOf = d => Object.assign({}, STYLE_DEF, THEME_STYLE[themeOf(d)]||{}, d.style||{});
+/* Photo : taille du cadre (avatarSize, en % : 100 = normal), zoom dans le cadre (avatarZoom, 100 à 300) et côté (avatarSide : "left" ou "right") */
+const avkOf = d => { const v=Number(d.avatarSize); return (isFinite(v)&&v>0) ? Math.max(.5,Math.min(2.5,v/100)) : 1; };
+const zoomOf = d => { const v=Number(d.avatarZoom); return (isFinite(v)&&v>=100) ? Math.min(300,v) : 100; };
+const numOr = (v,def) => { if(v===undefined||v===null||v==='')return def; const n=Number(v); return isFinite(n)?n:def; };
+const pageCls = d => " t-"+themeOf(d)+(d.avatarSide==="left"?" av-left":d.avatarSide==="right"?" av-right":"");
 function vars(d){
   const s = styleOf(d), a = accentOf(d);
-  return `--accent:${a};--accent-light:${mix(a,.5)};--tint:${mix(a,.08)};--rule:${mix(a,.28)};--ink:${s.ink};--soft:${s.text};--band:${s.band};--band-text:${s.bandText};--bg:${s.bg};--font:${FONTS[s.font]||FONTS.Inter};--fs:${s.size};--sp:${s.space};--pad:${s.margin}mm;`;
+  return `--accent:${a};--accent-light:${mix(a,.5)};--tint:${mix(a,.08)};--rule:${mix(a,.28)};--ink:${s.ink};--soft:${s.text};--band:${s.band};--band-text:${s.bandText};--bg:${s.bg};--font:${FONTS[s.font]||FONTS.Inter};--fs:${s.size};--sp:${s.space};--pad:${s.margin}mm;--avk:${avkOf(d)};${numOr(d.avatarEdge,null)!==null?`--ave:${numOr(d.avatarEdge,0)-s.margin}mm;`:""}${numOr(d.avatarGap,null)!==null?`--avg:${numOr(d.avatarGap,3)}mm;`:""}`;
 }
 function faviconUrl(a){
   const svg = `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='${a}'/><rect x='15' y='10' width='34' height='44' rx='4' fill='#fff'/><circle cx='26' cy='24' r='5' fill='${a}'/><rect x='34' y='20' width='10' height='3' rx='1.5' fill='${a}'/><rect x='34' y='26' width='8' height='2.5' rx='1.2' fill='#b8c0c6'/><rect x='20' y='36' width='24' height='3' rx='1.5' fill='#b8c0c6'/><rect x='20' y='43' width='18' height='3' rx='1.5' fill='#b8c0c6'/></svg>`;
@@ -417,18 +548,24 @@ function faviconUrl(a){
 }
 
 /* ---------- Blocs ---------- */
-const CONTACT_KEYS = [["location","Ville"],["phone","Téléphone"],["email","Email"]];
-const contactPairs = d => { const c=d.contact||{}; return show(d,"contact") ? CONTACT_KEYS.filter(([k])=>show(d,"c:"+k)&&has(c[k])).map(([k,l])=>[l,c[k]]) : []; };
+/* Contact : tous les champs du JSON sont affichés (Ville, Téléphone, Email + n'importe quel champ ajouté : "Site", "Adresse", "autre"...) */
+const CONTACT_LABELS = {location:"Ville",phone:"Téléphone",email:"Email"};
+const cval = v => String(v ?? "");
+const contactLabel = k => CONTACT_LABELS[k] || (k.charAt(0).toUpperCase()+k.slice(1));
+const contactPairs = d => { const c=(d.contact&&typeof d.contact==="object")?d.contact:{}; return show(d,"contact") ? Object.keys(c).filter(k=>show(d,"c:"+k)&&has(cval(c[k]))).map(k=>[contactLabel(k),cval(c[k])]) : []; };
+const contactHtml = v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) ? `<a href="mailto:${esc(v)}">${esc(v)}</a>` : /^https?:\/\/\S+$/i.test(v) ? `<a href="${esc(v)}">${esc(v)}</a>` : /^\+?[\d][\d\s().-]{6,}$/.test(v) ? `<a href="tel:${esc(v.replace(/[^\d+]/g,""))}">${esc(v)}</a>` : esc(v);
 const statsHtml = d => arr(d.stats).length ? `<div class="stats">${d.stats.map(x=>`<div class="stat"><div class="stat-value">${esc(x.value)}</div><div class="stat-label">${esc(x.label)}</div></div>`).join("")}</div>` : "";
 /* Liens : le texte affiché est le nom choisi (label) ; l'adresse (url) reste dans le JSON. Option : afficher aussi l'URL (utile pour les ATS qui ne suivent pas les liens cliquables) */
 const linkTxt = (d,x) => esc(x.label) + (d.showUrls ? " · " + esc(String(x.url||"").replace(/^https?:\/\/(www\.)?/i,"").replace(/[?#].*$/,"").replace(/\/$/,"")) : "");
 const linksInline = d => { const l=vis(d,"link:",d.links); return l.length ? `<div class="links-line">${l.map(x=>`<a href="${esc(x.url)}">${linkTxt(d,x)}</a>`).join("")}</div>` : ""; };
 const expHtml = d => vis(d,"exp:",d.experience).map(e=>`<div class="entry"><div class="entry-head"><div class="entry-title">${esc(e.title)}</div><div class="entry-date">${esc(e.date)}</div></div>${has(e.org)?`<div class="entry-org">${esc(e.org)}</div>`:""}${arr(e.bullets).length?`<ul class="bullets">${e.bullets.map(b=>`<li>${esc(b)}</li>`).join("")}</ul>`:""}${(show(d,"tags")&&arr(e.tags).length)?`<div class="entry-tags">${e.tags.map(esc).join(" · ")}</div>`:""}</div>`).join("");
-const projHtml = d => { const p=vis(d,"proj:",d.projects); return p.length ? `<ul class="bullets">${p.map(x=>`<li><strong>${esc(x.name)}</strong> : ${esc(x.desc)}</li>`).join("")}</ul>` : ""; };
+const shortUrl = u => String(u||"").replace(/^https?:\/\/(www\.)?/i,"").replace(/[?#].*$/,"").replace(/\/$/,"");
+const projLink = (d,x) => has(x.url) ? ` <a class="proj-link" href="${esc(x.url)}">${esc(has(x.linkLabel)?x.linkLabel:"Voir le projet")}${d.showUrls?" · "+esc(shortUrl(x.url)):""}</a>` : "";
+const projHtml = d => { const p=vis(d,"proj:",d.projects); return p.length ? `<ul class="bullets">${p.map(x=>`<li><strong>${esc(x.name)}</strong> : ${esc(x.desc)}${projLink(d,x)}</li>`).join("")}</ul>` : ""; };
 const skillsHtml = d => vis(d,"skill:",d.skills).map(x=>`<div class="skill"><span class="skill-name">${esc(x.name)} :</span> <span class="skill-value">${esc(x.value)}</span></div>`).join("");
 const formHtml = d => vis(d,"form:",d.formation).map(f=>`<div class="formation-entry">${has(f.year)?`<div class="formation-year">${esc(f.year)}</div>`:""}<div class="formation-title">${esc(f.title)}</div>${has(f.school)?`<div class="formation-school">${esc(f.school)}</div>`:""}</div>`).join("");
-const softHtml = d => { const s=vis(d,"soft:",d.softSkills); return s.length ? `<p class="plain-line">${s.map(esc).join(" · ")}</p>` : ""; };
-const softList = d => { const s=vis(d,"soft:",d.softSkills); return s.length ? `<ul class="side-list">${s.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>` : ""; };
+const softHtml = d => { const s=vis(d,"soft:",d.softSkills).filter(has); return s.length ? `<p class="plain-line">${s.map(esc).join(" · ")}</p>` : ""; };
+const softList = d => { const s=vis(d,"soft:",d.softSkills).filter(has); return s.length ? `<ul class="side-list">${s.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>` : ""; };
 const profileHtml = d => has(d.profile) ? `<p class="profil-text">${esc(d.profile)}</p>` : "";
 const sec = (d,key,title,body) => (body && show(d,key)) ? `<section class="section"><div class="section-title">${esc(title)}</div>${body}</section>` : "";
 const headerHtml = d => `<h1>${esc(FIXED.fullName)}</h1>${(has(d.role)&&show(d,"role"))?`<div class="role">${esc(d.role)}</div>`:""}${(has(d.availability)&&show(d,"availability"))?`<div class="availability">${esc(d.availability)}</div>`:""}`;
@@ -436,11 +573,12 @@ const headerHtml = d => `<h1>${esc(FIXED.fullName)}</h1>${(has(d.role)&&show(d,"
 let photoData = "";
 const photoSrc = d => photoData || (has(d.avatarUrl) ? d.avatarUrl : "");
 const posOf = d => { const v = Number(d.avatarPos); return (d.avatarPos === undefined || d.avatarPos === "" || !isFinite(v)) ? 30 : Math.max(0, Math.min(100, v)); };
-const avatarHtml = d => (photoSrc(d) && show(d,"avatar")) ? `<div class="avatar${d.avatarShape==="square"?" sq":""}"><img src="${esc(photoSrc(d))}" alt="" style="object-position:50% ${posOf(d)}%"></div>` : "";
-const sideItems = pairs => pairs.map(x=>`<div class="side-item"><strong>${esc(x[0])}</strong>${esc(x[1])}</div>`).join("");
+const imgStyle = d => `object-position:50% ${posOf(d)}%;transform:scale(${zoomOf(d)/100});transform-origin:50% ${posOf(d)}%`;
+const avatarHtml = d => (photoSrc(d) && show(d,"avatar")) ? `<div class="avatar${d.avatarShape==="square"?" sq":""}"><img src="${esc(photoSrc(d))}" alt="" style="${imgStyle(d)}"></div>` : "";
+const sideItems = pairs => pairs.map(x=>`<div class="side-item"><strong>${esc(x[0])}</strong>${contactHtml(x[1])}</div>`).join("");
 
 function renderSingle(d){
-  const cl = contactPairs(d).map(x=>esc(x[1])).join(" · ");
+  const cl = contactPairs(d).map(x=>contactHtml(x[1])).join(" · ");
   return `<div class="single"><header class="head"><div>${headerHtml(d)}${cl?`<div class="contact-line">${cl}</div>`:""}${show(d,"liens")?linksInline(d):""}</div>${avatarHtml(d)}</header>
   ${show(d,"stats")?statsHtml(d):""}
   ${sec(d,"profil","Profil",profileHtml(d))}${sec(d,"experience","Expérience",expHtml(d))}${sec(d,"projets","Projets",projHtml(d))}${sec(d,"competences","Compétences",skillsHtml(d))}
@@ -471,7 +609,7 @@ const RENDERERS = {pdf:renderSingle,bold:renderSingle,classic:renderSingle,minim
 
 function renderCV(d){
   const t = themeOf(d);
-  preview.className = "page t-" + t;
+  preview.className = "page" + pageCls(d);
   preview.style.cssText = vars(d);
   return RENDERERS[t](d);
 }
@@ -484,7 +622,7 @@ function buildStandaloneHtml(d, forPdf){
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Lato:wght@400;700;900&family=Poppins:wght@400;500;600;700;800&family=Source+Sans+3:wght@400;600;700;800&family=Merriweather:wght@400;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
 ${$("cv-styles").outerHTML}
 ${forPdf ? `<style>html,body{margin:0;background:#fff}.page{box-shadow:none}</style>` : `<style>@page{size:A4;margin:0}body{margin:0;background:#e9ecef;display:flex;justify-content:center}.page{box-shadow:none}@media print{body{background:#fff}*{-webkit-print-color-adjust:exact;print-color-adjust:exact}}</style>`}
-</head><body><div class="page t-${t}" style="${vars(d)}">${RENDERERS[t](d)}</div></body></html>`;
+</head><body><div class="page${pageCls(d)}" style="${vars(d)}">${RENDERERS[t](d)}</div></body></html>`;
 }
 
 /* ---------- UI ---------- */
@@ -512,6 +650,10 @@ function updatePreviewLayout(){
   const k=fitPage(preview,onePageOn()), h=preview.offsetHeight*k;
   preview.style.transform=k<1?`scale(${k})`:"none";
   pageBox.style.width=PAGE_W_PX+"px"; pageBox.style.height=h+"px"; pageGuides.style.height=h+"px";
+  /* Aperçu réduit pour tenir dans la largeur disponible (mobile, petits écrans) */
+  const avail=pageBox.parentElement.clientWidth-(innerWidth<=960?24:40), m=(avail>100&&avail<PAGE_W_PX)?avail/PAGE_W_PX:1;
+  pageBox.style.transformOrigin="0 0"; pageBox.style.transform=m<1?`scale(${m})`:"none";
+  pageBox.style.marginRight=m<1?`${-PAGE_W_PX*(1-m)}px`:"0"; pageBox.style.marginBottom=m<1?`${-h*(1-m)}px`:"0";
   const pages=Math.max(1,Math.ceil((h-2)/PAGE_H_PX));
   pageInfo.textContent=pages+(pages===1?" page":" pages")+(k<1?" · "+Math.round(k*100)+"%":"");
   pageInfo.className=pages>1?"warn":"";
@@ -540,8 +682,8 @@ Object.entries(THEMES).forEach(([key,t])=>{
   $("themePicker").appendChild(b);
 });
 Object.entries(PRESETS).slice(0,MAX_PRESETS).forEach(([k,p])=>{const o=document.createElement("option");o.value=k;o.textContent=p.label;$("presetSel").appendChild(o)});
-$("presetSel").onchange=e=>{loadPreset(e.target.value);refresh(true);setStatus("✅ Modèle : "+PRESETS[currentPreset].label,false)};
-$("btnReset").onclick=()=>{loadPreset(currentPreset);refresh(true);setStatus("Modèle rechargé",false)};
+$("presetSel").onchange=e=>{loadPreset(e.target.value);buildForm();refresh(true);setStatus("✅ Modèle : "+PRESETS[currentPreset].label,false)};
+$("btnReset").onclick=()=>{loadPreset(currentPreset);buildForm();refresh(true);setStatus("Modèle rechargé",false)};
 Object.entries(CATEGORIES).forEach(([k,c])=>{const o=document.createElement("option");o.value=k;o.textContent=c.label;$("catSel").appendChild(o)});
 $("catSel").onchange=e=>{applyCategory(currentData,e.target.value);refresh(true);setStatus("✅ Catégorie : "+CATEGORIES[currentData.category].label+" (affichage par défaut appliqué)",false)};
 $("onePage").addEventListener("change",e=>{currentData.onePage=e.target.checked;refresh(true)});
@@ -572,7 +714,13 @@ $("photoFile").addEventListener("change",e=>{
 });
 $("btnPhotoDel").onclick=()=>{photoData="";currentData.avatarUrl="";refresh(true);setStatus("Photo supprimée",false)};
 $("avatarShape").addEventListener("change",e=>{currentData.avatarShape=e.target.value;refresh(true)});
+$("avatarSide").addEventListener("change",e=>{currentData.avatarSide=e.target.value;refresh(true)});
+$("avSize").addEventListener("input",e=>{currentData.avatarSize=+e.target.value;refresh(true)});
+$("avZoom").addEventListener("input",e=>{currentData.avatarZoom=+e.target.value;refresh(true)});
 $("avPos").addEventListener("input",e=>{currentData.avatarPos=+e.target.value;refresh(true)});
+$("avEdge").addEventListener("input",e=>{currentData.avatarEdge=+e.target.value;refresh(true)});
+$("avGap").addEventListener("input",e=>{currentData.avatarGap=+e.target.value;refresh(true)});
+$("btnAvReset").onclick=()=>{["avatarShape","avatarSide","avatarSize","avatarZoom","avatarPos","avatarEdge","avatarGap"].forEach(k=>delete currentData[k]);refresh(true);setStatus("Réglages de la photo réinitialisés",false)};
 if(document.fonts&&document.fonts.ready)document.fonts.ready.then(updatePreviewLayout);
 
 /* Sections affichées : sections, contact, en-tête, puis chaque lien / expérience / projet / compétence / formation / savoir-être */
@@ -581,7 +729,7 @@ function buildChecks(){
   const lst=(p,l,f)=>arr(l).map((x,i)=>[p+i,f(x)||("#"+(i+1))]);
   const groups=[
     ["Sections",Object.entries(SECTIONS)],
-    ["Contact",CONTACT_KEYS.filter(([k])=>has(c[k])).map(([k,l])=>["c:"+k,l])],
+    ["Contact",Object.keys(c).filter(k=>has(cval(c[k]))).map(k=>["c:"+k,contactLabel(k)])],
     ["En-tête",[["role","Titre / poste"],["availability","Disponibilité"],["avatar","Photo"]]],
     ["Liens (un par un)",lst("link:",d.links,x=>x.label)],
     ["Expériences",lst("exp:",d.experience,x=>x.title)],
@@ -591,19 +739,23 @@ function buildChecks(){
     ["Savoir-être",lst("soft:",d.softSkills,x=>x)]
   ];
   $("sectionChecks").innerHTML=groups.filter(g=>g[1].length).map(([t,items])=>{
-    const on=items.filter(([k])=>show(d,k)).length;
-    return `<details class="chk-group" data-g="${esc(t)}" ${openGroups.has(t)?"open":""}><summary><span>${esc(t)}</span><em>${on}/${items.length}</em></summary><div class="checks">${items.map(([k,l])=>`<label title="${esc(l)}"><input type="checkbox" data-sec="${esc(k)}" ${show(d,k)?"checked":""}><span>${esc(l)}</span></label>`).join("")}</div></details>`;
+    const on=items.filter(([k])=>show(d,k)).length, off=GP[t]&&!show(d,GP[t]);
+    return `<details class="chk-group" data-g="${esc(t)}" ${openGroups.has(t)?"open":""}><summary><span>${esc(t)}</span><em class="${off?"off":""}">${on}/${items.length}${off?" · section masquée":""}</em></summary><div class="checks">${items.map(([k,l])=>`<label title="${esc(l)}"><input type="checkbox" data-sec="${esc(k)}" ${show(d,k)?"checked":""}><span>${esc(l)}</span></label>`).join("")}</div></details>`;
   }).join("");
 }
 /* Groupes repliés par défaut : on clique sur un groupe pour voir son contenu (l'état ouvert est mémorisé) */
 const openGroups=new Set();
+const GP={"Contact":"contact","Liens (un par un)":"liens","Expériences":"experience","Projets":"projets","Compétences":"competences","Formation":"formation","Savoir-être":"softskills"};
+const PARENT={"c:":"contact","link:":"liens","exp:":"experience","proj:":"projets","skill:":"competences","form:":"formation","soft:":"softskills"};
 $("sectionChecks").addEventListener("toggle",e=>{
   const g=e.target.dataset&&e.target.dataset.g; if(!g)return;
   e.target.open?openGroups.add(g):openGroups.delete(g);
 },true);
 $("sectionChecks").addEventListener("change",e=>{
   const k=e.target.dataset&&e.target.dataset.sec; if(!k)return;
-  const h=new Set(arr(currentData.hide)); e.target.checked?h.delete(k):h.add(k); currentData.hide=[...h]; refresh(true);
+  const h=new Set(arr(currentData.hide)); e.target.checked?h.delete(k):h.add(k);
+  if(e.target.checked){const pf=Object.keys(PARENT).find(x=>k.startsWith(x));if(pf&&h.has(PARENT[pf])){h.delete(PARENT[pf]);setStatus("✅ La section est réaffichée, car tu as coché un de ses éléments",false)}}
+  currentData.hide=[...h]; refresh(true);
 });
 
 function refresh(writeJson){
@@ -612,11 +764,16 @@ function refresh(writeJson){
   $("onePage").checked=onePageOn();
   $("showUrls").checked=!!currentData.showUrls;
   const _src=photoSrc(currentData);
-  $("photoThumb").innerHTML=_src?`<img src="${esc(_src)}" alt="" style="object-position:50% ${posOf(currentData)}%">`:"<span>Aucune</span>";
+  $("photoThumb").innerHTML=_src?`<img src="${esc(_src)}" alt="" style="${imgStyle(currentData)}">`:"<span>Aucune</span>";
   $("btnPhotoDel").disabled=!_src;
   $("avatarShape").value=currentData.avatarShape==="square"?"square":"round";
+  $("avatarSide").value=currentData.avatarSide==="left"?"left":"right";
+  $("avSize").value=Math.round(avkOf(currentData)*100);$("vAvSize").textContent=Math.round(avkOf(currentData)*100)+" %";
+  $("avZoom").value=zoomOf(currentData);$("vAvZoom").textContent=zoomOf(currentData)+" %";
   $("avPos").value=posOf(currentData);$("vPos").textContent=posOf(currentData)+" %";
-  if(writeJson)jsonInput.value=JSON.stringify(currentData,null,2);
+  const _ed=numOr(currentData.avatarEdge,styleOf(currentData).margin),_gp=numOr(currentData.avatarGap,3);
+  $("avEdge").value=_ed;$("vAvEdge").textContent=_ed+" mm";$("avGap").value=_gp;$("vAvGap").textContent=_gp+" mm";
+  if(writeJson)setJson(JSON.stringify(currentData,null,2));
   const s=styleOf(currentData);
   CTRL.forEach(([id,k])=>{$(id).value=s[k]});
   $("accentInput").value=accentOf(currentData);
@@ -630,11 +787,30 @@ function refresh(writeJson){
   $("favicon").href=faviconUrl(accentOf(currentData));
 }
 
+/* JSON coloré : clés, textes, nombres et true/false/null */
+const jsonHl=$("jsonHl");
+const e2=t=>t.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+function hlJson(t){
+  const re=/("(?:\\.|[^"\\])*")(\s*:)?|\b(?:true|false|null)\b|-?\d+(?:\.\d+)?(?:[eE][+-]?\d+)?/g;
+  let out="",last=0,m;
+  while((m=re.exec(t))){
+    out+=e2(t.slice(last,m.index));
+    if(m[1]!==undefined)out+=`<span class="${m[2]?"jk":"js"}">${e2(m[1])}</span>`+(m[2]?e2(m[2]):"");
+    else out+=`<span class="${/^-?\d/.test(m[0])?"jn":"jb"}">${m[0]}</span>`;
+    last=re.lastIndex;
+  }
+  return out+e2(t.slice(last))+"\n ";
+}
+function syncHl(){jsonHl.scrollTop=jsonInput.scrollTop;jsonHl.scrollLeft=jsonInput.scrollLeft}
+function hlUpdate(){jsonHl.innerHTML=hlJson(jsonInput.value);syncHl()}
+function setJson(v){jsonInput.value=v;hlUpdate()}
+jsonInput.addEventListener("input",hlUpdate);
+jsonInput.addEventListener("scroll",syncHl);
 let debounceTimer;
 jsonInput.addEventListener("input",()=>{
   clearTimeout(debounceTimer);
   debounceTimer=setTimeout(()=>{
-    try{currentData=JSON.parse(jsonInput.value);refresh(false);setStatus("✅ Mise à jour",false)}
+    try{currentData=JSON.parse(jsonInput.value);refresh(false);buildForm();setStatus("✅ Mise à jour",false)}
     catch(e){setStatus("❌ Erreur JSON : "+e.message,true);showToast("❌ JSON invalide : "+e.message,3500)}
   },300);
 });
@@ -727,7 +903,105 @@ async function exportPdf(){
 }
 $("btnPdf").onclick=exportPdf;
 
+/* ---------- Formulaire (sans JSON) : chaque champ modifie currentData, donc le JSON se met à jour en direct ---------- */
+const formEl=$("formEditor"), openForm=new Set(["Identité"]);
+const LISTS={
+  stats:{n:"chiffre",t:()=>({value:"",label:""})},
+  experience:{n:"expérience",h:"exp:",t:()=>({date:"",title:"",org:"",bullets:[],tags:[]})},
+  projects:{n:"projet",h:"proj:",t:()=>({name:"",desc:"",url:"",linkLabel:""})},
+  skills:{n:"compétence",h:"skill:",t:()=>({name:"",value:""})},
+  formation:{n:"formation",h:"form:",t:()=>({year:"",title:"",school:""})},
+  softSkills:{n:"savoir-être",h:"soft:",t:()=>""},
+  links:{n:"lien",h:"link:",t:()=>({label:"",url:""})}
+};
+const getP=(o,p)=>p.split(".").reduce((a,k)=>a==null?undefined:a[k],o);
+function setP(o,p,v){const ks=p.split(".");let a=o;ks.slice(0,-1).forEach((k,i)=>{if(a[k]==null||typeof a[k]!=="object")a[k]=/^\d+$/.test(ks[i+1])?[]:{};a=a[k]});a[ks[ks.length-1]]=v}
+/* kind : text (une ligne), area (paragraphe), lines (une entrée par ligne), csv (séparées par des virgules) */
+function fIn(label,path,kind,rows){
+  const v=getP(currentData,path);
+  const val=kind==="lines"?arr(v).join("\n"):kind==="csv"?arr(v).join(", "):(v??"");
+  const el=(kind==="area"||kind==="lines")
+    ?`<textarea data-p="${esc(path)}" data-k="${kind}" rows="${rows||4}">${esc(val)}</textarea>`
+    :`<input type="text" data-p="${esc(path)}" data-k="${kind||"text"}" value="${esc(val)}">`;
+  return `<label class="fe-f"><span>${esc(label)}</span>${el}</label>`;
+}
+const fSec=(t,body)=>`<details class="fe-sec" data-g="${esc(t)}" ${openForm.has(t)?"open":""}><summary>${esc(t)}</summary><div class="fe-body">${body}</div></details>`;
+const fTwo=(a,b)=>`<div class="fe-row2">${a}${b}</div>`;
+function fList(key,title,item){
+  const l=arr(currentData[key]);
+  return l.map((x,i)=>`<div class="fe-item"><div class="fe-item-head"><span>${esc(title)} ${i+1}</span><button type="button" class="fe-del" data-act="del" data-l="${key}" data-i="${i}">Supprimer</button></div>${item(i)}</div>`).join("")
+    +`<button type="button" class="fe-add" data-act="add" data-l="${key}">+ Ajouter ${esc(LISTS[key].n)}</button>`;
+}
+function buildForm(){
+  const sc=formEl.scrollTop;
+  formEl.innerHTML=[
+    fSec("Identité",fIn("Titre / poste","role","text")+fIn("Disponibilité","availability","text")),
+    fSec("Contact",fIn("Ville","contact.location","text")+fIn("Téléphone","contact.phone","text")+fIn("Email","contact.email","text")
+      +Object.keys((currentData.contact&&typeof currentData.contact==="object")?currentData.contact:{}).filter(k=>!(k in CONTACT_LABELS)).map(k=>`<div class="fe-extra">${fIn(contactLabel(k),"contact."+k,"text")}<button type="button" class="fe-del" data-act="delc" data-k="${esc(k)}">Supprimer</button></div>`).join("")
+      +`<div class="fe-extra"><input type="text" id="newContactKey" placeholder="Nouveau champ (ex. Site, Adresse)" autocomplete="off"><button type="button" class="fe-add" data-act="addc">+ Ajouter</button></div>`),
+    fSec("Profil",fIn("Texte de présentation","profile","area",7)),
+    fSec("Chiffres clés",fList("stats","Chiffre",i=>fTwo(fIn("Valeur",`stats.${i}.value`,"text"),fIn("Légende",`stats.${i}.label`,"text")))),
+    fSec("Expériences",fList("experience","Expérience",i=>fTwo(fIn("Date",`experience.${i}.date`,"text"),fIn("Intitulé",`experience.${i}.title`,"text"))+fIn("Entreprise / lieu",`experience.${i}.org`,"text")+fIn("Missions (une par ligne)",`experience.${i}.bullets`,"lines",5)+fIn("Technologies (séparées par des virgules)",`experience.${i}.tags`,"csv"))),
+    fSec("Projets",fList("projects","Projet",i=>fIn("Nom",`projects.${i}.name`,"text")+fIn("Description",`projects.${i}.desc`,"area",2)+fIn("Lien du projet (URL)",`projects.${i}.url`,"text")+fIn("Texte du lien (optionnel)",`projects.${i}.linkLabel`,"text"))),
+    fSec("Compétences",fList("skills","Compétence",i=>fIn("Catégorie",`skills.${i}.name`,"text")+fIn("Détail",`skills.${i}.value`,"area",2))),
+    fSec("Formation",fList("formation","Formation",i=>fTwo(fIn("Année",`formation.${i}.year`,"text"),fIn("Diplôme",`formation.${i}.title`,"text"))+fIn("École / précision",`formation.${i}.school`,"text"))),
+    fSec("Savoir-être",fList("softSkills","Savoir-être",i=>fIn("Qualité",`softSkills.${i}`,"text"))),
+    fSec("Liens",fList("links","Lien",i=>fTwo(fIn("Nom affiché",`links.${i}.label`,"text"),fIn("Adresse (URL)",`links.${i}.url`,"text"))))
+  ].join("");
+  formEl.scrollTop=sc;
+}
+formEl.addEventListener("input",e=>{
+  const t=e.target,p=t.dataset&&t.dataset.p; if(!p)return;
+  let v=t.value;
+  if(t.dataset.k==="lines")v=v.split("\n").map(s=>s.trim()).filter(Boolean);
+  else if(t.dataset.k==="csv")v=v.split(",").map(s=>s.trim()).filter(Boolean);
+  setP(currentData,p,v);
+  refresh(true);
+});
+/* Supprimer un élément décale les numéros : on met à jour les cases « masquées » pour qu'elles suivent les bons éléments */
+function dropHide(prefix,i){
+  currentData.hide=arr(currentData.hide).filter(h=>h!==prefix+i).map(h=>{
+    if(h.startsWith(prefix)){const n=+h.slice(prefix.length);if(isFinite(n)&&n>i)return prefix+(n-1)}
+    return h;
+  });
+}
+formEl.addEventListener("click",e=>{
+  const b=e.target.closest("button[data-act]"); if(!b)return;
+  if(b.dataset.act==="addc"||b.dataset.act==="delc"){
+    if(!currentData.contact||typeof currentData.contact!=="object")currentData.contact={};
+    if(b.dataset.act==="delc"){const k=b.dataset.k;delete currentData.contact[k];currentData.hide=arr(currentData.hide).filter(h=>h!=="c:"+k);buildForm();refresh(true);return}
+    const k=$("newContactKey").value.replace(/[.\s]+/g," ").trim();
+    if(!k){showToast("Écris d'abord le nom du champ",2500);return}
+    if(k in currentData.contact){showToast("Ce champ existe déjà",2500);return}
+    currentData.contact[k]="";buildForm();refresh(true);
+    const f=[...formEl.querySelectorAll("[data-p]")].find(i=>i.dataset.p==="contact."+k);if(f)f.focus();
+    return;
+  }
+  const key=b.dataset.l,L=LISTS[key]; if(!L)return;
+  if(!Array.isArray(currentData[key]))currentData[key]=[];
+  if(b.dataset.act==="add")currentData[key].push(L.t());
+  else{const i=+b.dataset.i;currentData[key].splice(i,1);if(L.h)dropHide(L.h,i)}
+  buildForm();refresh(true);
+});
+formEl.addEventListener("toggle",e=>{
+  const g=e.target.dataset&&e.target.dataset.g; if(!g)return;
+  e.target.open?openForm.add(g):openForm.delete(g);
+},true);
+/* Onglets : Formulaire / JSON / Les deux */
+function setTab(m){
+  formEl.hidden=(m!=="form"); $("jsonWrap").hidden=(m!=="json");
+  ["form","json"].forEach(k=>$("tab_"+k).classList.toggle("active",k===m));
+  if(m==="json")hlUpdate();
+}
+["form","json"].forEach(k=>$("tab_"+k).onclick=()=>setTab(k));
+/* Mobile : navigation entre Éditeur / Aperçu / Réglages */
+function setView(v){document.body.dataset.view=v;document.querySelectorAll(".mnav button").forEach(b=>b.classList.toggle("on",b.dataset.v===v));updatePreviewLayout()}
+document.querySelectorAll(".mnav button").forEach(b=>b.onclick=()=>setView(b.dataset.v));
+addEventListener("resize",updatePreviewLayout);
+$("btnPdfM").onclick=()=>{if(!$("btnPdf").disabled)exportPdf()};
+
 // Chargement initial (aucune sauvegarde locale)
+buildForm();setTab("json");
 refresh(true);
 </script>
 </body>
