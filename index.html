@@ -116,7 +116,14 @@
 body{font-family:'Lato',sans-serif;background:#12161a;color:#ffffff;-webkit-font-smoothing:antialiased;display:flex;height:100vh;margin:0;overflow:hidden}
 .editor{width:420px;flex-shrink:0;background:#1c2328;display:flex;flex-direction:column;border-right:1px solid #3a464d}
 .panel{width:384px;flex-shrink:0;background:#1c2328;border-left:1px solid #3a464d;overflow:auto;scrollbar-width:thin;scrollbar-color:#3a444a transparent}
-.panel::-webkit-scrollbar{width:8px}.panel::-webkit-scrollbar-thumb{background:#3a444a;border-radius:4px}
+/* Barres de défilement : fines, arrondies, dorées au survol */
+*{scrollbar-width:thin;scrollbar-color:#6b7b85 transparent}
+*::-webkit-scrollbar{width:12px;height:12px}
+*::-webkit-scrollbar-track{background:transparent}
+*::-webkit-scrollbar-thumb{background:#4f5f69;border-radius:99px;border:3px solid transparent;background-clip:padding-box;transition:background .2s}
+*::-webkit-scrollbar-thumb:hover{background:#e8b370;border:3px solid transparent;background-clip:padding-box}
+*::-webkit-scrollbar-thumb:active{background:#ffd9a0;border:3px solid transparent;background-clip:padding-box}
+*::-webkit-scrollbar-corner{background:transparent}
 .editor-header{padding:20px 18px 16px;border-bottom:1px solid #3a464d;display:flex;flex-direction:column;gap:14px}
 h2{margin:0;font-family:'Playfair Display',serif;font-weight:600;font-size:22px;letter-spacing:.01em;color:#ffffff}
 .brand{display:flex;align-items:baseline;justify-content:space-between}
