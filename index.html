@@ -65,6 +65,30 @@
 .t-classic .stat-value{color:var(--ink);font-size:1.35em}
 .t-classic .section-title{color:var(--ink);border-bottom:1px solid var(--ink)}
 .t-classic .bullets li:before{background:var(--ink)}
+.t-corporate{border-left:8mm solid var(--accent)}
+.t-corporate h1{text-transform:uppercase;letter-spacing:.05em;font-size:2.1em}
+.t-corporate .head{border-bottom:1px solid var(--rule);padding-bottom:.8em}
+.t-corporate .section-title{border:0;background:var(--tint);border-left:3px solid var(--accent);padding:.4em .7em;color:var(--ink)}
+.t-corporate .entry-date{background:var(--tint);padding:.05em .6em;border-radius:99px}
+.t-corporate .stat-value{color:var(--ink)}
+.t-executive{border-top:5mm solid var(--accent)}
+.t-executive h1{font-family:'Playfair Display',serif;font-weight:700;font-size:2.6em;letter-spacing:0}
+.t-executive .head{border-bottom:1px solid var(--ink);padding-bottom:.8em}
+.t-executive .role{color:var(--ink);letter-spacing:.2em;font-weight:600}
+.t-executive .section-title{display:flex;align-items:center;gap:.8em;border:0;padding-bottom:0;color:var(--ink);font-family:'Playfair Display',serif;font-size:1.1em;letter-spacing:.1em}
+.t-executive .section-title:after{content:'';flex:1;height:1px;background:var(--rule)}
+.t-executive .bullets li:before{width:.28em;height:.28em;transform:rotate(45deg);top:.66em}
+.t-executive .stat-value{font-family:'Playfair Display',serif;color:var(--ink)}
+.t-tech .head{border-bottom:2px dashed var(--accent);padding-bottom:.9em}
+.t-tech .role{display:inline-block;background:var(--ink);color:var(--bg);padding:.25em .8em;border-radius:4px;letter-spacing:.08em;font-size:.86em}
+.t-tech .section-title{border-bottom:1px dashed var(--rule);color:var(--ink)}
+.t-tech .section-title:before{content:'//';color:var(--accent);margin-right:.5em}
+.t-tech .entry{border-left:2px solid var(--rule);padding-left:.9em}
+.t-tech .entry-date{font-family:ui-monospace,Menlo,Consolas,monospace}
+.t-tech .bullets li:before{content:'›';background:none;width:auto;height:auto;top:-.05em;color:var(--accent);font-weight:800;font-size:1.1em}
+.t-tech .stats{border:0;gap:.6em;padding:0}
+.t-tech .stat{background:var(--tint);border:0;border-radius:6px;padding:.6em .9em}
+.t-tech .stat:first-child{padding-left:.9em}
 .t-sidebar{display:grid;grid-template-columns:37% 1fr;background:var(--bg)}
 .t-sidebar .main-col{grid-column:2;grid-row:1;padding:calc(var(--pad)*.9) var(--pad) calc(var(--pad)*1.1) calc(var(--pad)*.85);min-width:0}
 .t-sidebar .sidebar{grid-column:1;grid-row:1;background:var(--band);color:var(--band-text);padding:calc(var(--pad)*.9) calc(var(--pad)*.6)}
@@ -112,18 +136,28 @@
 .av-left:not(.t-minimal) .head .avatar,.t-modern.av-left .m-top .avatar{order:-1;margin-right:0;margin-left:var(--ave,0mm)}
 .t-sidebar.av-left .sidebar .avatar{margin-left:0;margin-right:auto}
 .t-sidebar.av-right .sidebar .avatar{margin-left:auto;margin-right:0}
-/* Lettre de motivation */
-.letter{padding:var(--pad);min-height:297mm}
-.lt-head{display:flex;justify-content:space-between;align-items:center;gap:var(--avg,1em);padding-bottom:.8em;border-bottom:2px solid var(--accent)}
+
+.letter{padding:var(--pad);min-height:297mm;display:flex;flex-direction:column}
+.lt-head{display:flex;justify-content:space-between;align-items:center;gap:var(--avg,1em);padding-bottom:.9em;border-bottom:2px solid var(--accent)}
 .lt-head>div:first-child{flex:1;min-width:0}
 .av-left .lt-head .avatar{order:-1}
-.lt-from{line-height:1.5}.lt-from div{margin-top:.1em}.lt-from h1{margin-bottom:.25em}
-.lt-meta{margin-top:2.2em}
-.lt-rec{margin-left:auto;width:48%;line-height:1.45;color:var(--ink);font-weight:600}
-.lt-date{margin-top:1.4em;text-align:right}
-.lt-subj{margin-top:1.8em;color:var(--ink)}
-.lt-body{margin-top:1.6em}.lt-body p{margin-bottom:1em;text-align:justify;line-height:1.6}
-.lt-sign{margin-top:2.2em;font-weight:700;color:var(--ink)}
+.lt-from h1{font-size:2em;margin-bottom:.1em}
+.lt-contact{margin-top:.55em;line-height:1.55}
+.lt-contact .links-line{margin-top:.35em}
+.lt-rec{margin:2.4em 0 0 auto;width:52%;text-align:right;line-height:1.5;color:var(--soft)}
+.lt-rec .r1{color:var(--ink);font-weight:600}
+.lt-rec .rc{color:var(--ink);font-weight:800;font-size:1.05em}
+.lt-date{margin-top:2.2em;color:var(--soft)}
+.lt-subj{margin-top:1.1em;padding:.55em .9em;border-left:3px solid var(--accent);background:var(--tint);color:var(--ink)}
+.lt-subj strong{font-weight:800}
+.lt-body{margin-top:1.8em}
+.lt-body p{margin-bottom:1em;text-align:justify;hyphens:auto;line-height:1.65;orphans:3;widows:3}
+.lt-body p.lt-greet{color:var(--ink);font-weight:600}
+.lt-sign{margin-top:1.4em;text-align:right;color:var(--ink)}
+.lt-sign-space{height:2.8em}
+.lt-sign strong{font-weight:800;font-size:1.05em}
+.lt-pj{margin-top:auto;padding-top:1.6em;font-size:.9em;color:var(--soft);border-top:1px solid var(--rule)}
+.lt-pj strong{color:var(--ink)}
 .lt-bold .lt-head,.lt-modern .lt-head,.lt-sidebar .lt-head{background:var(--band);color:var(--band-text);margin:calc(-1*var(--pad)) calc(-1*var(--pad)) 0;padding:var(--pad);border:0}
 .lt-bold h1,.lt-modern h1,.lt-sidebar h1{color:var(--band-text)}
 .lt-bold .role,.lt-modern .role,.lt-sidebar .role,.lt-bold .links-line,.lt-modern .links-line,.lt-sidebar .links-line{color:var(--accent-light)}
@@ -132,9 +166,24 @@
 .lt-minimal h1{font-family:'Playfair Display',serif;font-weight:600;font-size:2.7em}
 .lt-minimal .role{color:var(--soft);letter-spacing:.22em}.lt-minimal .links-line{justify-content:center}
 .lt-minimal .avatar{order:-1;margin-bottom:.7em}
+.lt-minimal .lt-subj{background:none;border-left:0;border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);text-align:center}
 .lt-classic h1{font-family:'Merriweather',serif;font-weight:700;font-size:2.1em;letter-spacing:0}
 .lt-classic .lt-head{border-bottom:3px double var(--ink)}
 .lt-classic .role{letter-spacing:.04em;text-transform:none;color:var(--ink);font-weight:600}
+.lt-classic .lt-subj{background:none;border-left:0;padding-left:0;border-bottom:1px solid var(--ink)}
+.lt-corporate{border-left:8mm solid var(--accent)}
+.lt-corporate h1{text-transform:uppercase;letter-spacing:.05em;font-size:1.8em}
+.lt-corporate .lt-head{border-bottom:1px solid var(--rule)}
+.lt-corporate .lt-subj{background:var(--tint)}
+.lt-executive{border-top:5mm solid var(--accent)}
+.lt-executive h1{font-family:'Playfair Display',serif;font-weight:700;font-size:2.4em;letter-spacing:0}
+.lt-executive .lt-head{border-bottom:1px solid var(--ink)}
+.lt-executive .role{color:var(--ink);letter-spacing:.2em;font-weight:600}
+.lt-executive .lt-subj{background:none;border-left:0;padding-left:0;font-family:'Playfair Display',serif;font-size:1.05em}
+.lt-tech .lt-head{border-bottom:2px dashed var(--accent)}
+.lt-tech .role{display:inline-block;background:var(--ink);color:var(--bg);padding:.25em .8em;border-radius:4px;letter-spacing:.08em;font-size:.86em}
+.lt-tech .lt-subj{border-radius:0 6px 6px 0}
+.lt-tech .lt-pj{border-top:1px dashed var(--rule)}
 @media print{.page{box-shadow:none}}
 </style>
 
@@ -175,6 +224,9 @@ h2{margin:0;font-family:'Playfair Display',serif;font-weight:600;font-size:22px;
 .icon-btn{width:42px;padding:0;font-size:18px;line-height:1}
 .toolbar{display:grid;grid-template-columns:1.35fr 1fr 1fr 1.15fr;gap:6px}
 .toolbar button{padding:9px 4px;font-weight:600;letter-spacing:.01em}
+.doc-title{display:flex;flex-direction:column;gap:4px;padding:9px 12px;border:1px solid #46545c;border-radius:9px;background:#161c20;min-width:0}
+.doc-title small{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:#e8b370;font-weight:700}
+.doc-title code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12.5px;color:#ffffff;word-break:break-all;line-height:1.4}
 button.primary{background:#e8b370;border-color:#e8b370;color:#1a1410;font-weight:700}
 button.primary:hover{background:#f3c68c}button.primary:disabled{opacity:.6;cursor:wait}
 .btns{display:flex;gap:6px;flex-wrap:wrap}
@@ -282,7 +334,6 @@ button:disabled{opacity:.45;cursor:not-allowed}
 .fe-f textarea{resize:vertical;min-height:64px;line-height:1.45}
 .fe-f input:focus,.fe-f textarea:focus{outline:none;border-color:#e8b370}
 .fe-in{display:flex;gap:6px;align-items:flex-start}.fe-in input,.fe-in textarea{flex:1;min-width:0}
-/* ✓ : visibile solo se il campo è stato modificato o è nuovo */
 .fe-ok{display:none;flex:none;width:36px;height:36px;padding:0;background:transparent;border:1px solid #e8b370;color:#e8b370;font-size:16px;font-weight:800;border-radius:7px;transition:background .15s,box-shadow .15s,color .15s}
 .fe-ok.dirty{display:block;animation:feP 1.2s ease-in-out infinite}
 .fe-ok.dirty:hover{background:rgba(232,179,112,.2)}
@@ -453,6 +504,7 @@ button{background:#313c43;color:#ffffff;border:1px solid #56656d;border-radius:7
           <button id="btnCopy" data-i18n="copy" data-i18n-title="copyTitle"></button>
           <button id="btnPrint" data-i18n="print" data-i18n-title="printTitle"></button>
         </div>
+        <div class="doc-title" id="docTitleBar"><small data-i18n="docTitleLabel"></small><code id="docTitleVal"></code></div>
       </div>
     </div>
   </div>
@@ -576,7 +628,8 @@ button{background:#313c43;color:#ffffff;border:1px solid #56656d;border-radius:7
 const FIXED = { fullName: "El Habib Benaboud" };
 const THEMES = {
   pdf:{accent:"#1d5c63"}, modern:{accent:"#2563eb"}, sidebar:{accent:"#a8763c"},
-  bold:{accent:"#be123c"}, classic:{accent:"#111111"}, minimal:{accent:"#111111"}
+  bold:{accent:"#be123c"}, classic:{accent:"#111111"}, minimal:{accent:"#111111"},
+  corporate:{accent:"#0f4c81"}, executive:{accent:"#7a1f2b"}, tech:{accent:"#0e7490"}
 };
 const FONTS = {Inter:"'Inter',sans-serif",Lato:"'Lato',sans-serif",Poppins:"'Poppins',sans-serif","Source Sans":"'Source Sans 3',sans-serif",Merriweather:"'Merriweather',serif",Playfair:"'Playfair Display',serif"};
 const PALETTES = [
@@ -622,6 +675,7 @@ const DICT = {
   copyTitle:["Copier le code HTML du CV","Copy the CV HTML code","Copia il codice HTML del CV"],
   print:["Imprimer","Print","Stampa"],
   printTitle:["Impression du navigateur","Browser print","Stampa del browser"],
+  docTitleLabel:["Nom du fichier PDF","PDF file name","Nome del file PDF"],
   tabJson:["JSON","JSON","JSON"],
   tabJsonTitle:["Modifier le code JSON (les clés sont colorées)","Edit the JSON code (keys are colored)","Modifica il codice JSON (le chiavi sono colorate)"],
   tabForm:["Formulaire","Form","Modulo"],
@@ -695,6 +749,9 @@ const DICT = {
   "theme.bold":["Bandeau","Banner","Banda"],
   "theme.classic":["Classique","Classic","Classico"],
   "theme.minimal":["Sobre","Minimal","Sobrio"],
+  "theme.corporate":["Corporate","Corporate","Corporate"],
+  "theme.executive":["Exécutif","Executive","Esecutivo"],
+  "theme.tech":["Tech","Tech","Tech"],
   "pal.0":["Océan","Ocean","Oceano"],
   "pal.1":["Royal","Royal","Reale"],
   "pal.2":["Forêt","Forest","Foresta"],
@@ -751,6 +808,7 @@ const DICT = {
   "fs.extra":["Informations complémentaires","Additional information","Altre informazioni"],
   "fs.links":["Liens","Links","Link"],
   "f.role":["Titre / poste","Title / role","Titolo / ruolo"],
+  "f.company":["Entreprise visée (nom du PDF)","Target company (PDF name)","Azienda target (nome del PDF)"],
   "f.availability":["Disponibilité","Availability","Disponibilità"],
   "f.newContact":["Nouveau champ (ex. Site, Adresse)","New field (e.g. Website, Address)","Nuovo campo (es. Sito, Indirizzo)"],
   "f.add":["+ Ajouter","+ Add","+ Aggiungi"],
@@ -849,7 +907,7 @@ const DICT = {
   "f.orderHint":["Glisse les sections avec la poignée ⠿ pour changer l'ordre. Avec les designs Élégant et Moderne, l'ordre s'applique dans chaque colonne.","Drag the sections by the ⠿ handle to change the order. With the Elegant and Modern designs, the order applies within each column.","Trascina le sezioni con la maniglia ⠿ per cambiare l'ordine. Con i design Elegante e Moderno, l'ordine vale all'interno di ogni colonna."],
   "fs.letter":["Lettre de motivation","Cover letter","Lettera di motivazione"],
   "f.l.recipient":["Destinataire","Recipient","Destinatario"],
-  "f.l.company":["Entreprise","Company","Azienda"],
+  "f.l.company":["Entreprise (vide = entreprise visée)","Company (empty = target company)","Azienda (vuota = azienda target)"],
   "f.l.address":["Adresse","Address","Indirizzo"],
   "f.l.city":["Ville (vide = ville du CV)","City (empty = CV city)","Città (vuota = città del CV)"],
   "f.l.date":["Date (vide = aujourd'hui)","Date (empty = today)","Data (vuota = oggi)"],
@@ -857,20 +915,21 @@ const DICT = {
   "f.l.greeting":["Formule d'appel (vide = par défaut)","Greeting (empty = default)","Saluto iniziale (vuoto = predefinito)"],
   "f.l.body":["Corps de la lettre (ligne vide = nouveau paragraphe)","Letter body (blank line = new paragraph)","Corpo della lettera (riga vuota = nuovo paragrafo)"],
   "f.l.closing":["Formule de politesse (vide = par défaut)","Closing (empty = default)","Chiusura (vuota = predefinita)"],
+  "f.l.enclosure":["Pièce jointe (vide = aucune)","Enclosure (empty = none)","Allegato (vuoto = nessuno)"],
   "f.l.signature":["Signature (vide = ton nom)","Signature (empty = your name)","Firma (vuota = il tuo nome)"]
 };
 const I18N = Object.fromEntries(LANGS.map((l,i)=>[l,Object.fromEntries(Object.entries(DICT).map(([k,v])=>[k,v[i]]))]));
 
 const CV_LABELS = {
-  fr:{contact:"Contact",links:"Liens",profile:"Profil",experience:"Expérience",projects:"Projets",skills:"Compétences",education:"Formation",soft:"Savoir-être",languages:"Langues",certifications:"Certifications",interests:"Loisirs",extra:"Informations complémentaires",city:"Ville",phone:"Téléphone",email:"Email",viewProject:"Voir le projet",title:"CV",ltDoc:"Lettre de motivation",ltSubject:"Objet",ltGreeting:"Madame, Monsieur,",ltClosing:"Cordialement,",loc:"fr-FR"},
-  en:{contact:"Contact",links:"Links",profile:"Profile",experience:"Experience",projects:"Projects",skills:"Skills",education:"Education",soft:"Soft skills",languages:"Languages",certifications:"Certifications",interests:"Hobbies",extra:"Additional information",city:"City",phone:"Phone",email:"Email",viewProject:"View the project",title:"Resume",ltDoc:"Cover letter",ltSubject:"Subject",ltGreeting:"Dear Sir or Madam,",ltClosing:"Sincerely,",loc:"en-GB"},
-  it:{contact:"Contatti",links:"Link",profile:"Profilo",experience:"Esperienza",projects:"Progetti",skills:"Competenze",education:"Formazione",soft:"Soft skill",languages:"Lingue",certifications:"Certificazioni",interests:"Hobby",extra:"Altre informazioni",city:"Città",phone:"Telefono",email:"Email",viewProject:"Vedi il progetto",title:"CV",ltDoc:"Lettera di motivazione",ltSubject:"Oggetto",ltGreeting:"Gentile Responsabile,",ltClosing:"Cordiali saluti,",loc:"it-IT"}
+  fr:{contact:"Contact",links:"Liens",profile:"Profil",experience:"Expérience",projects:"Projets",skills:"Compétences",education:"Formation",soft:"Savoir-être",languages:"Langues",certifications:"Certifications",interests:"Loisirs",extra:"Informations complémentaires",city:"Ville",phone:"Téléphone",email:"Email",viewProject:"Voir le projet",title:"CV",ltDoc:"Lettre de motivation",ltSubject:"Objet",ltGreeting:"Madame, Monsieur,",ltClosing:"Je vous prie d'agréer, Madame, Monsieur, l'expression de mes salutations distinguées.",ltEnclosure:"P.J.",ltDate:(c,d)=>c?`À ${c}, le ${d}`:`Le ${d}`,loc:"fr-FR"},
+  en:{contact:"Contact",links:"Links",profile:"Profile",experience:"Experience",projects:"Projects",skills:"Skills",education:"Education",soft:"Soft skills",languages:"Languages",certifications:"Certifications",interests:"Hobbies",extra:"Additional information",city:"City",phone:"Phone",email:"Email",viewProject:"View the project",title:"Resume",ltDoc:"Cover letter",ltSubject:"Subject",ltGreeting:"Dear Sir or Madam,",ltClosing:"Yours faithfully,",ltEnclosure:"Encl.",ltDate:(c,d)=>c?`${c}, ${d}`:d,loc:"en-GB"},
+  it:{contact:"Contatti",links:"Link",profile:"Profilo",experience:"Esperienza",projects:"Progetti",skills:"Competenze",education:"Formazione",soft:"Soft skill",languages:"Lingue",certifications:"Certificazioni",interests:"Hobby",extra:"Altre informazioni",city:"Città",phone:"Telefono",email:"Email",viewProject:"Vedi il progetto",title:"CV",ltDoc:"Lettera di motivazione",ltSubject:"Oggetto",ltGreeting:"Gentile Responsabile,",ltClosing:"Distinti saluti,",ltEnclosure:"All.",ltDate:(c,d)=>c?`${c}, ${d}`:d,loc:"it-IT"}
 };
 
 const LETTER_TPL = {
-  fr:{recipient:"Madame, Monsieur",company:"[Entreprise]",address:"",city:"",date:"",subject:"Candidature – [Poste]",greeting:"",body:"Passionné par l'informatique, je vous adresse ma candidature pour le poste de [Poste] au sein de [Entreprise]. Votre offre correspond à mon parcours et au projet professionnel que je construis.\n\nAu fil de mes expériences, j'ai appris à analyser un problème, à le résoudre et à documenter ma démarche, tout en restant à l'écoute des utilisateurs. Ces qualités me permettront de contribuer rapidement à vos équipes.\n\nJe serais heureux de vous exposer ma motivation lors d'un entretien et reste à votre disposition pour toute information complémentaire.",closing:"",signature:""},
-  en:{recipient:"Hiring Manager",company:"[Company]",address:"",city:"",date:"",subject:"Application – [Position]",greeting:"",body:"I am writing to apply for the [Position] role at [Company]. Your offer matches my background and the career path I am building.\n\nThrough my experience I have learned to analyse a problem, solve it and document my approach while listening to users. These qualities will allow me to contribute quickly to your teams.\n\nI would be glad to explain my motivation in an interview and remain available for any further information.",closing:"",signature:""},
-  it:{recipient:"Spett.le Ufficio Risorse Umane",company:"[Azienda]",address:"",city:"",date:"",subject:"Candidatura – [Posizione]",greeting:"",body:"Appassionato di informatica, desidero candidarmi per la posizione di [Posizione] presso [Azienda]. La vostra offerta corrisponde al mio percorso e al progetto professionale che sto costruendo.\n\nNelle mie esperienze ho imparato ad analizzare un problema, a risolverlo e a documentare il lavoro svolto, ascoltando sempre gli utenti. Queste qualità mi permetteranno di contribuire rapidamente ai vostri team.\n\nSarei lieto di illustrare la mia motivazione in un colloquio e resto a disposizione per qualsiasi informazione.",closing:"",signature:""}
+  fr:{recipient:"À l'attention du Service des Ressources Humaines",company:"",address:"",city:"",date:"",subject:"Candidature – [Poste]",greeting:"",body:"Passionné par l'informatique, je vous adresse ma candidature pour le poste de [Poste] au sein de votre entreprise. Votre offre correspond à mon parcours et au projet professionnel que je construis.\n\nAu fil de mes expériences, j'ai appris à analyser un problème, à le résoudre et à documenter ma démarche, tout en restant à l'écoute des utilisateurs. Ces qualités me permettront de contribuer rapidement à vos équipes.\n\nJe serais heureux de vous exposer ma motivation lors d'un entretien et reste à votre disposition pour toute information complémentaire.",closing:"",enclosure:"Curriculum vitae",signature:""},
+  en:{recipient:"For the attention of the Human Resources Department",company:"",address:"",city:"",date:"",subject:"Application – [Position]",greeting:"",body:"I am writing to apply for the [Position] role at your company. Your offer matches my background and the career path I am building.\n\nThrough my experience I have learned to analyse a problem, solve it and document my approach while listening to users. These qualities will allow me to contribute quickly to your teams.\n\nI would be glad to explain my motivation in an interview and remain available for any further information.",closing:"",enclosure:"Curriculum vitae",signature:""},
+  it:{recipient:"Alla cortese attenzione dell'Ufficio Risorse Umane",company:"",address:"",city:"",date:"",subject:"Candidatura – [Posizione]",greeting:"",body:"Appassionato di informatica, desidero candidarmi per la posizione di [Posizione] presso la vostra azienda. La vostra offerta corrisponde al mio percorso e al progetto professionale che sto costruendo.\n\nNelle mie esperienze ho imparato ad analizzare un problema, a risolverlo e a documentare il lavoro svolto, ascoltando sempre gli utenti. Queste qualità mi permetteranno di contribuire rapidamente ai vostri team.\n\nSarei lieto di illustrare la mia motivazione in un colloquio e resto a disposizione per qualsiasi informazione.",closing:"",enclosure:"Curriculum vitae",signature:""}
 };
 
 let uiLang = "fr";
@@ -883,7 +942,7 @@ const t = (k,v) => {
 
 const PRESETS = {
   elivie: { label:"ELIVIE · Support médical", data:{
-    theme:"pdf", category:"sante", lang:"fr", accent:"#2563eb", onePage:true, role:"Support technique · Environnement médical · Qualité de service", availability:"", avatarUrl:"",
+    theme:"pdf", category:"sante", lang:"fr", company:"ELIVIE", accent:"#2563eb", onePage:true, role:"Support technique · Environnement médical · Qualité de service", availability:"", avatarUrl:"",
     contact:{location:"Lyon",phone:"06 52 68 72 55",email:"elh.benaboud@gmail.com"},
     links:[{label:"LinkedIn",url:"https://www.linkedin.com/in/el-habib-benaboud/?isSelfProfile=true"},{label:"GitHub (Abib-44)",url:"https://github.com/Abib-44"},{label:"GitHub (Abib-dev)",url:"https://github.com/Abib-dev"},{label:"Portfolio",url:"https://abib-44.github.io/portfolio/"}],
     stats:[{value:"6 mois",label:"Stage en hôpital privé"},{value:"20 % +",label:"Objectifs dépassés"}],
@@ -903,7 +962,7 @@ const PRESETS = {
     languages:[],certifications:[],interests:[],extra:[]
   }},
   forsee: { label:"Forsee Power · Technicien IT", data:{
-    theme:"pdf", category:"info", lang:"fr", accent:"#1d5c63", onePage:true, role:"Alternance Technicien Informatique · Support utilisateurs · Linux · Systèmes", availability:"", avatarUrl:"",
+    theme:"pdf", category:"info", lang:"fr", company:"Forsee Power", accent:"#1d5c63", onePage:true, role:"Alternance Technicien Informatique · Support utilisateurs · Linux · Systèmes", availability:"", avatarUrl:"",
     contact:{location:"Lyon",phone:"06 52 68 72 55",email:"elh.benaboud@gmail.com"},
     links:[{label:"LinkedIn",url:"https://linkedin.com/in/el-habib-benaboud-data"},{label:"GitHub (Abib-44)",url:"https://github.com/Abib-44"},{label:"GitHub (Abib-dev)",url:"https://github.com/Abib-dev"},{label:"Portfolio",url:"https://abib-44.github.io/portfolio/"}],
     stats:[{value:"50+",label:"projets backend et data publiés sur GitHub"},{value:"4",label:"expériences techniques : stage, open source, bénévolat, entreprise"},{value:"Prod",label:"serveurs, datacenters et bases de données en production"}],
@@ -940,7 +999,6 @@ try{
   if(a&&a.d&&typeof a.d==="object"&&!Array.isArray(a.d)){currentData=a.d;if(PRESETS[a.p]||String(a.p).startsWith("u:"))currentPreset=a.p}
 }catch(e){}
 
-/* Preset personali (localStorage) */
 const SK = "cv-saved";
 const getSaved = () => { try{ const a=JSON.parse(localStorage.getItem(SK)||"[]"); return Array.isArray(a)?a:[]; }catch(e){ return []; } };
 const putSaved = a => { try{ localStorage.setItem(SK,JSON.stringify(a)); return true; }catch(e){ showToast(t("err.quota"),4000); return false; } };
@@ -1018,7 +1076,8 @@ const dotLine = (d,p,l) => { const s=vis(d,p,l).filter(has); return s.length ? `
 const dotList = (d,p,l) => { const s=vis(d,p,l).filter(has); return s.length ? `<ul class="side-list">${s.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>` : ""; };
 const profileHtml = d => has(d.profile) ? `<p class="profil-text">${esc(d.profile)}</p>` : "";
 const sec = (d,key,title,body) => (body && show(d,key)) ? `<section class="section"><div class="section-title">${esc(title)}</div>${body}</section>` : "";
-const headerHtml = d => `<h1>${esc(FIXED.fullName)}</h1>${(has(d.role)&&show(d,"role"))?`<div class="role">${esc(d.role)}</div>`:""}${(has(d.availability)&&show(d,"availability"))?`<div class="availability">${esc(d.availability)}</div>`:""}`;
+const roleHtml = d => (has(d.role)&&show(d,"role"))?`<div class="role">${esc(d.role)}</div>`:"";
+const headerHtml = d => `<h1>${esc(FIXED.fullName)}</h1>${roleHtml(d)}${(has(d.availability)&&show(d,"availability"))?`<div class="availability">${esc(d.availability)}</div>`:""}`;
 let photoData = "";
 const photoSrc = d => photoData || (has(d.avatarUrl) ? d.avatarUrl : "");
 const posOf = d => { const v = Number(d.avatarPos); return (d.avatarPos === undefined || d.avatarPos === "" || !isFinite(v)) ? 30 : Math.max(0, Math.min(100, v)); };
@@ -1071,21 +1130,31 @@ function renderModern(d){
     <main class="main">${byOrder(d,M)}</main>
     <aside class="aside">${cp.length?`<section class="section"><div class="section-title">${esc(L.contact)}</div>${sideItems(cp)}</section>`:""}${sec(d,"liens",L.links,links)}${byOrder(d,S)}</aside>`;
 }
-const letterDef = d => Object.assign({recipient:"",company:"",address:"",city:"",date:"",subject:"",greeting:"",body:"",closing:"",signature:""}, d.letter||{});
+const letterDef = d => Object.assign({recipient:"",company:"",address:"",city:"",date:"",subject:"",greeting:"",body:"",closing:"",enclosure:"",signature:""}, d.letter||{});
+const realCo = v => (has(v)&&!/^\s*\[.*\]\s*$/.test(v)) ? v.trim() : "";
+const companyOf = d => (docMode==="letter"&&realCo(letterDef(d).company)) || realCo(d.company);
+const titleParts = d => [FIXED.fullName, companyOf(d), docMode==="letter" ? Lc(d).ltDoc : Lc(d).title].filter(has);
+const docTitle = d => titleParts(d).join(" – ");
+const slug = s => String(s).normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^\w\s-]/g,"").trim().replace(/\s+/g,"-");
+const fileBase = d => titleParts(d).map(slug).filter(Boolean).join("_");
 function renderLetter(d){
-  const l=letterDef(d), L=Lc(d), c=contactObj(d), cl=contactPairs(d).map(x=>contactHtml(x[1])).join(" · ");
+  const l=letterDef(d), L=Lc(d), c=contactObj(d);
   const dt=has(l.date)?l.date:new Date().toLocaleDateString(L.loc,{day:"numeric",month:"long",year:"numeric"});
   const city=has(l.city)?l.city:cval(c.location);
+  const co=has(l.company)?l.company:cval(d.company);
   const paras=String(l.body||"").split(/\n\s*\n/).filter(has).map(p=>`<p>${esc(p.trim()).replace(/\n/g,"<br>")}</p>`).join("");
-  const rec=[l.recipient,l.company,l.address].filter(has).map(x=>`<div>${esc(x)}</div>`).join("");
+  const recLines=[[l.recipient,"r1"],[co,"rc"],[l.address,""]].filter(x=>has(x[0])).map(x=>`<div${x[1]?` class="${x[1]}"`:""}>${esc(x[0])}</div>`).join("");
   const from=contactPairs(d).map(x=>`<div>${contactHtml(x[1])}</div>`).join("");
-  return `<div class="letter"><header class="lt-head"><div class="lt-from"><h1>${esc(FIXED.fullName)}</h1>${from}</div>${avatarHtml(d)}</header>
-  <div class="lt-meta"><div class="lt-rec">${rec}</div><div class="lt-date">${esc(city?city+", ":"")}${esc(dt)}</div></div>
+  const links=show(d,"liens")?linksInline(d):"";
+  return `<div class="letter"><header class="lt-head"><div class="lt-from"><h1>${esc(FIXED.fullName)}</h1>${roleHtml(d)}<div class="lt-contact">${from}${links}</div></div>${avatarHtml(d)}</header>
+  ${recLines?`<div class="lt-rec">${recLines}</div>`:""}
+  <div class="lt-date">${esc(L.ltDate(city,dt))}</div>
   ${has(l.subject)?`<div class="lt-subj"><strong>${esc(L.ltSubject)} :</strong> ${esc(l.subject)}</div>`:""}
-  <div class="lt-body"><p>${esc(has(l.greeting)?l.greeting:L.ltGreeting)}</p>${paras}<p>${esc(has(l.closing)?l.closing:L.ltClosing)}</p></div>
-  <div class="lt-sign">${esc(has(l.signature)?l.signature:FIXED.fullName)}</div></div>`;
+  <div class="lt-body"><p class="lt-greet">${esc(has(l.greeting)?l.greeting:L.ltGreeting)}</p>${paras}<p>${esc(has(l.closing)?l.closing:L.ltClosing)}</p></div>
+  <div class="lt-sign"><div class="lt-sign-space"></div><strong>${esc(has(l.signature)?l.signature:FIXED.fullName)}</strong></div>
+  ${has(l.enclosure)?`<div class="lt-pj"><strong>${esc(L.ltEnclosure)} :</strong> ${esc(l.enclosure)}</div>`:""}</div>`;
 }
-const RENDERERS = {pdf:renderSingle,bold:renderSingle,classic:renderSingle,minimal:renderSingle,sidebar:renderSidebar,modern:renderModern};
+const RENDERERS = {pdf:renderSingle,bold:renderSingle,classic:renderSingle,minimal:renderSingle,corporate:renderSingle,executive:renderSingle,tech:renderSingle,sidebar:renderSidebar,modern:renderModern};
 const bodyHtml = d => docMode==="letter" ? renderLetter(d) : RENDERERS[themeOf(d)](d);
 
 function renderCV(d){
@@ -1096,7 +1165,7 @@ function renderCV(d){
 }
 function buildStandaloneHtml(d, forPdf){
   return `<!DOCTYPE html>
-<html lang="${cvLang(d)}"><head><meta charset="UTF-8"><title>${esc(docMode==="letter"?Lc(d).ltDoc:Lc(d).title)} - ${esc(FIXED.fullName)}</title>
+<html lang="${cvLang(d)}"><head><meta charset="UTF-8"><title>${esc(docTitle(d))}</title>
 <link rel="icon" type="image/svg+xml" href="${faviconUrl(accentOf(d))}">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Lato:wght@400;700;900&family=Poppins:wght@400;500;600;700;800&family=Source+Sans+3:wght@400;600;700;800&family=Merriweather:wght@400;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
@@ -1110,7 +1179,6 @@ let toastTimer, jsonErr=null;
 const setStatus=(m,e)=>{statusEl.textContent=m;statusEl.className=e?"error":"ok"};
 const showToast=(m,ms)=>{clearTimeout(toastTimer);toastEl.textContent=m;toastEl.classList.add("show");toastTimer=setTimeout(()=>toastEl.classList.remove("show"),ms)};
 
-/* Annulla / Ripristina + salvataggio automatico */
 let hist=[], hi=-1, histLock=false, histTimer;
 const updUndo=()=>{$("btnUndo").disabled=hi<=0;$("btnRedo").disabled=hi>=hist.length-1};
 function persist(){ try{ localStorage.setItem("cv-autosave",JSON.stringify({d:currentData,p:currentPreset})); }catch(e){} }
@@ -1191,7 +1259,6 @@ $("cvLangSel").onchange=e=>{currentData.lang=e.target.value;refresh(true)};
 $("onePage").addEventListener("change",e=>{currentData.onePage=e.target.checked;refresh(true)});
 $("showUrls").addEventListener("change",e=>{currentData.showUrls=e.target.checked;refresh(true)});
 
-/* CV <-> Lettera : resta nella scheda attuale (JSON o Formulaire) */
 function setDoc(m){
   docMode=m;
   if(m==="letter"&&!currentData.letter)currentData.letter=clone(LETTER_TPL[cvLang(currentData)]);
@@ -1199,7 +1266,6 @@ function setDoc(m){
 }
 document.querySelectorAll("#docSw .lang-btn").forEach(b=>b.onclick=()=>setDoc(b.dataset.doc));
 
-/* Preset personali: UI */
 function saveCurrent(name){
   const a=getSaved(), nm=(name||"").trim()||"CV "+(a.length+1), ex=a.find(x=>x.name===nm);
   const item={id:ex?ex.id:Date.now().toString(36),name:nm,ts:Date.now(),data:clone(currentData),photo:photoData};
@@ -1316,6 +1382,9 @@ function refresh(writeJson){
   $("onePage").checked=currentData.onePage!==false;
   $("showUrls").checked=!!currentData.showUrls;
   document.querySelectorAll("#docSw .lang-btn").forEach(b=>b.classList.toggle("on",b.dataset.doc===docMode));
+  $("docTitleVal").textContent=fileBase(currentData)+".pdf";
+  $("docTitleBar").title=docTitle(currentData);
+  document.title=fileBase(currentData);
   const src=photoSrc(currentData);
   $("photoThumb").innerHTML=src?`<img src="${esc(src)}" alt="" style="${imgStyle(currentData)}">`:`<span>${esc(t("photoNone"))}</span>`;
   $("headPhoto").innerHTML=src?`<img src="${esc(src)}" alt="" style="width:100%;height:100%;object-fit:cover">`:CAMERA_SVG;
@@ -1431,7 +1500,7 @@ $("btnCopy").onclick=async()=>{
 $("btnDownload").onclick=()=>{
   const a=document.createElement("a");
   a.href=URL.createObjectURL(new Blob([buildStandaloneHtml(currentData)],{type:"text/html"}));
-  a.download=(docMode==="letter"?"lettre-":"cv-")+themeOf(currentData)+".html";a.click();
+  a.download=fileBase(currentData)+".html";a.click();
   setTimeout(()=>URL.revokeObjectURL(a.href),1000);setStatus(t("st.htmlDownloaded"),false);
 };
 $("btnPrint").onclick=()=>{setStatus(t("st.print"),false);window.print()};
@@ -1487,6 +1556,7 @@ async function exportPdf(){
     const layer=collectLayer(doc),scale=Math.max(1,Math.min(2,30000/H));
     const canvas=await window.html2canvas(doc.documentElement,{scale,backgroundColor:"#ffffff",width:Wn,height:H,windowWidth:Wn,windowHeight:H,useCORS:true,logging:false});
     const pdf=new window.jspdf.jsPDF({unit:"mm",format:[PW,PH],orientation:"portrait",compress:true});
+    pdf.setProperties({title:docTitle(currentData),author:FIXED.fullName});
     const cw=canvas.width,chh=canvas.height,pagePx=Math.floor(cw*PH/PW),mmPerPx=PW/Wn;
     const ctx=canvas.getContext("2d",{willReadFrequently:true}),bg=ctx.getImageData(0,0,1,1).data;
     let y=0,first=true,pages=0;
@@ -1500,7 +1570,7 @@ async function exportPdf(){
       pdf.addImage(part.toDataURL("image/jpeg",.95),"JPEG",0,0,PW,sh*PW/cw,undefined,"FAST");
       addLayer(pdf,layer,mmPerPx,y/scale,end/scale);pages++;y=end;
     }
-    const name=(docMode==="letter"?"Lettre-":"CV-")+FIXED.fullName.replace(/\s+/g,"-")+".pdf",a=document.createElement("a");
+    const name=fileBase(currentData)+".pdf",a=document.createElement("a");
     a.href=URL.createObjectURL(pdf.output("blob"));a.download=name;a.style.display="none";document.body.appendChild(a);a.click();a.remove();
     setTimeout(()=>URL.revokeObjectURL(a.href),4000);
     setStatus(t("st.pdfReady",{n:name,p:pages+" "+t(pages>1?"pageMany":"pageOne")}),false);
@@ -1511,7 +1581,6 @@ async function exportPdf(){
 $("btnPdf").onclick=exportPdf;
 
 const openForm=new Set(["identity","letter"]);
-/* campi modificati e non ancora confermati con ✓ */
 const dirtyPaths=new Set();
 const LISTS={
   stats:{t:()=>({value:"",label:""})},
@@ -1545,7 +1614,7 @@ function fList(key,item){
 }
 function buildLetterForm(){
   const F=(k,kind,r)=>fIn(t("f.l."+k),"letter."+k,kind,r);
-  return fSec("letter",fTwo(F("recipient"),F("company"))+F("address")+fTwo(F("city"),F("date"))+F("subject")+F("greeting")+F("body","area",14)+fTwo(F("closing"),F("signature")));
+  return fSec("letter",fTwo(F("recipient"),F("company"))+F("address")+fTwo(F("city"),F("date"))+F("subject")+F("greeting")+F("body","area",14)+fTwo(F("closing"),F("signature"))+F("enclosure"));
 }
 function buildForm(){
   const sc=formEl.scrollTop;
@@ -1554,7 +1623,7 @@ function buildForm(){
   const ord=orderKeys(currentData,DEFAULT_ORDER);
   const orderBody=`<p class="hint">${esc(t("f.orderHint"))}</p><div id="ordList">`+ord.map(k=>`<div class="fe-ord" data-k="${k}"><span class="fe-grip">⠿</span><span>${esc(t("sec."+k))}</span></div>`).join("")+`</div>`;
   formEl.innerHTML=[
-    fSec("identity",fIn(t("f.role"),"role","text")+fIn(t("f.availability"),"availability","text")),
+    fSec("identity",fIn(t("f.company"),"company","text")+fIn(t("f.role"),"role","text")+fIn(t("f.availability"),"availability","text")),
     fSec("order",orderBody),
     fSec("contact",BASE_CONTACT.map(k=>fIn(contactName(k,uiLang),"contact."+k,"text")).join("")
       +extraContact.map(k=>`<div class="fe-extra">${fIn(contactName(k,uiLang),"contact."+k,"text")}<button type="button" class="fe-del" data-act="delc" data-k="${esc(k)}">${esc(t("del"))}</button></div>`).join("")
@@ -1600,7 +1669,6 @@ function swapHide(prefix,i,j){
   currentData.hide=arr(currentData.hide).map(h=>h===prefix+i?prefix+j:h===prefix+j?prefix+i:h);
 }
 
-/* Ordre des sections : trascinamento con mouse / dito */
 let ordDrag=null;
 formEl.addEventListener("pointerdown",e=>{
   const g=e.target.closest&&e.target.closest(".fe-grip"); if(!g)return;
@@ -1660,14 +1728,8 @@ formEl.addEventListener("click",e=>{
   const isAdd=b.dataset.act==="add", g=(b.closest(".fe-sec")||{dataset:{}}).dataset.g;
   if(isAdd)currentData[key].push(L.t());
   else{const i=+b.dataset.i;currentData[key].splice(i,1);if(L.h)dropHide(L.h,i);dirtyPaths.clear()}
-  if(isAdd){
-    /* il nuovo elemento è l'ultimo: i suoi campi sono "da confermare" */
-    const n=currentData[key].length-1;
-    formEl.dataset.pendingNew=key+"."+n;
-  }
   buildForm();refresh(true);
   if(isAdd){
-    const pre=formEl.dataset.pendingNew+"."; delete formEl.dataset.pendingNew;
     const last=formEl.querySelector(`.fe-sec[data-g="${g}"]`);
     const item=last&&[...last.querySelectorAll(".fe-item")].pop();
     if(item)item.querySelectorAll("[data-p]").forEach(x=>{dirtyPaths.add(x.dataset.p);const ok=x.closest(".fe-in").querySelector(".fe-ok");if(ok)ok.classList.add("dirty")});
