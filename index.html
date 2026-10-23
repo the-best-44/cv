@@ -112,6 +112,27 @@
 .av-left:not(.t-minimal) .head .avatar,.t-modern.av-left .m-top .avatar{order:-1;margin-right:0;margin-left:var(--ave,0mm)}
 .t-sidebar.av-left .sidebar .avatar{margin-left:0;margin-right:auto}
 .t-sidebar.av-right .sidebar .avatar{margin-left:auto;margin-right:0}
+/* Lettre de motivation */
+.letter{padding:var(--pad);min-height:297mm}
+.lt-head{display:flex;justify-content:space-between;align-items:center;gap:var(--avg,1em);padding-bottom:.8em;border-bottom:2px solid var(--accent)}
+.lt-head>div:first-child{flex:1;min-width:0}
+.av-left .lt-head .avatar{order:-1}
+.lt-meta{display:flex;justify-content:space-between;align-items:flex-start;gap:2em;margin-top:2em}
+.lt-rec{line-height:1.45;color:var(--ink);font-weight:600}.lt-date{white-space:nowrap}
+.lt-subj{margin-top:1.8em;color:var(--ink)}
+.lt-body{margin-top:1.6em}.lt-body p{margin-bottom:1em;text-align:justify;line-height:1.6}
+.lt-sign{margin-top:2.2em;font-weight:700;color:var(--ink)}
+.lt-bold .lt-head,.lt-modern .lt-head,.lt-sidebar .lt-head{background:var(--band);color:var(--band-text);margin:calc(-1*var(--pad)) calc(-1*var(--pad)) 0;padding:var(--pad);border:0}
+.lt-bold h1,.lt-modern h1,.lt-sidebar h1{color:var(--band-text)}
+.lt-bold .role,.lt-modern .role,.lt-sidebar .role,.lt-bold .links-line,.lt-modern .links-line,.lt-sidebar .links-line{color:var(--accent-light)}
+.lt-bold .avatar,.lt-modern .avatar,.lt-sidebar .avatar{border-color:var(--accent-light)}
+.lt-minimal .lt-head{flex-direction:column;text-align:center}
+.lt-minimal h1{font-family:'Playfair Display',serif;font-weight:600;font-size:2.7em}
+.lt-minimal .role{color:var(--soft);letter-spacing:.22em}.lt-minimal .links-line{justify-content:center}
+.lt-minimal .avatar{order:-1;margin-bottom:.7em}
+.lt-classic h1{font-family:'Merriweather',serif;font-weight:700;font-size:2.1em;letter-spacing:0}
+.lt-classic .lt-head{border-bottom:3px double var(--ink)}
+.lt-classic .role{letter-spacing:.04em;text-transform:none;color:var(--ink);font-weight:600}
 @media print{.page{box-shadow:none}}
 </style>
 
@@ -140,6 +161,7 @@ h2{margin:0;font-family:'Playfair Display',serif;font-weight:600;font-size:22px;
 .lang-btn{border:0;border-radius:0;background:none;padding:7px 10px;font-size:12px;font-weight:700;letter-spacing:.06em;color:#cfd8dc}
 .lang-btn:hover{background:#2a343b}
 .lang-btn.on{background:rgba(232,179,112,.25);color:#ffd9a0}
+.doc-sw .lang-btn{flex:1;padding:9px 10px;font-size:13px}
 .fold-head{width:36px;height:32px;padding:0;display:grid;place-items:center;border-radius:999px}
 .fold-head svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;transition:transform .3s}
 .editor-header.closed .fold-head svg{transform:rotate(180deg)}
@@ -147,7 +169,7 @@ h2{margin:0;font-family:'Playfair Display',serif;font-weight:600;font-size:22px;
 .editor-header.closed .head-collapse{grid-template-rows:0fr}
 .head-inner{min-height:0;overflow:hidden;display:flex;flex-direction:column;gap:14px}
 .head-photo{display:none;width:44px;height:44px;padding:0;border-radius:50%;border:2px solid #8a979d;background:#161c20;overflow:hidden;place-items:center;flex:none}
-.head-row{display:flex;gap:8px}.head-row select{flex:1;min-width:0}
+.head-row{display:flex;gap:6px}.head-row select{flex:1;min-width:0}
 .icon-btn{width:42px;padding:0;font-size:18px;line-height:1}
 .toolbar{display:grid;grid-template-columns:1.35fr 1fr 1fr 1.15fr;gap:6px}
 .toolbar button{padding:9px 4px;font-weight:600;letter-spacing:.01em}
@@ -254,12 +276,29 @@ button:disabled{opacity:.45;cursor:not-allowed}
 .fe-f input,.fe-f textarea{width:100%;background:#161c20;color:#fff;border:1px solid #56656d;border-radius:7px;padding:8px 10px;font-family:inherit;font-size:14px;font-weight:400}
 .fe-f textarea{resize:vertical;min-height:64px;line-height:1.45}
 .fe-f input:focus,.fe-f textarea:focus{outline:none;border-color:#e8b370}
+.fe-in{display:flex;gap:6px;align-items:flex-start}.fe-in input,.fe-in textarea{flex:1;min-width:0}
+.fe-ok{flex:none;width:36px;height:36px;padding:0;background:#2f9e4f;border:1px solid #3fbf63;color:#fff;font-size:16px;font-weight:800;border-radius:7px;transition:background .15s,box-shadow .15s}
+.fe-ok:hover{background:#3fbf63}
+.fe-ok.done{background:#22c55e;box-shadow:0 0 0 3px rgba(34,197,94,.35)}
 .fe-row2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .fe-item{display:flex;flex-direction:column;gap:8px;padding:10px;border:1px solid #46545c;border-radius:9px;background:#1c2328}
 .fe-item-head{display:flex;align-items:center;justify-content:space-between;font-size:12px;font-weight:700;color:#ffd9a0}
+.fe-acts{display:flex;gap:4px}
 .fe-del{padding:3px 9px;font-size:12px}
+.fe-ord{display:flex;align-items:center;justify-content:space-between;padding:8px 10px;border:1px solid #46545c;border-radius:9px;background:#1c2328;font-size:14px}
 .fe-extra{display:flex;gap:8px;align-items:flex-end}.fe-extra .fe-f{flex:1;min-width:0}.fe-extra>input{flex:1;min-width:0;background:#161c20;color:#fff;border:1px solid #56656d;border-radius:7px;padding:8px 10px;font-family:inherit;font-size:14px}.fe-extra>input:focus{outline:none;border-color:#e8b370}.fe-extra .fe-add{flex:none}
 .fe-add{padding:9px;font-weight:600;border-style:dashed}
+.modal{position:fixed;inset:0;z-index:2000;background:rgba(0,0,0,.6);display:grid;place-items:center;padding:16px}
+.modal-box{width:min(520px,100%);max-height:86vh;overflow:auto;background:#1c2328;border:1px solid #3a464d;border-radius:14px;padding:18px;display:flex;flex-direction:column;gap:12px}
+.modal-head{display:flex;justify-content:space-between;align-items:center}
+.modal-head h3{margin:0;font-family:'Playfair Display',serif;font-size:20px;color:#f7ead4}
+.modal-save{display:flex;gap:8px}
+.modal-save input{flex:1;min-width:0;background:#161c20;color:#fff;border:1px solid #56656d;border-radius:8px;padding:9px 11px;font:inherit;font-size:14px}
+#savedList{display:flex;flex-direction:column;gap:8px}
+.sv-item{display:flex;align-items:center;gap:8px;padding:10px 12px;border:1px solid #46545c;border-radius:10px;background:#242d34}
+.sv-item.cur{border-color:#e8b370}
+.sv-info{flex:1;min-width:0}.sv-info b{display:block;color:#fff;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.sv-info small{color:#cfd8dc;font-size:12px}
+.sv-del{color:#ffb3a8;border-color:#6b3630}
 .preview-wrap{flex:1;overflow:auto;padding:30px 20px;background:#0f1214;display:flex;justify-content:center;align-items:flex-start}
 button{background:#313c43;color:#ffffff;border:1px solid #56656d;border-radius:7px;padding:8px 12px;cursor:pointer;font-family:inherit;font-size:13.5px}button:hover{background:#41505a}
 #status{padding:10px 16px;font-size:13px;border-top:1px solid #3a464d}#status.ok{color:#9be09e}#status.error{color:#ff9a8c}
@@ -293,10 +332,11 @@ button{background:#313c43;color:#ffffff;border:1px solid #56656d;border-radius:7
   h2{font-size:25px}
   .brand-t span{font-size:10px}
   .lang-btn{padding:8px 9px}
+  .doc-sw .lang-btn{padding:11px 10px}
   .fold-head{width:38px;height:36px}
-  .head-row{gap:8px}
+  .head-row{gap:6px}
   .head-row select{height:46px;border-radius:12px}
-  .icon-btn{width:46px;height:46px;border-radius:12px}
+  .icon-btn{width:44px;height:46px;border-radius:12px}
   .toolbar{display:flex;gap:8px;overflow-x:auto;margin:0;padding:2px 0 4px;scrollbar-width:none}
   .toolbar::-webkit-scrollbar{display:none}
   .toolbar button{flex:none;min-height:44px;padding:0 18px;border-radius:999px;font-size:14px;white-space:nowrap}
@@ -315,6 +355,7 @@ button{background:#313c43;color:#ffffff;border:1px solid #56656d;border-radius:7
   .fe-f{font-size:12.5px}
   .fe-f input,.fe-f textarea,.fe-extra>input{font-size:16px;min-height:46px;border-radius:10px;padding:10px 12px}
   .fe-f textarea{min-height:76px}
+  .fe-ok{width:46px;height:46px;border-radius:10px}
   .fe-item{border-radius:12px;padding:12px}
   .fe-del{min-height:38px;padding:0 14px;border-radius:999px}
   .fe-add{min-height:46px;border-radius:12px}
@@ -352,12 +393,13 @@ button{background:#313c43;color:#ffffff;border:1px solid #56656d;border-radius:7
   .panel button:not(.pal):not(.theme-btn){min-height:46px;border-radius:12px}
   .panel .panel-tools button{min-height:40px;border-radius:999px}
   .photo-thumb{width:76px;height:76px}
+  .modal-save input{font-size:16px}
   #toast{top:calc(14px + env(safe-area-inset-top,0px));max-width:92vw}
 }
 @media (prefers-reduced-motion:reduce){
   .editor,.panel,.preview-wrap,.flow-track,.mnav:before,.head-collapse{transition:none!important}
 }
-@media print{@page{size:A4;margin:0}.page-guides,.editor,.panel,.mnav,#toast,#bgFlow{display:none!important}.page-box{width:210mm!important;transform:none!important;margin:0!important}body{display:block;height:auto;overflow:visible;background:#fff}.preview-wrap{padding:0;overflow:visible;display:block;background:#fff;position:static;transform:none;visibility:visible}.page{box-shadow:none}*{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+@media print{@page{size:A4;margin:0}.page-guides,.editor,.panel,.mnav,.modal,#toast,#bgFlow{display:none!important}.page-box{width:210mm!important;transform:none!important;margin:0!important}body{display:block;height:auto;overflow:visible;background:#fff}.preview-wrap{padding:0;overflow:visible;display:block;background:#fff;position:static;transform:none;visibility:visible}.page{box-shadow:none}*{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
 </style>
 </head>
 <body data-view="edit">
@@ -383,6 +425,13 @@ button{background:#313c43;color:#ffffff;border:1px solid #56656d;border-radius:7
         <div class="head-row">
           <select id="presetSel" data-i18n-title="presetTitle"></select>
           <button id="btnReset" class="icon-btn" data-i18n-title="resetTitle">↺</button>
+          <button id="btnUndo" class="icon-btn" data-i18n-title="undo" disabled>↶</button>
+          <button id="btnRedo" class="icon-btn" data-i18n-title="redo" disabled>↷</button>
+          <button id="btnSaved" class="icon-btn" data-i18n-title="personal">💾</button>
+        </div>
+        <div class="lang-sw doc-sw" id="docSw">
+          <button class="lang-btn" data-doc="cv" type="button">CV</button>
+          <button class="lang-btn" data-doc="letter" type="button" data-i18n="docLetter"></button>
         </div>
         <div class="toolbar">
           <button id="btnPdf" class="primary" data-i18n="exportPdf" data-i18n-title="exportPdfTitle"></button>
@@ -499,6 +548,14 @@ button{background:#313c43;color:#ffffff;border:1px solid #56656d;border-radius:7
   <button data-v="set" type="button"><svg viewBox="0 0 24 24"><path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3M1 14h6M9 8h6M17 16h6"/></svg><span data-i18n="navSet"></span></button>
 </nav>
 <button class="mfab" id="btnPdfM" type="button"><svg viewBox="0 0 24 24"><path d="M12 3v12M7 10l5 5 5-5M4 21h16"/></svg><span data-i18n="exportPdf"></span></button>
+<div id="savedModal" class="modal" hidden>
+  <div class="modal-box">
+    <div class="modal-head"><h3 data-i18n="personal"></h3><button id="btnSavedClose" type="button">✕</button></div>
+    <div class="modal-save"><input type="text" id="saveName" data-i18n-ph="saveNamePh" autocomplete="off"><button id="btnSaveNew" class="primary" type="button" data-i18n="saveNew"></button></div>
+    <p class="hint" data-i18n="savedHint"></p>
+    <div id="savedList"></div>
+  </div>
+</div>
 <div id="toast"></div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
@@ -519,6 +576,7 @@ const TEXT_PRESETS = [
   {i:"#1b2430",t:"#4a5563"},{i:"#000000",t:"#222222"},{i:"#2b2b2b",t:"#555555"}
 ];
 const SECTION_KEYS = ["contact","stats","profil","experience","tags","projets","competences","formation","certifs","langues","softskills","loisirs","infos","liens"];
+const DEFAULT_ORDER = ["profil","experience","projets","competences","formation","certifs","langues","softskills","loisirs","infos"];
 const STYLE_DEF = {ink:"#1b2430",text:"#4a5563",band:"#14202b",bandText:"#ffffff",bg:"#ffffff",font:"Inter",size:12,space:1,margin:15};
 const THEME_STYLE = {sidebar:{band:"#1f2e26",bg:"#f7f3ec"}};
 const MAX_PRESETS = 5;
@@ -758,14 +816,48 @@ const DICT = {
   "jerr.line":["ligne {l}, colonne {c}","line {l}, column {c}","riga {l}, colonna {c}"],
   "jerr.go":["Aller à l'erreur","Go to error","Vai all'errore"],
   "jerr.trailing":["Virgule en trop à la fin de cette ligne, avant } ou ] : supprime-la.","Trailing comma at the end of this line, before } or ]: remove it.","Virgola di troppo alla fine di questa riga, prima di } o ]: eliminala."],
-  "jerr.hint":["L'aperçu garde la dernière version valide.","The preview keeps the last valid version.","L'anteprima mantiene l'ultima versione valida."]
+  "jerr.hint":["L'aperçu garde la dernière version valide.","The preview keeps the last valid version.","L'anteprima mantiene l'ultima versione valida."],
+  undo:["Annuler (Ctrl+Z)","Undo (Ctrl+Z)","Annulla (Ctrl+Z)"],
+  redo:["Rétablir (Ctrl+Y)","Redo (Ctrl+Y)","Ripristina (Ctrl+Y)"],
+  personal:["Presets personnels","My presets","Preset personali"],
+  saveNamePh:["Nom du preset","Preset name","Nome del preset"],
+  saveNew:["Enregistrer le CV actuel","Save current CV","Salva il CV attuale"],
+  savedHint:["Enregistrés dans ce navigateur (localStorage), photo incluse.","Stored in this browser (localStorage), photo included.","Salvati in questo browser (localStorage), foto inclusa."],
+  savedEmpty:["Aucun CV enregistré pour l'instant.","No saved CV yet.","Nessun CV salvato per ora."],
+  load:["Charger","Load","Carica"],
+  delConfirm:["Supprimer « {n} » ?","Delete “{n}”?","Eliminare «{n}»?"],
+  docLetter:["Lettre de motivation","Cover letter","Lettera di motivazione"],
+  okTitle:["Valider ce champ","Confirm this field","Conferma questo campo"],
+  "st.fieldSaved":["✅ Champ validé et enregistré","✅ Field confirmed and saved","✅ Campo confermato e salvato"],
+  "st.saved":["✅ Enregistré : {n}","✅ Saved: {n}","✅ Salvato: {n}"],
+  "st.deleted":["Supprimé","Deleted","Eliminato"],
+  "err.quota":["❌ Stockage local plein","❌ Local storage full","❌ Archivio locale pieno"],
+  "fs.order":["Ordre des sections","Section order","Ordine delle sezioni"],
+  "f.orderHint":["Avec les designs Élégant et Moderne, l'ordre s'applique dans chaque colonne.","With the Elegant and Modern designs, the order applies within each column.","Con i design Elegante e Moderno, l'ordine vale all'interno di ogni colonna."],
+  "fs.letter":["Lettre de motivation","Cover letter","Lettera di motivazione"],
+  "f.l.recipient":["Destinataire","Recipient","Destinatario"],
+  "f.l.company":["Entreprise","Company","Azienda"],
+  "f.l.address":["Adresse","Address","Indirizzo"],
+  "f.l.city":["Ville (vide = ville du CV)","City (empty = CV city)","Città (vuota = città del CV)"],
+  "f.l.date":["Date (vide = aujourd'hui)","Date (empty = today)","Data (vuota = oggi)"],
+  "f.l.subject":["Objet","Subject","Oggetto"],
+  "f.l.greeting":["Formule d'appel (vide = par défaut)","Greeting (empty = default)","Saluto iniziale (vuoto = predefinito)"],
+  "f.l.body":["Corps de la lettre (ligne vide = nouveau paragraphe)","Letter body (blank line = new paragraph)","Corpo della lettera (riga vuota = nuovo paragrafo)"],
+  "f.l.closing":["Formule de politesse (vide = par défaut)","Closing (empty = default)","Chiusura (vuota = predefinita)"],
+  "f.l.signature":["Signature (vide = ton nom)","Signature (empty = your name)","Firma (vuota = il tuo nome)"]
 };
 const I18N = Object.fromEntries(LANGS.map((l,i)=>[l,Object.fromEntries(Object.entries(DICT).map(([k,v])=>[k,v[i]]))]));
 
 const CV_LABELS = {
-  fr:{contact:"Contact",links:"Liens",profile:"Profil",experience:"Expérience",projects:"Projets",skills:"Compétences",education:"Formation",soft:"Savoir-être",languages:"Langues",certifications:"Certifications",interests:"Loisirs",extra:"Informations complémentaires",city:"Ville",phone:"Téléphone",email:"Email",viewProject:"Voir le projet",title:"CV"},
-  en:{contact:"Contact",links:"Links",profile:"Profile",experience:"Experience",projects:"Projects",skills:"Skills",education:"Education",soft:"Soft skills",languages:"Languages",certifications:"Certifications",interests:"Hobbies",extra:"Additional information",city:"City",phone:"Phone",email:"Email",viewProject:"View the project",title:"Resume"},
-  it:{contact:"Contatti",links:"Link",profile:"Profilo",experience:"Esperienza",projects:"Progetti",skills:"Competenze",education:"Formazione",soft:"Soft skill",languages:"Lingue",certifications:"Certificazioni",interests:"Hobby",extra:"Altre informazioni",city:"Città",phone:"Telefono",email:"Email",viewProject:"Vedi il progetto",title:"CV"}
+  fr:{contact:"Contact",links:"Liens",profile:"Profil",experience:"Expérience",projects:"Projets",skills:"Compétences",education:"Formation",soft:"Savoir-être",languages:"Langues",certifications:"Certifications",interests:"Loisirs",extra:"Informations complémentaires",city:"Ville",phone:"Téléphone",email:"Email",viewProject:"Voir le projet",title:"CV",ltDoc:"Lettre de motivation",ltSubject:"Objet",ltGreeting:"Madame, Monsieur,",ltClosing:"Cordialement,",loc:"fr-FR"},
+  en:{contact:"Contact",links:"Links",profile:"Profile",experience:"Experience",projects:"Projects",skills:"Skills",education:"Education",soft:"Soft skills",languages:"Languages",certifications:"Certifications",interests:"Hobbies",extra:"Additional information",city:"City",phone:"Phone",email:"Email",viewProject:"View the project",title:"Resume",ltDoc:"Cover letter",ltSubject:"Subject",ltGreeting:"Dear Sir or Madam,",ltClosing:"Sincerely,",loc:"en-GB"},
+  it:{contact:"Contatti",links:"Link",profile:"Profilo",experience:"Esperienza",projects:"Progetti",skills:"Competenze",education:"Formazione",soft:"Soft skill",languages:"Lingue",certifications:"Certificazioni",interests:"Hobby",extra:"Altre informazioni",city:"Città",phone:"Telefono",email:"Email",viewProject:"Vedi il progetto",title:"CV",ltDoc:"Lettera di motivazione",ltSubject:"Oggetto",ltGreeting:"Gentile Responsabile,",ltClosing:"Cordiali saluti,",loc:"it-IT"}
+};
+
+const LETTER_TPL = {
+  fr:{recipient:"Madame, Monsieur",company:"[Entreprise]",address:"",city:"",date:"",subject:"Candidature – [Poste]",greeting:"",body:"Passionné par l'informatique, je vous adresse ma candidature pour le poste de [Poste] au sein de [Entreprise]. Votre offre correspond à mon parcours et au projet professionnel que je construis.\n\nAu fil de mes expériences, j'ai appris à analyser un problème, à le résoudre et à documenter ma démarche, tout en restant à l'écoute des utilisateurs. Ces qualités me permettront de contribuer rapidement à vos équipes.\n\nJe serais heureux de vous exposer ma motivation lors d'un entretien et reste à votre disposition pour toute information complémentaire.",closing:"",signature:""},
+  en:{recipient:"Hiring Manager",company:"[Company]",address:"",city:"",date:"",subject:"Application – [Position]",greeting:"",body:"I am writing to apply for the [Position] role at [Company]. Your offer matches my background and the career path I am building.\n\nThrough my experience I have learned to analyse a problem, solve it and document my approach while listening to users. These qualities will allow me to contribute quickly to your teams.\n\nI would be glad to explain my motivation in an interview and remain available for any further information.",closing:"",signature:""},
+  it:{recipient:"Spett.le Ufficio Risorse Umane",company:"[Azienda]",address:"",city:"",date:"",subject:"Candidatura – [Posizione]",greeting:"",body:"Appassionato di informatica, desidero candidarmi per la posizione di [Posizione] presso [Azienda]. La vostra offerta corrisponde al mio percorso e al progetto professionale che sto costruendo.\n\nNelle mie esperienze ho imparato ad analizzare un problema, a risolverlo e a documentare il lavoro svolto, ascoltando sempre gli utenti. Queste qualità mi permetteranno di contribuire rapidamente ai vostri team.\n\nSarei lieto di illustrare la mia motivazione in un colloquio e resto a disposizione per qualsiasi informazione.",closing:"",signature:""}
 };
 
 let uiLang = "fr";
@@ -827,9 +919,33 @@ const clone = o => JSON.parse(JSON.stringify(o));
 const esc = v => String(v ?? "").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
 const has = v => typeof v === "string" && v.trim().length > 0;
 const arr = v => Array.isArray(v) ? v : [];
+let docMode = "cv";
 let currentData = clone(PRESETS.elivie.data), currentPreset = "elivie";
 applyCategory(currentData, currentData.category);
-function loadPreset(k){ currentPreset=k; currentData=clone(PRESETS[k].data); applyCategory(currentData,currentData.category); }
+try{
+  const a=JSON.parse(localStorage.getItem("cv-autosave")||"null");
+  if(a&&a.d&&typeof a.d==="object"&&!Array.isArray(a.d)){currentData=a.d;if(PRESETS[a.p]||String(a.p).startsWith("u:"))currentPreset=a.p}
+}catch(e){}
+
+/* Preset personali (localStorage) */
+const SK = "cv-saved";
+const getSaved = () => { try{ const a=JSON.parse(localStorage.getItem(SK)||"[]"); return Array.isArray(a)?a:[]; }catch(e){ return []; } };
+const putSaved = a => { try{ localStorage.setItem(SK,JSON.stringify(a)); return true; }catch(e){ showToast(t("err.quota"),4000); return false; } };
+const presetLabel = k => PRESETS[k] ? PRESETS[k].label : ((getSaved().find(x=>"u:"+x.id===k)||{}).name || k);
+function loadPreset(k){
+  let src = PRESETS[k] && PRESETS[k].data, builtin = !!src;
+  if(!src && String(k).startsWith("u:")){ const x=getSaved().find(v=>"u:"+v.id===k); if(x){ src=x.data; photoData=x.photo||""; } }
+  if(!src){ k="elivie"; src=PRESETS.elivie.data; builtin=true; }
+  currentPreset=k; currentData=clone(src);
+  if(builtin) applyCategory(currentData,currentData.category);
+}
+function buildPresetSel(){
+  const s=$("presetSel"); s.innerHTML="";
+  Object.entries(PRESETS).slice(0,MAX_PRESETS).forEach(([k,p])=>{const o=document.createElement("option");o.value=k;o.textContent=p.label;s.appendChild(o)});
+  const sv=getSaved();
+  if(sv.length){const g=document.createElement("optgroup");g.label=t("personal");sv.forEach(x=>{const o=document.createElement("option");o.value="u:"+x.id;o.textContent=x.name;g.appendChild(o)});s.appendChild(g)}
+  if([...s.options].some(o=>o.value===currentPreset)) s.value=currentPreset;
+}
 
 const hid = (d,k) => arr(d.hide).includes(k);
 const show = (d,k) => !hid(d,k);
@@ -847,7 +963,12 @@ const Lc = d => CV_LABELS[cvLang(d)];
 const avkOf = d => { const v=Number(d.avatarSize); return (isFinite(v)&&v>0) ? Math.max(.5,Math.min(2.5,v/100)) : 1; };
 const zoomOf = d => { const v=Number(d.avatarZoom); return (isFinite(v)&&v>=100) ? Math.min(300,v) : 100; };
 const numOr = (v,def) => { if(v===undefined||v===null||v==='')return def; const n=Number(v); return isFinite(n)?n:def; };
-const pageCls = d => " t-"+themeOf(d)+(d.avatarSide==="left"?" av-left":d.avatarSide==="right"?" av-right":"");
+const avCls = d => d.avatarSide==="left"?" av-left":d.avatarSide==="right"?" av-right":"";
+const pageCls = d => " t-"+themeOf(d)+avCls(d);
+const letterCls = d => " lt-"+themeOf(d)+avCls(d);
+const clsOf = d => docMode==="letter" ? letterCls(d) : pageCls(d);
+const orderKeys = (d,keys) => { const o=arr(d.order).filter(k=>keys.includes(k)); return [...o,...keys.filter(k=>!o.includes(k))]; };
+const byOrder = (d,m) => orderKeys(d,Object.keys(m)).map(k=>m[k]).join("");
 function vars(d){
   const s = styleOf(d), a = accentOf(d);
   return `--accent:${a};--accent-light:${mix(a,.5)};--tint:${mix(a,.08)};--rule:${mix(a,.28)};--ink:${s.ink};--soft:${s.text};--band:${s.band};--band-text:${s.bandText};--bg:${s.bg};--font:${FONTS[s.font]||FONTS.Inter};--fs:${s.size};--sp:${s.space};--pad:${s.margin}mm;--avk:${avkOf(d)};${numOr(d.avatarEdge,null)!==null?`--ave:${numOr(d.avatarEdge,0)-s.margin}mm;`:""}${numOr(d.avatarGap,null)!==null?`--avg:${numOr(d.avatarGap,3)}mm;`:""}`;
@@ -895,10 +1016,21 @@ const CAMERA_SVG = `<svg viewBox="0 0 24 24" fill="none" stroke="#e6ecef" stroke
 
 function renderSingle(d){
   const L=Lc(d), cl=contactPairs(d).map(x=>contactHtml(x[1])).join(" · ");
+  const m={
+    profil:sec(d,"profil",L.profile,profileHtml(d)),
+    experience:sec(d,"experience",L.experience,expHtml(d)),
+    projets:sec(d,"projets",L.projects,projHtml(d)),
+    competences:sec(d,"competences",L.skills,skillsHtml(d)),
+    formation:sec(d,"formation",L.education,formHtml(d)),
+    certifs:sec(d,"certifs",L.certifications,certHtml(d)),
+    langues:sec(d,"langues",L.languages,langHtml(d)),
+    softskills:sec(d,"softskills",L.soft,softHtml(d)),
+    loisirs:sec(d,"loisirs",L.interests,dotLine(d,"int:",d.interests)),
+    infos:sec(d,"infos",L.extra,dotLine(d,"info:",d.extra))
+  };
   return `<div class="single"><header class="head"><div>${headerHtml(d)}${cl?`<div class="contact-line">${cl}</div>`:""}${show(d,"liens")?linksInline(d):""}</div>${avatarHtml(d)}</header>
   ${show(d,"stats")?statsHtml(d):""}
-  ${sec(d,"profil",L.profile,profileHtml(d))}${sec(d,"experience",L.experience,expHtml(d))}${sec(d,"projets",L.projects,projHtml(d))}${sec(d,"competences",L.skills,skillsHtml(d))}
-  ${sec(d,"formation",L.education,formHtml(d))}${sec(d,"certifs",L.certifications,certHtml(d))}${sec(d,"langues",L.languages,langHtml(d))}${sec(d,"softskills",L.soft,softHtml(d))}${sec(d,"loisirs",L.interests,dotLine(d,"int:",d.interests))}${sec(d,"infos",L.extra,dotLine(d,"info:",d.extra))}</div>`;
+  ${byOrder(d,m)}</div>`;
 }
 function renderSidebar(d){
   const L=Lc(d);
@@ -906,41 +1038,57 @@ function renderSidebar(d){
   const l = vis(d,"link:",d.links), cp = contactPairs(d);
   const links = l.map(x=>`<a href="${esc(x.url)}">${linkTxt(d,x)}</a>`).join("");
   const skills = vis(d,"skill:",d.skills).map(s=>`<div class="side-item skill-inline"><strong>${esc(s.name)} :</strong> ${esc(s.value)}</div>`).join("");
+  const M={profil:sec(d,"profil",L.profile,profileHtml(d)),experience:sec(d,"experience",L.experience,expHtml(d)),projets:sec(d,"projets",L.projects,projHtml(d))};
+  const S={competences:side("competences",L.skills,skills),formation:side("formation",L.education,formHtml(d)),certifs:side("certifs",L.certifications,certHtml(d)),langues:side("langues",L.languages,langSide(d)),softskills:side("softskills",L.soft,softList(d)),loisirs:side("loisirs",L.interests,dotList(d,"int:",d.interests)),infos:side("infos",L.extra,dotList(d,"info:",d.extra))};
   return `<div class="main-col"><header class="head">${headerHtml(d)}<div class="head-rule"></div></header>
-    ${show(d,"stats")?statsHtml(d):""}${sec(d,"profil",L.profile,profileHtml(d))}${sec(d,"experience",L.experience,expHtml(d))}${sec(d,"projets",L.projects,projHtml(d))}</div>
+    ${show(d,"stats")?statsHtml(d):""}${byOrder(d,M)}</div>
     <aside class="sidebar">${avatarHtml(d)}
     ${cp.length?`<div class="side-block"><div class="side-label">${esc(L.contact)}</div>${sideItems(cp)}</div>`:""}
     ${side("liens",L.links,links?`<div class="side-links">${links}</div>`:"")}
-    ${side("competences",L.skills,skills)}
-    ${side("formation",L.education,formHtml(d))}${side("certifs",L.certifications,certHtml(d))}${side("langues",L.languages,langSide(d))}${side("softskills",L.soft,softList(d))}${side("loisirs",L.interests,dotList(d,"int:",d.interests))}${side("infos",L.extra,dotList(d,"info:",d.extra))}</aside>`;
+    ${byOrder(d,S)}</aside>`;
 }
 function renderModern(d){
   const L=Lc(d);
   const l = vis(d,"link:",d.links), cp = contactPairs(d);
   const links = l.length ? `<div class="links-col">${l.map(x=>`<a href="${esc(x.url)}">${linkTxt(d,x)}</a>`).join("")}</div>` : "";
   const skills = vis(d,"skill:",d.skills).map(s=>`<div class="side-item"><strong>${esc(s.name)}</strong>${esc(s.value)}</div>`).join("");
+  const M={profil:sec(d,"profil",L.profile,profileHtml(d)),experience:sec(d,"experience",L.experience,expHtml(d)),projets:sec(d,"projets",L.projects,projHtml(d))};
+  const S={competences:sec(d,"competences",L.skills,skills),formation:sec(d,"formation",L.education,formHtml(d)),certifs:sec(d,"certifs",L.certifications,certHtml(d)),langues:sec(d,"langues",L.languages,langSide(d)),softskills:sec(d,"softskills",L.soft,softList(d)),loisirs:sec(d,"loisirs",L.interests,dotList(d,"int:",d.interests)),infos:sec(d,"infos",L.extra,dotList(d,"info:",d.extra))};
   return `<header class="m-head"><div class="m-top"><div>${headerHtml(d)}</div>${avatarHtml(d)}</div>${show(d,"stats")?statsHtml(d):""}</header>
-    <main class="main">${sec(d,"profil",L.profile,profileHtml(d))}${sec(d,"experience",L.experience,expHtml(d))}${sec(d,"projets",L.projects,projHtml(d))}</main>
-    <aside class="aside">${cp.length?`<section class="section"><div class="section-title">${esc(L.contact)}</div>${sideItems(cp)}</section>`:""}${sec(d,"liens",L.links,links)}${sec(d,"competences",L.skills,skills)}${sec(d,"formation",L.education,formHtml(d))}${sec(d,"certifs",L.certifications,certHtml(d))}${sec(d,"langues",L.languages,langSide(d))}${sec(d,"softskills",L.soft,softList(d))}${sec(d,"loisirs",L.interests,dotList(d,"int:",d.interests))}${sec(d,"infos",L.extra,dotList(d,"info:",d.extra))}</aside>`;
+    <main class="main">${byOrder(d,M)}</main>
+    <aside class="aside">${cp.length?`<section class="section"><div class="section-title">${esc(L.contact)}</div>${sideItems(cp)}</section>`:""}${sec(d,"liens",L.links,links)}${byOrder(d,S)}</aside>`;
+}
+const letterDef = d => Object.assign({recipient:"",company:"",address:"",city:"",date:"",subject:"",greeting:"",body:"",closing:"",signature:""}, d.letter||{});
+function renderLetter(d){
+  const l=letterDef(d), L=Lc(d), c=contactObj(d), cl=contactPairs(d).map(x=>contactHtml(x[1])).join(" · ");
+  const dt=has(l.date)?l.date:new Date().toLocaleDateString(L.loc,{day:"numeric",month:"long",year:"numeric"});
+  const city=has(l.city)?l.city:cval(c.location);
+  const paras=String(l.body||"").split(/\n\s*\n/).filter(has).map(p=>`<p>${esc(p.trim()).replace(/\n/g,"<br>")}</p>`).join("");
+  const rec=[l.recipient,l.company,l.address].filter(has).map(x=>`<div>${esc(x)}</div>`).join("");
+  return `<div class="letter"><header class="lt-head"><div>${headerHtml(d)}${cl?`<div class="contact-line">${cl}</div>`:""}${show(d,"liens")?linksInline(d):""}</div>${avatarHtml(d)}</header>
+  <div class="lt-meta"><div class="lt-rec">${rec}</div><div class="lt-date">${esc(city?city+", ":"")}${esc(dt)}</div></div>
+  ${has(l.subject)?`<div class="lt-subj"><strong>${esc(L.ltSubject)} :</strong> ${esc(l.subject)}</div>`:""}
+  <div class="lt-body"><p>${esc(has(l.greeting)?l.greeting:L.ltGreeting)}</p>${paras}<p>${esc(has(l.closing)?l.closing:L.ltClosing)}</p></div>
+  <div class="lt-sign">${esc(has(l.signature)?l.signature:FIXED.fullName)}</div></div>`;
 }
 const RENDERERS = {pdf:renderSingle,bold:renderSingle,classic:renderSingle,minimal:renderSingle,sidebar:renderSidebar,modern:renderModern};
+const bodyHtml = d => docMode==="letter" ? renderLetter(d) : RENDERERS[themeOf(d)](d);
 
 function renderCV(d){
-  const k = themeOf(d), html = RENDERERS[k](d);
-  preview.className = "page" + pageCls(d);
+  const html = bodyHtml(d);
+  preview.className = "page" + clsOf(d);
   preview.style.cssText = vars(d);
   return html;
 }
 function buildStandaloneHtml(d, forPdf){
-  const k = themeOf(d);
   return `<!DOCTYPE html>
-<html lang="${cvLang(d)}"><head><meta charset="UTF-8"><title>${esc(Lc(d).title)} - ${esc(FIXED.fullName)}</title>
+<html lang="${cvLang(d)}"><head><meta charset="UTF-8"><title>${esc(docMode==="letter"?Lc(d).ltDoc:Lc(d).title)} - ${esc(FIXED.fullName)}</title>
 <link rel="icon" type="image/svg+xml" href="${faviconUrl(accentOf(d))}">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Lato:wght@400;700;900&family=Poppins:wght@400;500;600;700;800&family=Source+Sans+3:wght@400;600;700;800&family=Merriweather:wght@400;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
 ${$("cv-styles").outerHTML}
 ${forPdf ? `<style>html,body{margin:0;background:#fff}.page{box-shadow:none}</style>` : `<style>@page{size:A4;margin:0}body{margin:0;background:#e9ecef;display:flex;justify-content:center}.page{box-shadow:none}@media print{body{background:#fff}*{-webkit-print-color-adjust:exact;print-color-adjust:exact}}</style>`}
-</head><body><div class="page${pageCls(d)}" style="${vars(d)}">${RENDERERS[k](d)}</div></body></html>`;
+</head><body><div class="page${clsOf(d)}" style="${vars(d)}">${bodyHtml(d)}</div></body></html>`;
 }
 
 const jsonInput=$("jsonInput"), preview=$("preview"), statusEl=$("status"), toastEl=$("toast"), pageBox=$("pageBox"), pageGuides=$("pageGuides"), pageInfo=$("pageInfo"), panelEl=$("panelEl"), formEl=$("formEditor");
@@ -948,8 +1096,26 @@ let toastTimer, jsonErr=null;
 const setStatus=(m,e)=>{statusEl.textContent=m;statusEl.className=e?"error":"ok"};
 const showToast=(m,ms)=>{clearTimeout(toastTimer);toastEl.textContent=m;toastEl.classList.add("show");toastTimer=setTimeout(()=>toastEl.classList.remove("show"),ms)};
 
+/* Annulla / Ripristina + salvataggio automatico */
+let hist=[], hi=-1, histLock=false, histTimer;
+const updUndo=()=>{$("btnUndo").disabled=hi<=0;$("btnRedo").disabled=hi>=hist.length-1};
+function persist(){ try{ localStorage.setItem("cv-autosave",JSON.stringify({d:currentData,p:currentPreset})); }catch(e){} }
+function histPush(){
+  if(histLock)return;
+  const s=JSON.stringify(currentData); if(hist[hi]===s)return;
+  hist=hist.slice(0,hi+1); hist.push(s); if(hist.length>100)hist.shift(); hi=hist.length-1;
+  updUndo(); persist();
+}
+const histSched=()=>{clearTimeout(histTimer);histTimer=setTimeout(histPush,500)};
+function histGo(n){
+  clearTimeout(histTimer); histPush();
+  const j=hi+n; if(j<0||j>=hist.length)return;
+  hi=j; currentData=JSON.parse(hist[hi]); jsonErr=null; renderErr();
+  histLock=true; buildForm(); refresh(true); histLock=false; updUndo(); persist();
+}
+
 const PAGE_W_PX=210*96/25.4, PAGE_H_PX=297*96/25.4;
-const onePageOn=()=>currentData.onePage!==false;
+const onePageOn=()=>docMode==="cv"&&currentData.onePage!==false;
 function fitPage(el,enabled){
   el.style.transform="none"; el.style.width=PAGE_W_PX+"px"; el.style.minHeight=PAGE_H_PX+"px";
   let k=1;
@@ -1004,13 +1170,58 @@ function buildLists(){
   $("catSel").innerHTML="";
   Object.keys(CATEGORIES).forEach(k=>{const o=document.createElement("option");o.value=k;o.textContent=t("cat."+k);$("catSel").appendChild(o)});
 }
-Object.entries(PRESETS).slice(0,MAX_PRESETS).forEach(([k,p])=>{const o=document.createElement("option");o.value=k;o.textContent=p.label;$("presetSel").appendChild(o)});
-$("presetSel").onchange=e=>{loadPreset(e.target.value);buildForm();refresh(true);setStatus(t("st.preset",{n:PRESETS[currentPreset].label}),false)};
+$("presetSel").onchange=e=>{loadPreset(e.target.value);buildForm();refresh(true);setStatus(t("st.preset",{n:presetLabel(currentPreset)}),false)};
 $("btnReset").onclick=()=>{loadPreset(currentPreset);buildForm();refresh(true);setStatus(t("st.presetReload"),false)};
+$("btnUndo").onclick=()=>histGo(-1);
+$("btnRedo").onclick=()=>histGo(1);
 $("catSel").onchange=e=>{applyCategory(currentData,e.target.value);refresh(true);setStatus(t("st.category",{n:t("cat."+currentData.category)}),false)};
 $("cvLangSel").onchange=e=>{currentData.lang=e.target.value;refresh(true)};
 $("onePage").addEventListener("change",e=>{currentData.onePage=e.target.checked;refresh(true)});
 $("showUrls").addEventListener("change",e=>{currentData.showUrls=e.target.checked;refresh(true)});
+
+/* CV <-> Lettera */
+function setDoc(m){
+  docMode=m;
+  if(m==="letter"&&!currentData.letter)currentData.letter=clone(LETTER_TPL[cvLang(currentData)]);
+  buildForm(); refresh(true);
+  if(m==="letter")setTab("form");
+}
+document.querySelectorAll("#docSw .lang-btn").forEach(b=>b.onclick=()=>setDoc(b.dataset.doc));
+
+/* Preset personali: UI */
+function saveCurrent(name){
+  const a=getSaved(), nm=(name||"").trim()||"CV "+(a.length+1), ex=a.find(x=>x.name===nm);
+  const item={id:ex?ex.id:Date.now().toString(36),name:nm,ts:Date.now(),data:clone(currentData),photo:photoData};
+  if(ex)Object.assign(ex,item);else a.unshift(item);
+  if(putSaved(a)){currentPreset="u:"+item.id;buildPresetSel();renderSaved();persist();setStatus(t("st.saved",{n:nm}),false)}
+}
+function renderSaved(){
+  const a=getSaved();
+  $("savedList").innerHTML=a.length?a.map(x=>`<div class="sv-item${"u:"+x.id===currentPreset?" cur":""}"><div class="sv-info"><b>${esc(x.name)}</b><small>${esc(t("theme."+themeOf(x.data||{})))} · ${esc(new Date(x.ts).toLocaleString(uiLang))}</small></div><button type="button" data-sv="load" data-id="${esc(x.id)}">${esc(t("load"))}</button><button type="button" class="sv-del" data-sv="del" data-id="${esc(x.id)}">${esc(t("del"))}</button></div>`).join(""):`<p class="hint">${esc(t("savedEmpty"))}</p>`;
+}
+$("btnSaved").onclick=()=>{renderSaved();$("saveName").value="";$("savedModal").hidden=false};
+$("btnSavedClose").onclick=()=>{$("savedModal").hidden=true};
+$("btnSaveNew").onclick=()=>{saveCurrent($("saveName").value);$("saveName").value=""};
+$("saveName").addEventListener("keydown",e=>{if(e.key==="Enter")$("btnSaveNew").click()});
+$("savedModal").addEventListener("click",e=>{
+  if(e.target.id==="savedModal"){e.target.hidden=true;return}
+  const b=e.target.closest("[data-sv]"); if(!b)return;
+  const id=b.dataset.id, x=getSaved().find(v=>v.id===id); if(!x)return;
+  if(b.dataset.sv==="load"){loadPreset("u:"+id);buildPresetSel();buildForm();refresh(true);$("savedModal").hidden=true;setStatus(t("st.preset",{n:x.name}),false)}
+  else if(confirm(t("delConfirm",{n:x.name}))){
+    putSaved(getSaved().filter(v=>v.id!==id));
+    if(currentPreset==="u:"+id)currentPreset="elivie";
+    buildPresetSel();renderSaved();setStatus(t("st.deleted"),false);
+  }
+});
+document.addEventListener("keydown",e=>{
+  if(e.key==="Escape"&&!$("savedModal").hidden){$("savedModal").hidden=true;return}
+  if(!(e.ctrlKey||e.metaKey))return;
+  if(/^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName||""))return;
+  const k=e.key.toLowerCase();
+  if(k==="z"){e.preventDefault();histGo(e.shiftKey?1:-1)}
+  else if(k==="y"){e.preventDefault();histGo(1)}
+});
 
 $("btnPhoto").onclick=()=>$("photoFile").click();
 $("photoFile").addEventListener("change",e=>{
@@ -1091,8 +1302,9 @@ $("sectionChecks").addEventListener("change",e=>{
 function refresh(writeJson){
   preview.innerHTML=renderCV(currentData);
   updatePreviewLayout();
-  $("onePage").checked=onePageOn();
+  $("onePage").checked=currentData.onePage!==false;
   $("showUrls").checked=!!currentData.showUrls;
+  document.querySelectorAll("#docSw .lang-btn").forEach(b=>b.classList.toggle("on",b.dataset.doc===docMode));
   const src=photoSrc(currentData);
   $("photoThumb").innerHTML=src?`<img src="${esc(src)}" alt="" style="${imgStyle(currentData)}">`:`<span>${esc(t("photoNone"))}</span>`;
   $("headPhoto").innerHTML=src?`<img src="${esc(src)}" alt="" style="width:100%;height:100%;object-fit:cover">`:CAMERA_SVG;
@@ -1118,6 +1330,7 @@ function refresh(writeJson){
   document.querySelectorAll(".theme-btn").forEach(b=>b.classList.toggle("active",b.dataset.theme===themeOf(currentData)));
   $("favicon").href=faviconUrl(accentOf(currentData));
   updateFoldLabels();
+  histSched();
 }
 
 const jsonHl=$("jsonHl");
@@ -1208,7 +1421,7 @@ $("btnCopy").onclick=async()=>{
 $("btnDownload").onclick=()=>{
   const a=document.createElement("a");
   a.href=URL.createObjectURL(new Blob([buildStandaloneHtml(currentData)],{type:"text/html"}));
-  a.download="cv-"+themeOf(currentData)+".html";a.click();
+  a.download=(docMode==="letter"?"lettre-":"cv-")+themeOf(currentData)+".html";a.click();
   setTimeout(()=>URL.revokeObjectURL(a.href),1000);setStatus(t("st.htmlDownloaded"),false);
 };
 $("btnPrint").onclick=()=>{setStatus(t("st.print"),false);window.print()};
@@ -1277,7 +1490,7 @@ async function exportPdf(){
       pdf.addImage(part.toDataURL("image/jpeg",.95),"JPEG",0,0,PW,sh*PW/cw,undefined,"FAST");
       addLayer(pdf,layer,mmPerPx,y/scale,end/scale);pages++;y=end;
     }
-    const name="CV-"+FIXED.fullName.replace(/\s+/g,"-")+".pdf",a=document.createElement("a");
+    const name=(docMode==="letter"?"Lettre-":"CV-")+FIXED.fullName.replace(/\s+/g,"-")+".pdf",a=document.createElement("a");
     a.href=URL.createObjectURL(pdf.output("blob"));a.download=name;a.style.display="none";document.body.appendChild(a);a.click();a.remove();
     setTimeout(()=>URL.revokeObjectURL(a.href),4000);
     setStatus(t("st.pdfReady",{n:name,p:pages+" "+t(pages>1?"pageMany":"pageOne")}),false);
@@ -1287,7 +1500,7 @@ async function exportPdf(){
 }
 $("btnPdf").onclick=exportPdf;
 
-const openForm=new Set(["identity"]);
+const openForm=new Set(["identity","letter"]);
 const LISTS={
   stats:{t:()=>({value:"",label:""})},
   experience:{h:"exp:",t:()=>({date:"",title:"",org:"",bullets:[],tags:[]})},
@@ -1309,19 +1522,28 @@ function fIn(label,path,kind,rows){
   const el=(kind==="area"||kind==="lines")
     ?`<textarea data-p="${esc(path)}" data-k="${kind}" rows="${rows||4}">${esc(val)}</textarea>`
     :`<input type="text" data-p="${esc(path)}" data-k="${kind||"text"}" value="${esc(val)}">`;
-  return `<label class="fe-f"><span>${esc(label)}</span>${el}</label>`;
+  return `<label class="fe-f"><span>${esc(label)}</span><div class="fe-in">${el}<button type="button" class="fe-ok" data-act="ok" title="${esc(t("okTitle"))}">✓</button></div></label>`;
 }
 const fSec=(id,body)=>`<details class="fe-sec" data-g="${id}" ${openForm.has(id)?"open":""}><summary>${esc(t("fs."+id))}</summary><div class="fe-body">${body}</div></details>`;
 const fTwo=(a,b)=>`<div class="fe-row2">${a}${b}</div>`;
 function fList(key,item){
-  return arr(currentData[key]).map((x,i)=>`<div class="fe-item"><div class="fe-item-head"><span>${esc(t("n."+key))} ${i+1}</span><button type="button" class="fe-del" data-act="del" data-l="${key}" data-i="${i}">${esc(t("del"))}</button></div>${item(i)}</div>`).join("")
+  const n=arr(currentData[key]).length;
+  return arr(currentData[key]).map((x,i)=>`<div class="fe-item"><div class="fe-item-head"><span>${esc(t("n."+key))} ${i+1}</span><span class="fe-acts"><button type="button" class="fe-del" data-act="mv" data-l="${key}" data-i="${i}" data-d="-1" ${i?"":"disabled"}>↑</button><button type="button" class="fe-del" data-act="mv" data-l="${key}" data-i="${i}" data-d="1" ${i<n-1?"":"disabled"}>↓</button><button type="button" class="fe-del" data-act="del" data-l="${key}" data-i="${i}">${esc(t("del"))}</button></span></div>${item(i)}</div>`).join("")
     +`<button type="button" class="fe-add" data-act="add" data-l="${key}">${esc(t("add."+key))}</button>`;
+}
+function buildLetterForm(){
+  const F=(k,kind,r)=>fIn(t("f.l."+k),"letter."+k,kind,r);
+  return fSec("letter",fTwo(F("recipient"),F("company"))+F("address")+fTwo(F("city"),F("date"))+F("subject")+F("greeting")+F("body","area",14)+fTwo(F("closing"),F("signature")));
 }
 function buildForm(){
   const sc=formEl.scrollTop;
+  if(docMode==="letter"){formEl.innerHTML=buildLetterForm();formEl.scrollTop=sc;updateFoldLabels();return}
   const extraContact=Object.keys(contactObj(currentData)).filter(k=>!BASE_CONTACT.includes(k));
+  const ord=orderKeys(currentData,DEFAULT_ORDER);
+  const orderBody=`<p class="hint">${esc(t("f.orderHint"))}</p>`+ord.map((k,i)=>`<div class="fe-ord"><span>${esc(t("sec."+k))}</span><span class="fe-acts"><button type="button" class="fe-del" data-act="secmv" data-k="${k}" data-d="-1" ${i?"":"disabled"}>↑</button><button type="button" class="fe-del" data-act="secmv" data-k="${k}" data-d="1" ${i<ord.length-1?"":"disabled"}>↓</button></span></div>`).join("");
   formEl.innerHTML=[
     fSec("identity",fIn(t("f.role"),"role","text")+fIn(t("f.availability"),"availability","text")),
+    fSec("order",orderBody),
     fSec("contact",BASE_CONTACT.map(k=>fIn(contactName(k,uiLang),"contact."+k,"text")).join("")
       +extraContact.map(k=>`<div class="fe-extra">${fIn(contactName(k,uiLang),"contact."+k,"text")}<button type="button" class="fe-del" data-act="delc" data-k="${esc(k)}">${esc(t("del"))}</button></div>`).join("")
       +`<div class="fe-extra"><input type="text" id="newContactKey" placeholder="${esc(t("f.newContact"))}" autocomplete="off"><button type="button" class="fe-add" data-act="addc">${esc(t("f.add"))}</button></div>`),
@@ -1349,14 +1571,33 @@ formEl.addEventListener("input",e=>{
   setP(currentData,p,v);
   refresh(true);
 });
+formEl.addEventListener("keydown",e=>{
+  if(e.key!=="Enter"||e.target.tagName!=="INPUT"||!e.target.dataset.p)return;
+  const w=e.target.closest(".fe-in"); if(!w)return;
+  e.preventDefault(); const b=w.querySelector(".fe-ok"); if(b)b.click();
+});
 function dropHide(prefix,i){
   currentData.hide=arr(currentData.hide).filter(h=>h!==prefix+i).map(h=>{
     if(h.startsWith(prefix)){const n=+h.slice(prefix.length);if(isFinite(n)&&n>i)return prefix+(n-1)}
     return h;
   });
 }
+function swapHide(prefix,i,j){
+  currentData.hide=arr(currentData.hide).map(h=>h===prefix+i?prefix+j:h===prefix+j?prefix+i:h);
+}
 formEl.addEventListener("click",e=>{
   const b=e.target.closest("button[data-act]"); if(!b)return;
+  if(b.dataset.act==="ok"){
+    histPush();persist();
+    b.classList.add("done");setStatus(t("st.fieldSaved"),false);
+    clearTimeout(b._t);b._t=setTimeout(()=>b.classList.remove("done"),1600);
+    return;
+  }
+  if(b.dataset.act==="secmv"){
+    const a=orderKeys(currentData,DEFAULT_ORDER),i=a.indexOf(b.dataset.k),j=i+ +b.dataset.d;
+    if(i<0||j<0||j>=a.length)return;
+    [a[i],a[j]]=[a[j],a[i]];currentData.order=a;buildForm();refresh(true);return;
+  }
   if(b.dataset.act==="addc"||b.dataset.act==="delc"){
     if(!currentData.contact||typeof currentData.contact!=="object")currentData.contact={};
     if(b.dataset.act==="delc"){const k=b.dataset.k;delete currentData.contact[k];currentData.hide=arr(currentData.hide).filter(h=>h!=="c:"+k);buildForm();refresh(true);return}
@@ -1369,6 +1610,12 @@ formEl.addEventListener("click",e=>{
   }
   const key=b.dataset.l,L=LISTS[key]; if(!L)return;
   if(!Array.isArray(currentData[key]))currentData[key]=[];
+  if(b.dataset.act==="mv"){
+    const i=+b.dataset.i,j=i+ +b.dataset.d,A=currentData[key];
+    if(j<0||j>=A.length)return;
+    [A[i],A[j]]=[A[j],A[i]];if(L.h)swapHide(L.h,i,j);
+    buildForm();refresh(true);return;
+  }
   if(b.dataset.act==="add")currentData[key].push(L.t());
   else{const i=+b.dataset.i;currentData[key].splice(i,1);if(L.h)dropHide(L.h,i)}
   buildForm();refresh(true);
@@ -1420,17 +1667,19 @@ function applyI18n(){
   document.documentElement.lang=uiLang;
   document.querySelectorAll("[data-i18n]").forEach(el=>{el.textContent=t(el.dataset.i18n)});
   document.querySelectorAll("[data-i18n-title]").forEach(el=>{el.title=t(el.dataset.i18nTitle)});
-  document.querySelectorAll(".lang-btn").forEach(b=>b.classList.toggle("on",b.dataset.lang===uiLang));
+  document.querySelectorAll("[data-i18n-ph]").forEach(el=>{el.placeholder=t(el.dataset.i18nPh)});
+  document.querySelectorAll(".lang-btn[data-lang]").forEach(b=>b.classList.toggle("on",b.dataset.lang===uiLang));
   pageGuides.title=t("pageEnd");
 }
 function relocalize(){
   applyI18n();
   buildLists();
+  buildPresetSel();
   buildForm();
   refresh(false);
   renderErr();
 }
-document.querySelectorAll(".lang-btn").forEach(b=>b.onclick=()=>{
+document.querySelectorAll(".lang-btn[data-lang]").forEach(b=>b.onclick=()=>{
   uiLang=b.dataset.lang;
   try{localStorage.setItem("ui-lang",uiLang)}catch(e){}
   relocalize();
@@ -1441,6 +1690,7 @@ relocalize();
 setTab("json");
 setView("edit");
 refresh(true);
+histPush();
 setStatus(t("ready"),false);
 </script>
 </body>
