@@ -159,6 +159,8 @@ button.primary:hover{background:#f3c68c}button.primary:disabled{opacity:.6;curso
 .panel-head h3{margin:0;font-family:'Playfair Display',serif;font-weight:600;font-size:22px;letter-spacing:.01em;color:#f7ead4}
 .panel-head span{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#e6ecef}
 .panel-tools{display:flex;justify-content:flex-end;padding:8px 18px 0}
+.controls .panel-tools{padding:0;margin-bottom:-8px}
+.jerr-cause{font-weight:700;color:#ffd9a0;font-size:12.5px}
 .panel-tools button{padding:6px 14px;border-radius:999px;font-size:12.5px;font-weight:700}
 .panel-top .jerr-banner{margin:10px 18px 0}
 .controls{padding:14px 18px 30px;display:flex;flex-direction:column;gap:20px;font-size:14px;color:#ffffff}
@@ -268,7 +270,8 @@ button{background:#313c43;color:#ffffff;border:1px solid #56656d;border-radius:7
 .mnav,.mfab{display:none}
 @media (max-width:960px){
   :root{--nav-h:64px}
-  body{display:block;position:relative;height:100vh;height:100dvh;overflow:hidden;background:#0d1114}
+  html{overflow:hidden;width:100%;height:100%;overscroll-behavior:none}
+  body{display:block;position:fixed;inset:0;width:100%;height:auto;overflow:hidden;background:#0d1114;overscroll-behavior:none;touch-action:manipulation}
   #bgFlow{display:block;position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none}
   .flow-track{position:absolute;top:0;bottom:0;left:0;width:200vw;transform:translateX(calc(var(--cur,0) * -50vw));transition:transform .7s cubic-bezier(.22,.8,.24,1);background:radial-gradient(circle at 15% 25%,rgba(232,179,112,.22),transparent 28%),radial-gradient(circle at 50% 75%,rgba(37,99,235,.2),transparent 30%),radial-gradient(circle at 85% 30%,rgba(124,58,237,.2),transparent 28%)}
   .editor,.panel,.preview-wrap{position:absolute;top:0;left:0;z-index:1;width:100%;border:0;height:calc(100vh - var(--nav-h) - env(safe-area-inset-bottom,0px));height:calc(100dvh - var(--nav-h) - env(safe-area-inset-bottom,0px));transform:translateX(calc((var(--i) - var(--cur,0)) * 100%));visibility:hidden;transition:transform .5s cubic-bezier(.22,.8,.24,1),visibility 0s linear .5s}
@@ -404,7 +407,6 @@ button{background:#313c43;color:#ffffff;border:1px solid #56656d;border-radius:7
 <aside class="panel" id="panelEl">
   <div class="panel-top">
     <div class="panel-head"><h3 data-i18n="settings"></h3><span data-i18n="livePreview"></span></div>
-    <div class="panel-tools"><button id="btnFold" type="button"></button></div>
     <div class="jerr-banner" hidden></div>
   </div>
   <div class="controls">
@@ -421,6 +423,8 @@ button{background:#313c43;color:#ffffff;border:1px solid #56656d;border-radius:7
       <div class="ctl-label" data-i18n="design"></div>
       <div class="theme-picker" id="themePicker"></div>
     </section>
+
+    <div class="panel-tools"><button id="btnFold" type="button"></button></div>
 
     <details class="card" open><summary data-i18n="cardColor"></summary>
       <div class="card-body">
@@ -727,6 +731,7 @@ const DICT = {
   "jerr.title":["Erreur JSON","JSON error","Errore JSON"],
   "jerr.line":["ligne {l}, colonne {c}","line {l}, column {c}","riga {l}, colonna {c}"],
   "jerr.go":["Aller à l'erreur","Go to error","Vai all'errore"],
+  "jerr.trailing":["Virgule en trop à la fin de cette ligne, avant } ou ] : supprime-la.","Trailing comma at the end of this line, before } or ]: remove it.","Virgola di troppo alla fine di questa riga, prima di } o ]: eliminala."],
   "jerr.hint":["L'aperçu garde la dernière version valide.","The preview keeps the last valid version.","L'anteprima mantiene l'ultima versione valida."]
 };
 const I18N = Object.fromEntries(LANGS.map((l,i)=>[l,Object.fromEntries(Object.entries(DICT).map(([k,v])=>[k,v[i]]))]));
@@ -1103,21 +1108,25 @@ function hlUpdate(){jsonHl.innerHTML=hlJson(jsonInput.value);syncHl()}
 function setJson(v){jsonInput.value=v;hlUpdate()}
 jsonInput.addEventListener("scroll",syncHl);
 
+const indexOfLC=(text,l,c)=>{const ls=text.split("\n");let i=0;for(let k=0;k<l-1&&k<ls.length;k++)i+=ls[k].length+1;return i+c-1};
+const lcOfIndex=(text,i)=>{const b=text.slice(0,i).split("\n");return [b.length,b[b.length-1].length+1]};
 function parseJsonError(text,err){
   const message=String(err&&err.message||err);
-  let line=0,col=0;
-  const lc=message.match(/line (\d+) column (\d+)/);
-  const pos=message.match(/position (\d+)/);
-  if(lc){line=+lc[1];col=+lc[2]}
-  else if(pos){const before=text.slice(0,+pos[1]).split("\n");line=before.length;col=before[before.length-1].length+1}
-  return {message,line,col};
+  const lc=message.match(/line (\d+) column (\d+)/), pm=message.match(/position (\d+)/);
+  let idx=pm?+pm[1]:lc?indexOfLC(text,+lc[1],+lc[2]):-1, trailing=false;
+  if(idx>=0&&/[}\]]/.test(text[idx]||"")){
+    let j=idx-1;while(j>=0&&/\s/.test(text[j]))j--;
+    if(j>=0&&text[j]===","){idx=j;trailing=true}
+  }
+  const [line,col]=idx>=0?lcOfIndex(text,idx):[0,0];
+  return {message,line,col,trailing};
 }
 function renderErr(){
   document.querySelectorAll(".jerr-banner").forEach(b=>{
     b.hidden=!jsonErr;
     if(!jsonErr)return;
     const where=jsonErr.line?t("jerr.line",{l:jsonErr.line,c:jsonErr.col}):"";
-    b.innerHTML=`<div class="jerr-top"><strong>${esc(t("jerr.title"))}</strong>${where?`<span>${esc(where)}</span>`:""}</div><div class="jerr-msg">${esc(jsonErr.message)}</div><div class="jerr-actions"><button type="button" data-goto="err">${esc(t("jerr.go"))}</button></div><div class="jerr-hint">${esc(t("jerr.hint"))}</div>`;
+    b.innerHTML=`<div class="jerr-top"><strong>${esc(t("jerr.title"))}</strong>${where?`<span>${esc(where)}</span>`:""}</div><div class="jerr-msg">${esc(jsonErr.message)}</div>${jsonErr.trailing?`<div class="jerr-cause">${esc(t("jerr.trailing"))}</div>`:""}<div class="jerr-actions"><button type="button" data-goto="err">${esc(t("jerr.go"))}</button></div><div class="jerr-hint">${esc(t("jerr.hint"))}</div>`;
   });
   document.body.classList.toggle("has-jerr",!!jsonErr);
 }
