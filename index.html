@@ -198,6 +198,7 @@ details.card>summary::-webkit-details-marker{display:none}
 details.card>summary:after{content:'';width:7px;height:7px;border-right:2px solid #e9eef0;border-bottom:2px solid #e9eef0;transform:rotate(45deg) translateY(-2px);transition:transform .2s}
 details.card[open]>summary:after{transform:rotate(-135deg) translateY(-2px)}
 details.card[open]>summary{border-bottom:1px solid #3d4a52}
+details.card>summary #btnFold{margin-left:auto;margin-right:14px;padding:5px 12px;min-height:0;border-radius:999px;font-family:'Lato',sans-serif;font-size:12.5px;font-weight:700}
 .card-body{padding:14px 16px 16px;display:flex;flex-direction:column;gap:14px}
 .palettes{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}
 .pal{display:flex;flex-direction:column;align-items:center;gap:6px;padding:10px 2px 8px;font-size:12px;background:#1c2328;border:1px solid #46545c;border-radius:9px;color:#ffffff}
@@ -277,15 +278,21 @@ button:disabled{opacity:.45;cursor:not-allowed}
 .fe-f textarea{resize:vertical;min-height:64px;line-height:1.45}
 .fe-f input:focus,.fe-f textarea:focus{outline:none;border-color:#e8b370}
 .fe-in{display:flex;gap:6px;align-items:flex-start}.fe-in input,.fe-in textarea{flex:1;min-width:0}
-.fe-ok{flex:none;width:36px;height:36px;padding:0;background:#2f9e4f;border:1px solid #3fbf63;color:#fff;font-size:16px;font-weight:800;border-radius:7px;transition:background .15s,box-shadow .15s}
-.fe-ok:hover{background:#3fbf63}
-.fe-ok.done{background:#22c55e;box-shadow:0 0 0 3px rgba(34,197,94,.35)}
+/* ✓ : visibile solo se il campo è stato modificato o è nuovo */
+.fe-ok{display:none;flex:none;width:36px;height:36px;padding:0;background:transparent;border:1px solid #e8b370;color:#e8b370;font-size:16px;font-weight:800;border-radius:7px;transition:background .15s,box-shadow .15s,color .15s}
+.fe-ok.dirty{display:block;animation:feP 1.2s ease-in-out infinite}
+.fe-ok.dirty:hover{background:rgba(232,179,112,.2)}
+@keyframes feP{50%{box-shadow:0 0 0 3px rgba(232,179,112,.35)}}
 .fe-row2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .fe-item{display:flex;flex-direction:column;gap:8px;padding:10px;border:1px solid #46545c;border-radius:9px;background:#1c2328}
 .fe-item-head{display:flex;align-items:center;justify-content:space-between;font-size:12px;font-weight:700;color:#ffd9a0}
 .fe-acts{display:flex;gap:4px}
 .fe-del{padding:3px 9px;font-size:12px}
-.fe-ord{display:flex;align-items:center;justify-content:space-between;padding:8px 10px;border:1px solid #46545c;border-radius:9px;background:#1c2328;font-size:14px}
+.fe-ord{display:flex;align-items:center;justify-content:flex-start;gap:10px;padding:8px 10px;border:1px solid #46545c;border-radius:9px;background:#1c2328;font-size:14px;user-select:none;-webkit-user-select:none}
+#ordList{display:flex;flex-direction:column;gap:6px}
+.fe-grip{cursor:grab;font-size:18px;line-height:1;color:#e8b370;padding:4px 6px;touch-action:none}
+.fe-ord.drag{opacity:.9;border-color:#e8b370;box-shadow:0 6px 18px rgba(0,0,0,.45)}
+.fe-ord.drag .fe-grip{cursor:grabbing}
 .fe-extra{display:flex;gap:8px;align-items:flex-end}.fe-extra .fe-f{flex:1;min-width:0}.fe-extra>input{flex:1;min-width:0;background:#161c20;color:#fff;border:1px solid #56656d;border-radius:7px;padding:8px 10px;font-family:inherit;font-size:14px}.fe-extra>input:focus{outline:none;border-color:#e8b370}.fe-extra .fe-add{flex:none}
 .fe-add{padding:9px;font-weight:600;border-style:dashed}
 .modal{position:fixed;inset:0;z-index:2000;background:rgba(0,0,0,.6);display:grid;place-items:center;padding:16px}
@@ -359,6 +366,7 @@ button{background:#313c43;color:#ffffff;border:1px solid #56656d;border-radius:7
   .fe-item{border-radius:12px;padding:12px}
   .fe-del{min-height:38px;padding:0 14px;border-radius:999px}
   .fe-add{min-height:46px;border-radius:12px}
+  .fe-grip{padding:8px 10px;font-size:22px}
   #status{padding:10px 16px;font-size:13px;background:rgba(18,23,26,.85)}
   .preview-wrap{padding:18px 12px 130px;background:transparent}
   body[data-view=prev] .mfab{display:flex;align-items:center;gap:8px;position:fixed;right:16px;bottom:calc(var(--nav-h) + env(safe-area-inset-bottom,0px) + 16px);z-index:55;min-height:50px;padding:0 22px;border:0;border-radius:999px;background:#e8b370;color:#1a1410;font-size:15px;font-weight:800;box-shadow:0 10px 28px rgba(0,0,0,.5)}
@@ -375,6 +383,7 @@ button{background:#313c43;color:#ffffff;border:1px solid #56656d;border-radius:7
   .theme-btn{min-height:50px;padding:0 4px;font-size:15px;border-radius:12px}
   details.card{border-radius:16px}
   details.card>summary{padding:17px 16px;font-size:17px}
+  details.card>summary #btnFold{min-height:36px;padding:0 14px;border-radius:999px}
   .card-body{padding:16px;gap:16px}
   .pal{padding:12px 2px 10px;border-radius:12px}
   .pal i{width:30px;height:30px}
@@ -468,12 +477,12 @@ button{background:#313c43;color:#ffffff;border:1px solid #56656d;border-radius:7
       <select id="cvLangSel"><option value="fr">Français</option><option value="en">English</option><option value="it">Italiano</option></select>
       <p class="hint" data-i18n="cvLangHint"></p>
     </section>
-    <section class="grp">
-      <div class="ctl-label" data-i18n="design"></div>
-      <div class="theme-picker" id="themePicker"></div>
-    </section>
 
-    <div class="panel-tools"><button id="btnFold" type="button"></button></div>
+    <details class="card" open><summary><span data-i18n="design"></span><button id="btnFold" type="button"></button></summary>
+      <div class="card-body">
+        <div class="theme-picker" id="themePicker"></div>
+      </div>
+    </details>
 
     <details class="card" open><summary data-i18n="cardColor"></summary>
       <div class="card-body">
@@ -833,7 +842,7 @@ const DICT = {
   "st.deleted":["Supprimé","Deleted","Eliminato"],
   "err.quota":["❌ Stockage local plein","❌ Local storage full","❌ Archivio locale pieno"],
   "fs.order":["Ordre des sections","Section order","Ordine delle sezioni"],
-  "f.orderHint":["Avec les designs Élégant et Moderne, l'ordre s'applique dans chaque colonne.","With the Elegant and Modern designs, the order applies within each column.","Con i design Elegante e Moderno, l'ordine vale all'interno di ogni colonna."],
+  "f.orderHint":["Glisse les sections avec la poignée ⠿ pour changer l'ordre. Avec les designs Élégant et Moderne, l'ordre s'applique dans chaque colonne.","Drag the sections by the ⠿ handle to change the order. With the Elegant and Modern designs, the order applies within each column.","Trascina le sezioni con la maniglia ⠿ per cambiare l'ordine. Con i design Elegante e Moderno, l'ordine vale all'interno di ogni colonna."],
   "fs.letter":["Lettre de motivation","Cover letter","Lettera di motivazione"],
   "f.l.recipient":["Destinataire","Recipient","Destinatario"],
   "f.l.company":["Entreprise","Company","Azienda"],
@@ -1111,6 +1120,7 @@ function histGo(n){
   clearTimeout(histTimer); histPush();
   const j=hi+n; if(j<0||j>=hist.length)return;
   hi=j; currentData=JSON.parse(hist[hi]); jsonErr=null; renderErr();
+  dirtyPaths.clear();
   histLock=true; buildForm(); refresh(true); histLock=false; updUndo(); persist();
 }
 
@@ -1170,8 +1180,8 @@ function buildLists(){
   $("catSel").innerHTML="";
   Object.keys(CATEGORIES).forEach(k=>{const o=document.createElement("option");o.value=k;o.textContent=t("cat."+k);$("catSel").appendChild(o)});
 }
-$("presetSel").onchange=e=>{loadPreset(e.target.value);buildForm();refresh(true);setStatus(t("st.preset",{n:presetLabel(currentPreset)}),false)};
-$("btnReset").onclick=()=>{loadPreset(currentPreset);buildForm();refresh(true);setStatus(t("st.presetReload"),false)};
+$("presetSel").onchange=e=>{loadPreset(e.target.value);dirtyPaths.clear();buildForm();refresh(true);setStatus(t("st.preset",{n:presetLabel(currentPreset)}),false)};
+$("btnReset").onclick=()=>{loadPreset(currentPreset);dirtyPaths.clear();buildForm();refresh(true);setStatus(t("st.presetReload"),false)};
 $("btnUndo").onclick=()=>histGo(-1);
 $("btnRedo").onclick=()=>histGo(1);
 $("catSel").onchange=e=>{applyCategory(currentData,e.target.value);refresh(true);setStatus(t("st.category",{n:t("cat."+currentData.category)}),false)};
@@ -1179,12 +1189,11 @@ $("cvLangSel").onchange=e=>{currentData.lang=e.target.value;refresh(true)};
 $("onePage").addEventListener("change",e=>{currentData.onePage=e.target.checked;refresh(true)});
 $("showUrls").addEventListener("change",e=>{currentData.showUrls=e.target.checked;refresh(true)});
 
-/* CV <-> Lettera */
+/* CV <-> Lettera : resta nella scheda attuale (JSON o Formulaire) */
 function setDoc(m){
   docMode=m;
   if(m==="letter"&&!currentData.letter)currentData.letter=clone(LETTER_TPL[cvLang(currentData)]);
   buildForm(); refresh(true);
-  if(m==="letter")setTab("form");
 }
 document.querySelectorAll("#docSw .lang-btn").forEach(b=>b.onclick=()=>setDoc(b.dataset.doc));
 
@@ -1207,7 +1216,7 @@ $("savedModal").addEventListener("click",e=>{
   if(e.target.id==="savedModal"){e.target.hidden=true;return}
   const b=e.target.closest("[data-sv]"); if(!b)return;
   const id=b.dataset.id, x=getSaved().find(v=>v.id===id); if(!x)return;
-  if(b.dataset.sv==="load"){loadPreset("u:"+id);buildPresetSel();buildForm();refresh(true);$("savedModal").hidden=true;setStatus(t("st.preset",{n:x.name}),false)}
+  if(b.dataset.sv==="load"){loadPreset("u:"+id);dirtyPaths.clear();buildPresetSel();buildForm();refresh(true);$("savedModal").hidden=true;setStatus(t("st.preset",{n:x.name}),false)}
   else if(confirm(t("delConfirm",{n:x.name}))){
     putSaved(getSaved().filter(v=>v.id!==id));
     if(currentPreset==="u:"+id)currentPreset="elivie";
@@ -1404,7 +1413,7 @@ jsonInput.addEventListener("input",()=>{
       if(!parsed||typeof parsed!=="object"||Array.isArray(parsed))throw new Error(t("err.notObject"));
       currentData=parsed;
       refresh(false);
-      jsonErr=null;renderErr();hlUpdate();buildForm();setStatus(t("st.updated"),false);
+      jsonErr=null;renderErr();hlUpdate();dirtyPaths.clear();buildForm();setStatus(t("st.updated"),false);
     }catch(err){
       currentData=previous;
       jsonErr=parseJsonError(jsonInput.value,err);
@@ -1501,6 +1510,8 @@ async function exportPdf(){
 $("btnPdf").onclick=exportPdf;
 
 const openForm=new Set(["identity","letter"]);
+/* campi modificati e non ancora confermati con ✓ */
+const dirtyPaths=new Set();
 const LISTS={
   stats:{t:()=>({value:"",label:""})},
   experience:{h:"exp:",t:()=>({date:"",title:"",org:"",bullets:[],tags:[]})},
@@ -1522,7 +1533,7 @@ function fIn(label,path,kind,rows){
   const el=(kind==="area"||kind==="lines")
     ?`<textarea data-p="${esc(path)}" data-k="${kind}" rows="${rows||4}">${esc(val)}</textarea>`
     :`<input type="text" data-p="${esc(path)}" data-k="${kind||"text"}" value="${esc(val)}">`;
-  return `<label class="fe-f"><span>${esc(label)}</span><div class="fe-in">${el}<button type="button" class="fe-ok" data-act="ok" title="${esc(t("okTitle"))}">✓</button></div></label>`;
+  return `<label class="fe-f"><span>${esc(label)}</span><div class="fe-in">${el}<button type="button" class="fe-ok${dirtyPaths.has(path)?" dirty":""}" data-act="ok" title="${esc(t("okTitle"))}">✓</button></div></label>`;
 }
 const fSec=(id,body)=>`<details class="fe-sec" data-g="${id}" ${openForm.has(id)?"open":""}><summary>${esc(t("fs."+id))}</summary><div class="fe-body">${body}</div></details>`;
 const fTwo=(a,b)=>`<div class="fe-row2">${a}${b}</div>`;
@@ -1540,7 +1551,7 @@ function buildForm(){
   if(docMode==="letter"){formEl.innerHTML=buildLetterForm();formEl.scrollTop=sc;updateFoldLabels();return}
   const extraContact=Object.keys(contactObj(currentData)).filter(k=>!BASE_CONTACT.includes(k));
   const ord=orderKeys(currentData,DEFAULT_ORDER);
-  const orderBody=`<p class="hint">${esc(t("f.orderHint"))}</p>`+ord.map((k,i)=>`<div class="fe-ord"><span>${esc(t("sec."+k))}</span><span class="fe-acts"><button type="button" class="fe-del" data-act="secmv" data-k="${k}" data-d="-1" ${i?"":"disabled"}>↑</button><button type="button" class="fe-del" data-act="secmv" data-k="${k}" data-d="1" ${i<ord.length-1?"":"disabled"}>↓</button></span></div>`).join("");
+  const orderBody=`<p class="hint">${esc(t("f.orderHint"))}</p><div id="ordList">`+ord.map(k=>`<div class="fe-ord" data-k="${k}"><span class="fe-grip">⠿</span><span>${esc(t("sec."+k))}</span></div>`).join("")+`</div>`;
   formEl.innerHTML=[
     fSec("identity",fIn(t("f.role"),"role","text")+fIn(t("f.availability"),"availability","text")),
     fSec("order",orderBody),
@@ -1569,6 +1580,8 @@ formEl.addEventListener("input",e=>{
   if(el.dataset.k==="lines")v=v.split("\n").map(s=>s.trim()).filter(Boolean);
   else if(el.dataset.k==="csv")v=v.split(",").map(s=>s.trim()).filter(Boolean);
   setP(currentData,p,v);
+  dirtyPaths.add(p);
+  const okb=el.closest(".fe-in")&&el.closest(".fe-in").querySelector(".fe-ok");if(okb)okb.classList.add("dirty");
   refresh(true);
 });
 formEl.addEventListener("keydown",e=>{
@@ -1585,26 +1598,53 @@ function dropHide(prefix,i){
 function swapHide(prefix,i,j){
   currentData.hide=arr(currentData.hide).map(h=>h===prefix+i?prefix+j:h===prefix+j?prefix+i:h);
 }
+
+/* Ordre des sections : trascinamento con mouse / dito */
+let ordDrag=null;
+formEl.addEventListener("pointerdown",e=>{
+  const g=e.target.closest&&e.target.closest(".fe-grip"); if(!g)return;
+  const row=g.closest(".fe-ord"); if(!row)return;
+  e.preventDefault();
+  ordDrag={row,list:row.parentElement,id:e.pointerId};
+  row.classList.add("drag");
+  try{formEl.setPointerCapture(e.pointerId)}catch(_){}
+});
+formEl.addEventListener("pointermove",e=>{
+  if(!ordDrag||e.pointerId!==ordDrag.id)return;
+  const {row,list}=ordDrag;
+  const after=[...list.children].filter(x=>x!==row).find(s=>{const r=s.getBoundingClientRect();return e.clientY<r.top+r.height/2});
+  if(after){ if(row.nextElementSibling!==after)list.insertBefore(row,after); }
+  else if(list.lastElementChild!==row)list.appendChild(row);
+  const fr=formEl.getBoundingClientRect();
+  if(e.clientY<fr.top+30)formEl.scrollTop-=10; else if(e.clientY>fr.bottom-30)formEl.scrollTop+=10;
+});
+function endOrdDrag(e){
+  if(!ordDrag||(e&&e.pointerId!==ordDrag.id))return;
+  const {row,list,id}=ordDrag; ordDrag=null;
+  row.classList.remove("drag");
+  try{formEl.releasePointerCapture(id)}catch(_){}
+  currentData.order=[...list.children].map(x=>x.dataset.k);
+  refresh(true);
+}
+formEl.addEventListener("pointerup",endOrdDrag);
+formEl.addEventListener("pointercancel",endOrdDrag);
+
 formEl.addEventListener("click",e=>{
   const b=e.target.closest("button[data-act]"); if(!b)return;
   if(b.dataset.act==="ok"){
     histPush();persist();
-    b.classList.add("done");setStatus(t("st.fieldSaved"),false);
-    clearTimeout(b._t);b._t=setTimeout(()=>b.classList.remove("done"),1600);
+    const inp=b.closest(".fe-in").querySelector("[data-p]");
+    if(inp)dirtyPaths.delete(inp.dataset.p);
+    b.classList.remove("dirty");setStatus(t("st.fieldSaved"),false);
     return;
-  }
-  if(b.dataset.act==="secmv"){
-    const a=orderKeys(currentData,DEFAULT_ORDER),i=a.indexOf(b.dataset.k),j=i+ +b.dataset.d;
-    if(i<0||j<0||j>=a.length)return;
-    [a[i],a[j]]=[a[j],a[i]];currentData.order=a;buildForm();refresh(true);return;
   }
   if(b.dataset.act==="addc"||b.dataset.act==="delc"){
     if(!currentData.contact||typeof currentData.contact!=="object")currentData.contact={};
-    if(b.dataset.act==="delc"){const k=b.dataset.k;delete currentData.contact[k];currentData.hide=arr(currentData.hide).filter(h=>h!=="c:"+k);buildForm();refresh(true);return}
+    if(b.dataset.act==="delc"){const k=b.dataset.k;delete currentData.contact[k];dirtyPaths.delete("contact."+k);currentData.hide=arr(currentData.hide).filter(h=>h!=="c:"+k);buildForm();refresh(true);return}
     const k=$("newContactKey").value.replace(/[.\s]+/g," ").trim();
     if(!k){showToast(t("err.contactName"),2500);return}
     if(k in currentData.contact){showToast(t("err.contactExists"),2500);return}
-    currentData.contact[k]="";buildForm();refresh(true);
+    currentData.contact[k]="";dirtyPaths.add("contact."+k);buildForm();refresh(true);
     const f=[...formEl.querySelectorAll("[data-p]")].find(i=>i.dataset.p==="contact."+k);if(f)f.focus();
     return;
   }
@@ -1614,11 +1654,23 @@ formEl.addEventListener("click",e=>{
     const i=+b.dataset.i,j=i+ +b.dataset.d,A=currentData[key];
     if(j<0||j>=A.length)return;
     [A[i],A[j]]=[A[j],A[i]];if(L.h)swapHide(L.h,i,j);
-    buildForm();refresh(true);return;
+    dirtyPaths.clear();buildForm();refresh(true);return;
   }
-  if(b.dataset.act==="add")currentData[key].push(L.t());
-  else{const i=+b.dataset.i;currentData[key].splice(i,1);if(L.h)dropHide(L.h,i)}
+  const isAdd=b.dataset.act==="add", g=(b.closest(".fe-sec")||{dataset:{}}).dataset.g;
+  if(isAdd)currentData[key].push(L.t());
+  else{const i=+b.dataset.i;currentData[key].splice(i,1);if(L.h)dropHide(L.h,i);dirtyPaths.clear()}
+  if(isAdd){
+    /* il nuovo elemento è l'ultimo: i suoi campi sono "da confermare" */
+    const n=currentData[key].length-1;
+    formEl.dataset.pendingNew=key+"."+n;
+  }
   buildForm();refresh(true);
+  if(isAdd){
+    const pre=formEl.dataset.pendingNew+"."; delete formEl.dataset.pendingNew;
+    const last=formEl.querySelector(`.fe-sec[data-g="${g}"]`);
+    const item=last&&[...last.querySelectorAll(".fe-item")].pop();
+    if(item)item.querySelectorAll("[data-p]").forEach(x=>{dirtyPaths.add(x.dataset.p);const ok=x.closest(".fe-in").querySelector(".fe-ok");if(ok)ok.classList.add("dirty")});
+  }
 });
 formEl.addEventListener("toggle",e=>{
   const g=e.target.dataset&&e.target.dataset.g; if(!g)return;
@@ -1635,7 +1687,7 @@ function toggleFold(root){
   root.querySelectorAll("details").forEach(x=>{x.open=!open});
   updateFoldLabels();
 }
-$("btnFold").onclick=()=>toggleFold(panelEl);
+$("btnFold").onclick=e=>{e.preventDefault();e.stopPropagation();toggleFold(panelEl)};
 $("btnFoldForm").onclick=()=>toggleFold(formEl);
 document.addEventListener("toggle",updateFoldLabels,true);
 
