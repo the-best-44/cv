@@ -170,6 +170,8 @@ body{font-family:'Lato',sans-serif;background:#12161a;color:#ffffff;-webkit-font
 .editor{width:420px;flex-shrink:0;background:#1c2328;display:flex;flex-direction:column;border-right:1px solid #3a464d}
 .panel{width:384px;flex-shrink:0;background:#1c2328;border-left:1px solid #3a464d;overflow:auto;scrollbar-width:thin;scrollbar-color:#3a444a transparent}
 *{scrollbar-width:thin;scrollbar-color:#6b7b85 transparent}
+*{-webkit-tap-highlight-color:transparent}
+.mnav button:focus,.mnav button:focus-visible{outline:none}
 *::-webkit-scrollbar{width:12px;height:12px}
 *::-webkit-scrollbar-track{background:transparent}
 *::-webkit-scrollbar-thumb{background:#4f5f69;border-radius:99px;border:3px solid transparent;background-clip:padding-box;transition:background .2s}
@@ -380,7 +382,7 @@ button{background:#313c43;color:#ffffff;border:1px solid #56656d;border-radius:7
   html{overflow:hidden;width:100%;height:100%;overscroll-behavior:none}
   body{display:block;position:fixed;inset:0;width:100%;height:auto;overflow:hidden;background:#0d1114;overscroll-behavior:none;touch-action:manipulation}
   #bgFlow{display:block;position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none}
-  .flow-track{position:absolute;top:0;bottom:0;left:0;width:200vw;transform:translateX(calc(var(--cur,0) * -50vw));transition:transform .7s cubic-bezier(.22,.8,.24,1);background:radial-gradient(circle at 15% 25%,rgba(232,179,112,.22),transparent 28%),radial-gradient(circle at 50% 75%,rgba(37,99,235,.2),transparent 30%),radial-gradient(circle at 85% 30%,rgba(124,58,237,.2),transparent 28%)}
+  .flow-track{position:absolute;top:0;bottom:0;left:0;width:200vw;transform:translateX(calc(var(--cur,0) * -50vw));transition:transform .7s cubic-bezier(.22,.8,.24,1);background:radial-gradient(circle at 15% 25%,rgba(232,179,112,.22),transparent 28%),radial-gradient(circle at 85% 30%,rgba(124,58,237,.2),transparent 28%)}
   .editor,.panel,.preview-wrap{position:absolute;top:0;left:0;z-index:1;width:100%;border:0;height:calc(100vh - var(--nav-h) - env(safe-area-inset-bottom,0px));height:calc(100dvh - var(--nav-h) - env(safe-area-inset-bottom,0px));transform:translateX(calc((var(--i) - var(--cur,0)) * 100%));visibility:hidden;transition:transform .5s cubic-bezier(.22,.8,.24,1),visibility 0s linear .5s}
   body[data-view=edit] .editor,body[data-view=prev] .preview-wrap,body[data-view=set] .panel{visibility:visible;transition:transform .5s cubic-bezier(.22,.8,.24,1),visibility 0s}
   .editor{--i:0;display:flex;background:rgba(22,27,31,.72)}
