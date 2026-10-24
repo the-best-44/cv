@@ -34,7 +34,9 @@
 .bullets{margin-top:.3em}.bullets li{position:relative;padding-left:1em;margin-bottom:.15em}
 .bullets li:before{content:'';position:absolute;left:0;top:.62em;width:.3em;height:.3em;background:var(--accent)}
 .bullets li strong{color:var(--ink)}
-.proj-title{display:flex;align-items:baseline;flex-wrap:wrap;gap:.1em .9em;min-width:0}
+.proj-head{align-items:baseline}
+.proj-meta{display:flex;align-items:baseline;gap:.9em;flex:none}
+.proj-meta .proj-link{margin-left:auto}
 .page .proj-link{color:var(--link);font-weight:600;font-size:.92em;white-space:nowrap;text-decoration:underline;text-underline-offset:.15em}
 .page .proj-link:after{content:" ↗";font-size:.9em}
 .skill{margin-bottom:.3em}
@@ -121,6 +123,8 @@
 .t-sidebar .entry:after{content:'';position:absolute;left:0;top:.15em;width:.7em;height:.7em;border:2px solid var(--accent);border-radius:50%;background:var(--bg)}
 .t-sidebar .entry-head{display:flex;flex-direction:column-reverse;align-items:flex-start;gap:0}
 .t-sidebar .entry-date{font-size:.8em;font-weight:700;letter-spacing:.14em;text-transform:uppercase}
+.t-sidebar .proj-head{flex-direction:column;align-items:stretch;gap:0}
+.t-sidebar .proj-meta{width:100%}
 .t-sidebar .bullets li:before{border-radius:50%;width:.26em;height:.26em;background:var(--soft)}
 .t-sidebar .sidebar .avatar{margin:0 auto 1.8em;--b:8.5em;border-color:var(--accent-light)}
 .side-block{margin-bottom:1.7em}
@@ -486,7 +490,8 @@ button{background:#313c43;color:#ffffff;border:1px solid #56656d;border-radius:7
 .page-box [data-sec]{cursor:grab;user-select:none;-webkit-user-select:none}
 .page-box.dragging [data-sec]:not(.sec-drag){outline:1.5px dashed rgba(232,179,112,.8);outline-offset:3px;border-radius:3px}
 .page-box .sec-drag{opacity:.35;outline:2px dashed #e8b370;outline-offset:3px}
-.drop-slot{display:flex;align-items:center;justify-content:center;min-height:2.6em;margin:.6em 0;border:2px dashed #e8b370;border-radius:6px;background:rgba(232,179,112,.22);color:#8a5a14;font:700 11px Lato,sans-serif;letter-spacing:.08em;text-transform:uppercase}
+.drop-slot{display:flex;align-items:center;justify-content:center;min-height:2em;margin:.5em 0;border:2px dashed rgba(232,179,112,.7);border-radius:6px;background:rgba(232,179,112,.1);color:#b07a2a;font:700 11px Lato,sans-serif;letter-spacing:.08em;text-transform:uppercase;transition:none}
+.drop-slot.on{border-style:solid;border-color:#e8b370;background:rgba(232,179,112,.4);color:#6b430a}
 .drag-chip{position:fixed;z-index:4000;pointer-events:none;background:#e8b370;color:#1a1410;font:700 12px Lato,sans-serif;padding:5px 12px;border-radius:999px;box-shadow:0 6px 18px rgba(0,0,0,.4)}
 @media print{.page-box{display:block;height:var(--ch)!important}.sheet.clone,.drop-slot{display:none!important}.sheet{height:var(--ch)!important;overflow:visible!important;box-shadow:none!important;background:none!important}.sheet::after{display:none}}
 </style>
@@ -1187,7 +1192,10 @@ const bulletsHtml = list => list.length ? `<ul class="bullets">${list.map(b=>`<l
 const expHtml = d => vis(d,"exp:",d.experience).map(e=>`<div class="entry"><div class="entry-head"><div class="entry-title">${esc(e.title)}</div><div class="entry-date">${esc(e.date)}</div></div>${has(e.org)?`<div class="entry-org">${esc(e.org)}</div>`:""}${bulletsHtml(arr(e.bullets))}${tagsHtml(d,e)}</div>`).join("");
 const projLink = (d,x) => has(x.url) ? `<a class="proj-link" href="${esc(x.url)}">${esc(has(x.linkLabel)?x.linkLabel:Lc(d).viewProject)}${d.showUrls?" · "+esc(shortUrl(x.url)):""}</a>` : "";
 const projPoints = p => { const b=arr(p.bullets).filter(has); return b.length ? b : (has(p.desc) ? [p.desc] : []); };
-const projHtml = d => vis(d,"proj:",d.projects).map(p=>`<div class="entry"><div class="entry-head"><div class="entry-title proj-title"><span>${esc(p.name)}</span>${projLink(d,p)}</div>${has(p.date)?`<div class="entry-date">${esc(p.date)}</div>`:""}</div>${bulletsHtml(projPoints(p))}${tagsHtml(d,p)}</div>`).join("");
+const projHtml = d => vis(d,"proj:",d.projects).map(p=>{
+  const dt=has(p.date)?`<div class="entry-date">${esc(p.date)}</div>`:"", lk=projLink(d,p);
+  return `<div class="entry"><div class="entry-head proj-head"><div class="entry-title">${esc(p.name)}</div>${(dt||lk)?`<div class="proj-meta">${dt}${lk}</div>`:""}</div>${bulletsHtml(projPoints(p))}${tagsHtml(d,p)}</div>`;
+}).join("");
 const skillsHtml = d => vis(d,"skill:",d.skills).map(x=>`<div class="skill"><span class="skill-name">${esc(x.name)} :</span> <span class="skill-value">${esc(x.value)}</span></div>`).join("");
 const formHtml = d => vis(d,"form:",d.formation).map(f=>`<div class="formation-entry">${has(f.year)?`<div class="formation-year">${esc(f.year)}</div>`:""}<div class="formation-title">${esc(f.title)}</div>${has(f.school)?`<div class="formation-school">${esc(f.school)}</div>`:""}</div>`).join("");
 const softHtml = d => { const s=vis(d,"soft:",d.softSkills).filter(has); return s.length ? `<p class="plain-line">${s.map(esc).join(" · ")}</p>` : ""; };
@@ -2077,17 +2085,30 @@ pageBox.addEventListener("pointermove",e=>{
     if(Math.hypot(e.clientX-s.x,e.clientY-s.y)<6)return;
     s.active=true; moved=true;
     s.el.classList.add("sec-drag"); pageBox.classList.add("dragging");
-    s.slot=document.createElement("div"); s.slot.className="drop-slot"; s.slot.textContent="⤵ "+t("dropHere");
-    s.el.after(s.slot);
+    // crea TUTTI gli slot possibili, escluso quello dove l'elemento si trova già
+    const sibs=[...s.el.parentElement.children].filter(x=>x.dataset.sec), me=sibs.indexOf(s.el);
+    s.slots=[]; s.cur=null;
+    for(let n=0;n<=sibs.length;n++){
+      if(n===me||n===me+1)continue;
+      const sl=document.createElement("div");
+      sl.className="drop-slot"; sl.textContent="⤵ "+t("dropHere");
+      if(n<sibs.length)sibs[n].before(sl); else sibs[n-1].after(sl);
+      s.slots.push(sl);
+    }
     try{preview.setPointerCapture(e.pointerId)}catch(_){}
   }
   const c=chipEl(); c.hidden=false; c.textContent=t("sec."+s.el.dataset.sec); c.style.left=(e.clientX+14)+"px"; c.style.top=(e.clientY+14)+"px";
   const wrap=pageBox.parentElement, fr=wrap.getBoundingClientRect();
   if(e.clientY<fr.top+50)wrap.scrollTop-=12; else if(e.clientY>fr.bottom-50)wrap.scrollTop+=12;
-  const cy=contentY(e.clientY), sib=[...s.el.parentElement.children].filter(x=>x!==s.el&&x.dataset.sec);
-  const after=sib.find(x=>{const r=x.getBoundingClientRect();return cy<r.top+r.height/2});
-  if(after){ if(s.slot.nextElementSibling!==after){after.before(s.slot);moved=true} }
-  else if(sib.length){ const last=sib[sib.length-1]; if(last.nextElementSibling!==s.slot){last.after(s.slot);moved=true} }
+  // evidenzia lo slot più vicino al cursore
+  const cy=contentY(e.clientY);
+  let best=null,bd=Infinity;
+  s.slots.forEach(sl=>{const r=sl.getBoundingClientRect(),d=Math.abs(cy-(r.top+r.height/2));if(d<bd){bd=d;best=sl}});
+  if(best!==s.cur){
+    if(s.cur)s.cur.classList.remove("on");
+    if(best)best.classList.add("on");
+    s.cur=best; moved=true;
+  }
   if(moved)updatePreviewLayout();
 });
 function endPreviewDrag(e){
@@ -2098,14 +2119,20 @@ function endPreviewDrag(e){
   pageBox.classList.remove("dragging");
   if(!s.active)return;
   const par=s.el.parentElement, keys=[];
-  [...par.children].forEach(x=>{ if(x===s.slot)keys.push(s.el.dataset.sec); else if(x!==s.el&&x.dataset.sec)keys.push(x.dataset.sec); });
-  s.slot.remove(); s.el.classList.remove("sec-drag");
+  [...par.children].forEach(x=>{
+    if(x===s.cur)keys.push(s.el.dataset.sec);
+    else if(x!==s.el&&x.dataset.sec)keys.push(x.dataset.sec);
+  });
+  const dropped=!!s.cur;
+  s.slots.forEach(x=>x.remove()); s.el.classList.remove("sec-drag");
   try{preview.releasePointerCapture(e.pointerId)}catch(_){}
-  const current=orderKeys(currentData,DEFAULT_ORDER);
-  const slots=current.map((k,i)=>keys.includes(k)?i:-1).filter(i=>i>=0);
-  const next=[...current];
-  slots.forEach((slot,n)=>{next[slot]=keys[n]});
-  currentData.order=next;
+  if(dropped){
+    const current=orderKeys(currentData,DEFAULT_ORDER);
+    const slots=current.map((k,i)=>keys.includes(k)?i:-1).filter(i=>i>=0);
+    const next=[...current];
+    slots.forEach((slot,n)=>{next[slot]=keys[n]});
+    currentData.order=next;
+  }
   refresh(true);
 }
 pageBox.addEventListener("pointerup",endPreviewDrag);
