@@ -34,7 +34,9 @@
 .bullets{margin-top:.3em}.bullets li{position:relative;padding-left:1em;margin-bottom:.15em}
 .bullets li:before{content:'';position:absolute;left:0;top:.62em;width:.3em;height:.3em;background:var(--accent)}
 .bullets li strong{color:var(--ink)}
-.page .proj-link{color:var(--accent);font-weight:600;white-space:nowrap;border-bottom:1px solid var(--rule)}
+.proj-title{display:flex;align-items:baseline;flex-wrap:wrap;gap:.1em .9em;min-width:0}
+.page .proj-link{color:var(--link);font-weight:600;font-size:.92em;white-space:nowrap;text-decoration:underline;text-underline-offset:.15em}
+.page .proj-link:after{content:" ↗";font-size:.9em}
 .skill{margin-bottom:.3em}
 .skill-name,.formation-title{font-weight:700;color:var(--ink)}
 .formation-year{font-weight:700;color:var(--accent);font-size:.9em}.formation-entry{margin-bottom:.45em}
@@ -77,7 +79,6 @@
 .t-ats .entry-date{color:var(--ink)}
 .t-ats .entry-org{font-style:normal}
 .t-ats .bullets li:before{border-radius:50%;background:var(--ink);width:.26em;height:.26em}
-.t-ats .proj-link{color:var(--ink)}
 .t-editorial .head{flex-direction:column;text-align:center;gap:0;padding:1em 0;border-top:1px solid var(--ink);border-bottom:1px solid var(--ink)}
 .t-editorial h1{font-size:2.5em;font-weight:700;letter-spacing:.02em}
 .t-editorial .role{text-transform:none;letter-spacing:.03em;font-style:italic;font-weight:400;color:var(--accent);font-size:1.1em}
@@ -348,8 +349,6 @@ button:disabled{opacity:.45;cursor:not-allowed}
 .fe-grip{cursor:grab;font-size:18px;line-height:1;color:#e8b370;padding:4px 6px;touch-action:none}
 .fe-ord.drag{opacity:.9;border-color:#e8b370;box-shadow:0 6px 18px rgba(0,0,0,.45);cursor:grabbing}
 .fe-ord.drag .fe-grip{cursor:grabbing}
-#preview [data-sec]{cursor:grab;user-select:none;-webkit-user-select:none}
-#preview .sec-drag{opacity:.55;outline:2px dashed #e8b370;outline-offset:3px;cursor:grabbing}
 .fe-extra{display:flex;gap:8px;align-items:flex-end}.fe-extra .fe-f{flex:1;min-width:0}.fe-extra>input{flex:1;min-width:0;background:#161c20;color:#fff;border:1px solid #56656d;border-radius:7px;padding:8px 10px;font-family:inherit;font-size:14px}.fe-extra>input:focus{outline:none;border-color:#e8b370}.fe-extra .fe-add{flex:none}
 .fe-add{padding:9px;font-weight:600;border-style:dashed}
 .modal{position:fixed;inset:0;z-index:2000;background:rgba(0,0,0,.6);display:grid;place-items:center;padding:16px}
@@ -477,6 +476,19 @@ button{background:#313c43;color:#ffffff;border:1px solid #56656d;border-radius:7
   .editor,.panel,.preview-wrap,.flow-track,.mnav:before,.head-collapse{transition:none!important}
 }
 @media print{@page{size:A4;margin:0}.page-guides,.editor,.panel,.mnav,.modal,#toast,#bgFlow{display:none!important}.page-box{width:210mm!important;transform:none!important;margin:0!important}body{display:block;height:auto;overflow:visible;background:#fff}.preview-wrap{padding:0;overflow:visible;display:block;background:#fff;position:static;transform:none;visibility:visible}.page{box-shadow:none}*{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+
+/* ---- Pages multiples dans l'aperçu + glisser-déposer guidé ---- */
+.page-box{display:flex;flex-direction:column;gap:24px}
+.page-guides{display:none}
+.sheet{position:relative;flex:none;width:210mm;height:297mm;overflow:hidden;box-shadow:0 10px 40px rgba(0,0,0,.5)}
+.sheet .page{box-shadow:none}
+.sheet[data-pg]:not([data-pg=""])::after{content:attr(data-pg);position:absolute;right:10px;bottom:6px;z-index:6;font:700 10px Lato,sans-serif;letter-spacing:.1em;color:#6b7b85;pointer-events:none}
+.page-box [data-sec]{cursor:grab;user-select:none;-webkit-user-select:none}
+.page-box.dragging [data-sec]:not(.sec-drag){outline:1.5px dashed rgba(232,179,112,.8);outline-offset:3px;border-radius:3px}
+.page-box .sec-drag{opacity:.35;outline:2px dashed #e8b370;outline-offset:3px}
+.drop-slot{display:flex;align-items:center;justify-content:center;min-height:2.6em;margin:.6em 0;border:2px dashed #e8b370;border-radius:6px;background:rgba(232,179,112,.22);color:#8a5a14;font:700 11px Lato,sans-serif;letter-spacing:.08em;text-transform:uppercase}
+.drag-chip{position:fixed;z-index:4000;pointer-events:none;background:#e8b370;color:#1a1410;font:700 12px Lato,sans-serif;padding:5px 12px;border-radius:999px;box-shadow:0 6px 18px rgba(0,0,0,.4)}
+@media print{.page-box{display:block;height:var(--ch)!important}.sheet.clone,.drop-slot{display:none!important}.sheet{height:var(--ch)!important;overflow:visible!important;box-shadow:none!important;background:none!important}.sheet::after{display:none}}
 </style>
 </head>
 <body data-view="edit">
@@ -530,7 +542,7 @@ button{background:#313c43;color:#ffffff;border:1px solid #56656d;border-radius:7
   <div id="jsonWrap"><pre id="jsonHl" aria-hidden="true"></pre><textarea id="jsonInput" spellcheck="false" wrap="off" autocapitalize="off" autocomplete="off"></textarea></div>
   <div id="status"></div>
 </div>
-<div class="preview-wrap"><div class="page-box" id="pageBox"><div class="page" id="preview"></div><div class="page-guides" id="pageGuides"></div></div></div>
+<div class="preview-wrap"><div class="page-box" id="pageBox"><div class="sheet" id="sheet0"><div class="page" id="preview"></div></div><div class="page-guides" id="pageGuides"></div></div></div>
 <aside class="panel" id="panelEl">
   <div class="panel-top">
     <div class="panel-head"><h3 data-i18n="settings"></h3><span data-i18n="livePreview"></span></div>
@@ -559,6 +571,7 @@ button{background:#313c43;color:#ffffff;border:1px solid #56656d;border-radius:7
           <label class="row"><span><span data-i18n="band"></span><small data-i18n="bandHint"></small></span><input type="color" id="cBand"></label>
           <label class="row"><span><span data-i18n="bandText"></span><small data-i18n="bandTextHint"></small></span><input type="color" id="cBandText"></label>
           <label class="row"><span data-i18n="bg"></span><input type="color" id="cBg"></label>
+          <label class="row"><span><span data-i18n="linkColor"></span><small data-i18n="linkColorHint"></small></span><input type="color" id="cLink"></label>
         </div>
       </div>
     </details>
@@ -687,7 +700,7 @@ const TEXT_PRESETS = [
 const SECTION_KEYS = ["contact","stats","profil","experience","tags","projets","competences","formation","certifs","langues","softskills","loisirs","infos","liens"];
 const DEFAULT_ORDER = ["profil","experience","projets","competences","formation","certifs","langues","softskills","loisirs","infos"];
 const HEADER_KEYS = ["role","availability","avatar"];
-const STYLE_DEF = {ink:"#1b2430",text:"#4a5563",band:"#14202b",bandText:"#ffffff",bg:"#ffffff",font:"Inter",size:12,space:1,margin:15};
+const STYLE_DEF = {ink:"#1b2430",text:"#4a5563",band:"#14202b",bandText:"#ffffff",bg:"#ffffff",link:"#1a56db",font:"Inter",size:12,space:1,margin:15};
 const THEME_STYLE = {sidebar:{band:"#1f2e26",bg:"#f7f3ec"},ats:{font:"Arial",ink:"#111111",text:"#333333"},editorial:{font:"Georgia",ink:"#1a1a1a",text:"#3d3d3d"},compact:{size:11.5,space:.85,margin:13}};
 const MAX_PRESETS = 5;
 const MIN_BODY_PX = 9;
@@ -749,6 +762,9 @@ const DICT = {
   bandText:["Texte sur le bandeau","Text on the banner","Testo sulla banda"],
   bandTextHint:["À choisir lisible sur le bandeau","Pick a color readable on the banner","Scegli un colore leggibile sulla banda"],
   bg:["Fond de la page","Page background","Sfondo della pagina"],
+  linkColor:["Liens","Links","Link"],
+  linkColorHint:["Liens de projets","Project links","Link dei progetti"],
+  dropHere:["Déposer ici","Drop here","Rilascia qui"],
   cardText:["Couleur des textes","Text color","Colore dei testi"],
   ink:["Titres","Headings","Titoli"],
   inkHint:["Nom, intitulés de poste","Name, job titles","Nome, titoli delle posizioni"],
@@ -1150,7 +1166,7 @@ const orderKeys = (d,keys) => { const o=arr(d.order).filter(k=>keys.includes(k))
 const byOrder = (d,m) => orderKeys(d,Object.keys(m)).map(k=>m[k]).join("");
 function vars(d){
   const s = styleOf(d), a = accentOf(d);
-  return `--accent:${a};--accent-light:${mix(a,.5)};--tint:${mix(a,.08)};--rule:${mix(a,.28)};--ink:${s.ink};--soft:${s.text};--band:${s.band};--band-text:${s.bandText};--bg:${s.bg};--font:${FONTS[s.font]||FONTS.Inter};--fs:${s.size};--sp:${s.space};--pad:${s.margin}mm;--avk:${avkOf(d)};${numOr(d.avatarEdge,null)!==null?`--ave:${numOr(d.avatarEdge,0)-s.margin}mm;`:""}${numOr(d.avatarGap,null)!==null?`--avg:${numOr(d.avatarGap,3)}mm;`:""}`;
+  return `--accent:${a};--accent-light:${mix(a,.5)};--tint:${mix(a,.08)};--rule:${mix(a,.28)};--ink:${s.ink};--soft:${s.text};--band:${s.band};--band-text:${s.bandText};--bg:${s.bg};--link:${s.link};--font:${FONTS[s.font]||FONTS.Inter};--fs:${s.size};--sp:${s.space};--pad:${s.margin}mm;--avk:${avkOf(d)};${numOr(d.avatarEdge,null)!==null?`--ave:${numOr(d.avatarEdge,0)-s.margin}mm;`:""}${numOr(d.avatarGap,null)!==null?`--avg:${numOr(d.avatarGap,3)}mm;`:""}`;
 }
 function faviconUrl(a){
   const svg = `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='${a}'/><rect x='15' y='10' width='34' height='44' rx='4' fill='#fff'/><circle cx='26' cy='24' r='5' fill='${a}'/><rect x='34' y='20' width='10' height='3' rx='1.5' fill='${a}'/><rect x='34' y='26' width='8' height='2.5' rx='1.2' fill='#b8c0c6'/><rect x='20' y='36' width='24' height='3' rx='1.5' fill='#b8c0c6'/><rect x='20' y='43' width='18' height='3' rx='1.5' fill='#b8c0c6'/></svg>`;
@@ -1169,9 +1185,9 @@ const linksInline = d => { const l=vis(d,"link:",d.links); return l.length ? `<d
 const tagsHtml = (d,e) => (show(d,"tags")&&arr(e.tags).length) ? `<div class="entry-tags">${e.tags.map(esc).join(" · ")}</div>` : "";
 const bulletsHtml = list => list.length ? `<ul class="bullets">${list.map(b=>`<li>${esc(b)}</li>`).join("")}</ul>` : "";
 const expHtml = d => vis(d,"exp:",d.experience).map(e=>`<div class="entry"><div class="entry-head"><div class="entry-title">${esc(e.title)}</div><div class="entry-date">${esc(e.date)}</div></div>${has(e.org)?`<div class="entry-org">${esc(e.org)}</div>`:""}${bulletsHtml(arr(e.bullets))}${tagsHtml(d,e)}</div>`).join("");
-const projLink = (d,x) => has(x.url) ? `<div class="entry-link"><a class="proj-link" href="${esc(x.url)}">${esc(has(x.linkLabel)?x.linkLabel:Lc(d).viewProject)}${d.showUrls?" · "+esc(shortUrl(x.url)):""}</a></div>` : "";
+const projLink = (d,x) => has(x.url) ? `<a class="proj-link" href="${esc(x.url)}">${esc(has(x.linkLabel)?x.linkLabel:Lc(d).viewProject)}${d.showUrls?" · "+esc(shortUrl(x.url)):""}</a>` : "";
 const projPoints = p => { const b=arr(p.bullets).filter(has); return b.length ? b : (has(p.desc) ? [p.desc] : []); };
-const projHtml = d => vis(d,"proj:",d.projects).map(p=>`<div class="entry"><div class="entry-head"><div class="entry-title">${esc(p.name)}</div>${has(p.date)?`<div class="entry-date">${esc(p.date)}</div>`:""}</div>${bulletsHtml(projPoints(p))}${tagsHtml(d,p)}${projLink(d,p)}</div>`).join("");
+const projHtml = d => vis(d,"proj:",d.projects).map(p=>`<div class="entry"><div class="entry-head"><div class="entry-title proj-title"><span>${esc(p.name)}</span>${projLink(d,p)}</div>${has(p.date)?`<div class="entry-date">${esc(p.date)}</div>`:""}</div>${bulletsHtml(projPoints(p))}${tagsHtml(d,p)}</div>`).join("");
 const skillsHtml = d => vis(d,"skill:",d.skills).map(x=>`<div class="skill"><span class="skill-name">${esc(x.name)} :</span> <span class="skill-value">${esc(x.value)}</span></div>`).join("");
 const formHtml = d => vis(d,"form:",d.formation).map(f=>`<div class="formation-entry">${has(f.year)?`<div class="formation-year">${esc(f.year)}</div>`:""}<div class="formation-title">${esc(f.title)}</div>${has(f.school)?`<div class="formation-school">${esc(f.school)}</div>`:""}</div>`).join("");
 const softHtml = d => { const s=vis(d,"soft:",d.softSkills).filter(has); return s.length ? `<p class="plain-line">${s.map(esc).join(" · ")}</p>` : ""; };
@@ -1314,6 +1330,7 @@ function histGo(n){
 }
 
 const PAGE_W_PX=210*96/25.4, PAGE_H_PX=297*96/25.4;
+const SHEET_GAP=24;
 let lastK=1, lastPages=1;
 const onePageOn=()=>docMode==="cv"&&currentData.onePage!==false;
 function fitPage(el,enabled){
@@ -1334,17 +1351,25 @@ function fitPage(el,enabled){
 function updatePreviewLayout(){
   const k=fitPage(preview,onePageOn()), h=preview.offsetHeight*k;
   preview.style.transform=k<1?`scale(${k})`:"none";
-  pageBox.style.width=PAGE_W_PX+"px"; pageBox.style.height=h+"px"; pageGuides.style.height=h+"px";
+  const pages=Math.max(1,Math.ceil((h-2)/PAGE_H_PX)), total=pages*PAGE_H_PX+(pages-1)*SHEET_GAP;
+  const bg=styleOf(currentData).bg, s0=$("sheet0");
+  pageBox.querySelectorAll(".sheet.clone").forEach(x=>x.remove());
+  for(let i=1;i<pages;i++){
+    const sh=document.createElement("div"); sh.className="sheet clone"; sh.style.background=bg; sh.dataset.pg=(i+1)+" / "+pages;
+    const c=preview.cloneNode(true); c.removeAttribute("id"); c.style.top=(-i*PAGE_H_PX)+"px";
+    sh.appendChild(c); pageBox.appendChild(sh);
+  }
+  s0.style.background=bg; s0.dataset.pg=pages>1?"1 / "+pages:"";
+  pageBox.style.width=PAGE_W_PX+"px"; pageBox.style.height=total+"px"; pageBox.style.setProperty("--ch",h+"px");
   const avail=pageBox.parentElement.clientWidth-(innerWidth<=960?24:40), m=(avail>100&&avail<PAGE_W_PX)?avail/PAGE_W_PX:1;
   pageBox.style.transformOrigin="0 0"; pageBox.style.transform=m<1?`scale(${m})`:"none";
-  pageBox.style.marginRight=m<1?`${-PAGE_W_PX*(1-m)}px`:"0"; pageBox.style.marginBottom=m<1?`${-h*(1-m)}px`:"0";
-  const pages=Math.max(1,Math.ceil((h-2)/PAGE_H_PX));
+  pageBox.style.marginRight=m<1?`${-PAGE_W_PX*(1-m)}px`:"0"; pageBox.style.marginBottom=m<1?`${-total*(1-m)}px`:"0";
   lastK=k; lastPages=pages;
   pageInfo.textContent=pages+" "+t(pages>1?"pageMany":"pageOne")+(k<1?" · "+Math.round(k*100)+"%":"");
   pageInfo.className=pages>1?"warn":"";
 }
 
-const CTRL=[["cInk","ink"],["cText","text"],["cBand","band"],["cBandText","bandText"],["cBg","bg"],["cFont","font"],["cSize","size"],["cSpace","space"],["cMargin","margin"]];
+const CTRL=[["cInk","ink"],["cText","text"],["cBand","band"],["cBandText","bandText"],["cBg","bg"],["cLink","link"],["cFont","font"],["cSize","size"],["cSpace","space"],["cMargin","margin"]];
 Object.keys(FONTS).forEach(f=>{const o=document.createElement("option");o.value=o.textContent=f;$("cFont").appendChild(o)});
 CTRL.forEach(([id,k])=>$(id).addEventListener("input",e=>{ST()[k]=e.target.type==="range"?+e.target.value:e.target.value;refresh(true)}));
 $("accentInput").addEventListener("input",e=>{currentData.accent=e.target.value;refresh(true)});
@@ -2029,34 +2054,53 @@ function endOrdDrag(e){
 $("ordList").addEventListener("pointerup",endOrdDrag);
 $("ordList").addEventListener("pointercancel",endOrdDrag);
 
-let previewDrag=null;
-preview.addEventListener("pointerdown",e=>{
+/* ---------- Glisser-déposer dans l'aperçu : slot guidé + pages multiples ---------- */
+let previewDrag=null, dragChip=null;
+const chipEl=()=>{if(!dragChip){dragChip=document.createElement("div");dragChip.className="drag-chip";document.body.appendChild(dragChip)}return dragChip};
+function contentY(y){
+  const sh=[...pageBox.querySelectorAll(".sheet")];
+  let i=sh.findIndex(s=>y<s.getBoundingClientRect().bottom+SHEET_GAP/2); if(i<0)i=sh.length-1;
+  const r=sh[i].getBoundingClientRect();
+  return y-r.top+sh[0].getBoundingClientRect().top+i*r.height;
+}
+pageBox.addEventListener("pointerdown",e=>{
   if(docMode!=="cv"||e.button!==0||e.target.closest("a"))return;
-  const el=e.target.closest("[data-sec]");
-  if(el)previewDrag={el,id:e.pointerId,x:e.clientX,y:e.clientY,active:false};
+  const hit=e.target.closest("[data-sec]"); if(!hit)return;
+  const el=preview.querySelector(`[data-sec="${hit.dataset.sec}"]`); if(!el)return;
+  previewDrag={el,id:e.pointerId,x:e.clientX,y:e.clientY,active:false};
 });
-preview.addEventListener("pointermove",e=>{
+pageBox.addEventListener("pointermove",e=>{
   const s=previewDrag;
   if(!s||e.pointerId!==s.id)return;
+  let moved=false;
   if(!s.active){
     if(Math.hypot(e.clientX-s.x,e.clientY-s.y)<6)return;
-    s.active=true;
-    s.el.classList.add("sec-drag");
+    s.active=true; moved=true;
+    s.el.classList.add("sec-drag"); pageBox.classList.add("dragging");
+    s.slot=document.createElement("div"); s.slot.className="drop-slot"; s.slot.textContent="⤵ "+t("dropHere");
+    s.el.after(s.slot);
     try{preview.setPointerCapture(e.pointerId)}catch(_){}
   }
-  const siblings=[...s.el.parentElement.children].filter(x=>x!==s.el&&x.dataset.sec);
-  const after=siblings.find(x=>{const r=x.getBoundingClientRect();return e.clientY<r.top+r.height/2});
-  if(after){if(s.el.nextElementSibling!==after)after.before(s.el)}
-  else if(siblings.length)siblings[siblings.length-1].after(s.el);
+  const c=chipEl(); c.hidden=false; c.textContent=t("sec."+s.el.dataset.sec); c.style.left=(e.clientX+14)+"px"; c.style.top=(e.clientY+14)+"px";
+  const wrap=pageBox.parentElement, fr=wrap.getBoundingClientRect();
+  if(e.clientY<fr.top+50)wrap.scrollTop-=12; else if(e.clientY>fr.bottom-50)wrap.scrollTop+=12;
+  const cy=contentY(e.clientY), sib=[...s.el.parentElement.children].filter(x=>x!==s.el&&x.dataset.sec);
+  const after=sib.find(x=>{const r=x.getBoundingClientRect();return cy<r.top+r.height/2});
+  if(after){ if(s.slot.nextElementSibling!==after){after.before(s.slot);moved=true} }
+  else if(sib.length){ const last=sib[sib.length-1]; if(last.nextElementSibling!==s.slot){last.after(s.slot);moved=true} }
+  if(moved)updatePreviewLayout();
 });
 function endPreviewDrag(e){
   const s=previewDrag;
   if(!s||e.pointerId!==s.id)return;
   previewDrag=null;
+  if(dragChip)dragChip.hidden=true;
+  pageBox.classList.remove("dragging");
   if(!s.active)return;
-  s.el.classList.remove("sec-drag");
+  const par=s.el.parentElement, keys=[];
+  [...par.children].forEach(x=>{ if(x===s.slot)keys.push(s.el.dataset.sec); else if(x!==s.el&&x.dataset.sec)keys.push(x.dataset.sec); });
+  s.slot.remove(); s.el.classList.remove("sec-drag");
   try{preview.releasePointerCapture(e.pointerId)}catch(_){}
-  const keys=[...s.el.parentElement.children].filter(x=>x.dataset.sec).map(x=>x.dataset.sec);
   const current=orderKeys(currentData,DEFAULT_ORDER);
   const slots=current.map((k,i)=>keys.includes(k)?i:-1).filter(i=>i>=0);
   const next=[...current];
@@ -2064,8 +2108,8 @@ function endPreviewDrag(e){
   currentData.order=next;
   refresh(true);
 }
-preview.addEventListener("pointerup",endPreviewDrag);
-preview.addEventListener("pointercancel",endPreviewDrag);
+pageBox.addEventListener("pointerup",endPreviewDrag);
+pageBox.addEventListener("pointercancel",endPreviewDrag);
 
 formEl.addEventListener("click",e=>{
   const b=e.target.closest("button[data-act]"); if(!b)return;
