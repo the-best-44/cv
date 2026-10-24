@@ -199,6 +199,7 @@ h2{margin:0;font-family:'Playfair Display',serif;font-weight:600;font-size:22px;
 .head-photo{display:none;width:44px;height:44px;padding:0;border-radius:50%;border:2px solid #8a979d;background:#161c20;overflow:hidden;place-items:center;flex:none}
 .head-row{display:flex;gap:6px}.head-row select{flex:1;min-width:0}
 .icon-btn{width:42px;padding:0;font-size:18px;line-height:1}
+.icon-btn svg{width:20px;height:20px;display:block;margin:0 auto;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .toolbar{display:grid;grid-template-columns:1.35fr 1fr 1fr 1.15fr;gap:6px}
 .toolbar button{padding:9px 4px;font-weight:600;letter-spacing:.01em}
 .doc-title{display:flex;flex-direction:column;gap:4px;padding:9px 12px;border:1px solid #46545c;border-radius:9px;background:#161c20;min-width:0}
@@ -259,6 +260,9 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:15px;heigh
 input[type=range]::-moz-range-thumb{width:11px;height:11px;border-radius:50%;background:#e8b370;border:2px solid #242d34;box-shadow:0 0 0 1px #e8b370}
 select{background:#161c20;color:#ffffff;border:1px solid #56656d;border-radius:8px;padding:9px 11px;font-family:inherit;font-size:14px}
 #catSel,#cFont,#cvLangSel{width:100%}
+.txt{width:100%;background:#161c20;color:#ffffff;border:1px solid #56656d;border-radius:8px;padding:9px 11px;font-family:inherit;font-size:14px}
+.txt:focus{outline:none;border-color:#e8b370}
+textarea.txt{resize:vertical;min-height:90px;line-height:1.45}
 input[type=checkbox]{-webkit-appearance:none;appearance:none;width:17px;height:17px;margin:0;border:1.5px solid #9aa7ad;border-radius:4px;background:#161c20;display:inline-grid;place-content:center;cursor:pointer;flex:none}
 input[type=checkbox]:checked{background:#e8b370;border-color:#e8b370}
 input[type=checkbox]:checked:after{content:'';width:8px;height:4px;border-left:2.5px solid #161c20;border-bottom:2.5px solid #161c20;transform:rotate(-45deg) translate(1px,-1px)}
@@ -285,6 +289,18 @@ button:disabled{opacity:.45;cursor:not-allowed}
 .checks label span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .opts{display:flex;flex-direction:column;gap:14px;padding-top:18px;border-top:1px solid #3d4a52}
 #pageInfo{margin-left:auto;font-weight:700;font-size:12px;color:#a6e8a9;background:rgba(127,191,130,.2);padding:2px 9px;border-radius:99px}#pageInfo.warn{color:#ffc873;background:rgba(224,168,79,.22)}
+.ats-list{display:flex;flex-direction:column;gap:9px}
+.ats-item{display:flex;gap:9px;align-items:flex-start;font-size:13px;line-height:1.4;color:#ffffff}
+.ats-item i{flex:none;width:18px;height:18px;margin-top:1px;border-radius:50%;display:grid;place-items:center;font-style:normal;font-size:11px;font-weight:800}
+.ats-item.ok i{background:rgba(127,191,130,.25);color:#a6e8a9}
+.ats-item.warn i{background:rgba(224,168,79,.25);color:#ffc873}
+.ats-item.bad i{background:rgba(255,138,122,.25);color:#ff9a8c}
+.kw-sum{font-size:13px;color:#e6ecef}
+.kw-h{font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:#e9eef0;font-weight:700;margin:12px 0 6px}
+.kw-chips{display:flex;flex-wrap:wrap;gap:6px}
+.kw-chip{padding:3px 10px;border-radius:99px;font-size:12px;font-weight:700}
+.kw-chip.ok{background:rgba(127,191,130,.2);color:#a6e8a9}
+.kw-chip.no{background:rgba(255,138,122,.18);color:#ffb3a8}
 #jsonWrap{position:relative;flex:1;min-height:0;background:#0e1215;--jfs:13.5px}
 #jsonHl,#jsonInput{position:absolute;inset:0;width:100%;height:100%;margin:0;border:0;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:var(--jfs);line-height:1.55;letter-spacing:0;white-space:pre;tab-size:2}
 #jsonHl{padding:16px 28px 28px 16px;overflow:hidden;pointer-events:none;color:#cfd8dc}
@@ -335,20 +351,26 @@ button:disabled{opacity:.45;cursor:not-allowed}
 .fe-extra{display:flex;gap:8px;align-items:flex-end}.fe-extra .fe-f{flex:1;min-width:0}.fe-extra>input{flex:1;min-width:0;background:#161c20;color:#fff;border:1px solid #56656d;border-radius:7px;padding:8px 10px;font-family:inherit;font-size:14px}.fe-extra>input:focus{outline:none;border-color:#e8b370}.fe-extra .fe-add{flex:none}
 .fe-add{padding:9px;font-weight:600;border-style:dashed}
 .modal{position:fixed;inset:0;z-index:2000;background:rgba(0,0,0,.6);display:grid;place-items:center;padding:16px}
-.modal-box{width:min(520px,100%);max-height:86vh;overflow:auto;background:#1c2328;border:1px solid #3a464d;border-radius:14px;padding:18px;display:flex;flex-direction:column;gap:12px}
+.modal-box{width:min(560px,100%);max-height:86vh;overflow:auto;background:#1c2328;border:1px solid #3a464d;border-radius:14px;padding:18px;display:flex;flex-direction:column;gap:12px}
 .modal-head{display:flex;justify-content:space-between;align-items:center}
 .modal-head h3{margin:0;font-family:'Playfair Display',serif;font-size:20px;color:#f7ead4}
 .modal-save{display:flex;gap:8px}
 .modal-save input{flex:1;min-width:0;background:#161c20;color:#fff;border:1px solid #56656d;border-radius:8px;padding:9px 11px;font:inherit;font-size:14px}
+.modal-tools{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:8px 2px;border-top:1px solid #3d4a52}
 #savedList{display:flex;flex-direction:column;gap:8px}
-.sv-item{display:flex;align-items:center;gap:8px;padding:10px 12px;border:1px solid #46545c;border-radius:10px;background:#242d34}
+.sv-item{display:flex;align-items:center;gap:10px;padding:10px 12px;border:1px solid #46545c;border-radius:10px;background:#242d34;flex-wrap:wrap}
 .sv-item.cur{border-color:#e8b370}
-.sv-info{flex:1;min-width:0}.sv-info b{display:block;color:#fff;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.sv-info small{color:#cfd8dc;font-size:12px}
+.sv-item.sel{background:rgba(232,179,112,.1)}
+.sv-info{flex:1;min-width:120px}.sv-info b{display:block;color:#fff;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.sv-info small{color:#cfd8dc;font-size:12px}
+.sv-rename{width:100%;background:#161c20;color:#fff;border:1px solid #e8b370;border-radius:7px;padding:6px 9px;font:inherit;font-size:14px}
+.sv-rename:focus{outline:none}
+.sv-acts{display:flex;gap:6px;flex-wrap:wrap}
+.sv-acts button{padding:6px 11px;font-size:12.5px}
 .sv-del{color:#ffb3a8;border-color:#6b3630}
 .preview-wrap{flex:1;overflow:auto;padding:30px 20px;background:#0f1214;display:flex;justify-content:center;align-items:flex-start}
 button{background:#313c43;color:#ffffff;border:1px solid #56656d;border-radius:7px;padding:8px 12px;cursor:pointer;font-family:inherit;font-size:13.5px}button:hover{background:#41505a}
 #status{padding:10px 16px;font-size:13px;border-top:1px solid #3a464d}#status.ok{color:#9be09e}#status.error{color:#ff9a8c}
-#toast{position:fixed;top:18px;left:50%;transform:translateX(-50%) translateY(-12px);background:#3a1f1f;color:#f2b8ae;border:1px solid #6b3630;padding:10px 18px;border-radius:6px;font-size:13px;max-width:80vw;opacity:0;pointer-events:none;transition:.25s;z-index:1000}
+#toast{position:fixed;top:18px;left:50%;transform:translateX(-50%) translateY(-12px);background:#3a1f1f;color:#f2b8ae;border:1px solid #6b3630;padding:10px 18px;border-radius:6px;font-size:13px;max-width:80vw;opacity:0;pointer-events:none;transition:.25s;z-index:3000}
 #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 .page-box{position:relative;flex-shrink:0}.page-box .page{position:absolute;left:0;top:0;transform-origin:0 0}
 .page-guides{position:absolute;left:0;right:0;top:0;pointer-events:none;z-index:5;background:repeating-linear-gradient(to bottom,transparent 0,transparent calc(297mm - 2px),#e11d48 calc(297mm - 2px),#e11d48 297mm);-webkit-mask-image:repeating-linear-gradient(90deg,#000 0 8px,transparent 8px 14px);mask-image:repeating-linear-gradient(90deg,#000 0 8px,transparent 8px 14px)}
@@ -438,13 +460,15 @@ button{background:#313c43;color:#ffffff;border:1px solid #56656d;border-radius:7
   .row output{min-width:64px;font-size:14px}
   input[type=color]{width:40px;height:40px}
   select{min-height:46px;border-radius:12px;font-size:16px}
+  .txt{min-height:46px;border-radius:12px;font-size:16px}
+  textarea.txt{min-height:110px}
   input[type=checkbox]{width:22px;height:22px;border-radius:6px}
   .checks{gap:4px}.checks label{min-height:40px}
   .check-row{min-height:40px}
   .panel button:not(.pal):not(.theme-btn){min-height:46px;border-radius:12px}
   .panel .panel-tools button{min-height:40px;border-radius:999px}
   .photo-thumb{width:76px;height:76px}
-  .modal-save input{font-size:16px}
+  .modal-save input,.sv-rename{font-size:16px}
   #toast{top:calc(14px + env(safe-area-inset-top,0px));max-width:92vw}
 }
 @media (prefers-reduced-motion:reduce){
@@ -476,10 +500,9 @@ button{background:#313c43;color:#ffffff;border:1px solid #56656d;border-radius:7
         <div class="head-row">
           <select id="presetSel" data-i18n-title="presetTitle"></select>
           <button id="btnReset" class="icon-btn" data-i18n-title="resetTitle">↺</button>
-          <button id="btnPresetDel" class="icon-btn" data-i18n-title="delPresetTitle">🗑</button>
           <button id="btnUndo" class="icon-btn" data-i18n-title="undo" disabled>↶</button>
           <button id="btnRedo" class="icon-btn" data-i18n-title="redo" disabled>↷</button>
-          <button id="btnSaved" class="icon-btn" data-i18n-title="personal">💾</button>
+          <button id="btnSaved" class="icon-btn" data-i18n-title="personal"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 6h13M8 12h13M8 18h13"/><circle cx="3.5" cy="6" r="1"/><circle cx="3.5" cy="12" r="1"/><circle cx="3.5" cy="18" r="1"/></svg></button>
         </div>
         <div class="lang-sw doc-sw" id="docSw">
           <button class="lang-btn" data-doc="cv" type="button">CV</button>
@@ -559,6 +582,7 @@ button{background:#313c43;color:#ffffff;border:1px solid #56656d;border-radius:7
         </div>
         <input type="file" id="photoFile" accept="image/*" hidden>
         <div class="rows">
+          <div class="row stack"><span><span data-i18n="photoUrl"></span><small data-i18n="photoUrlHint"></small></span><input type="text" id="photoUrl" class="txt" placeholder="https://…" autocomplete="off" autocapitalize="off" spellcheck="false"></div>
           <div class="row stack"><span data-i18n="shape"></span><select id="avatarShape"><option value="round" data-i18n="round"></option><option value="square" data-i18n="square"></option></select></div>
           <div class="row stack"><span><span data-i18n="side"></span><small data-i18n="sideHint"></small></span><select id="avatarSide"><option value="right" data-i18n="right"></option><option value="left" data-i18n="left"></option></select></div>
           <label class="row"><span><span data-i18n="avSize"></span><small data-i18n="avSizeHint"></small></span><span class="ctl"><input type="range" id="avSize" min="50" max="200" step="5"><output id="vAvSize"></output></span></label>
@@ -594,6 +618,18 @@ button{background:#313c43;color:#ffffff;border:1px solid #56656d;border-radius:7
       </div>
     </details>
 
+    <details class="card" id="cardAts"><summary data-i18n="cardAts"></summary>
+      <div class="card-body">
+        <div id="atsReport" class="ats-list"></div>
+        <div class="grp">
+          <div class="ctl-label" data-i18n="atsJobLabel"></div>
+          <textarea id="jobText" class="txt" rows="6" spellcheck="false"></textarea>
+          <p class="hint" data-i18n="atsJobHint"></p>
+        </div>
+        <div id="atsKw"></div>
+      </div>
+    </details>
+
     <section class="opts">
       <div class="check-row"><input type="checkbox" id="showUrls"><label for="showUrls" data-i18n="showUrls" data-i18n-title="showUrlsTitle"></label></div>
       <div class="check-row"><input type="checkbox" id="onePage"><label for="onePage" data-i18n="onePage"></label><span id="pageInfo"></span></div>
@@ -611,8 +647,17 @@ button{background:#313c43;color:#ffffff;border:1px solid #56656d;border-radius:7
     <div class="modal-head"><h3 data-i18n="personal"></h3><button id="btnSavedClose" type="button">✕</button></div>
     <div class="modal-save"><input type="text" id="saveName" data-i18n-ph="saveNamePh" autocomplete="off"><button id="btnSaveNew" class="primary" type="button" data-i18n="saveNew"></button></div>
     <p class="hint" data-i18n="savedHint"></p>
-    <button id="btnRestorePresets" type="button" data-i18n="restoreBuiltin" hidden></button>
+    <div class="modal-tools">
+      <label class="check-row"><input type="checkbox" id="svAll"><span data-i18n="selectAll"></span></label>
+      <button id="btnSvDelSel" type="button" class="sv-del" disabled></button>
+    </div>
     <div id="savedList"></div>
+    <div class="btns">
+      <button id="btnSvExport" type="button" data-i18n="exportSaved"></button>
+      <button id="btnSvImport" type="button" data-i18n="importSaved"></button>
+      <button id="btnRestorePresets" type="button" data-i18n="restoreBuiltin" hidden></button>
+    </div>
+    <input type="file" id="svImportFile" accept="application/json,.json" hidden>
   </div>
 </div>
 <div id="toast"></div>
@@ -643,6 +688,7 @@ const HEADER_KEYS = ["role","availability","avatar"];
 const STYLE_DEF = {ink:"#1b2430",text:"#4a5563",band:"#14202b",bandText:"#ffffff",bg:"#ffffff",font:"Inter",size:12,space:1,margin:15};
 const THEME_STYLE = {sidebar:{band:"#1f2e26",bg:"#f7f3ec"},ats:{font:"Arial",ink:"#111111",text:"#333333"},editorial:{font:"Georgia",ink:"#1a1a1a",text:"#3d3d3d"},compact:{size:11.5,space:.85,margin:13}};
 const MAX_PRESETS = 5;
+const MIN_BODY_PX = 9;
 const BASE_CONTACT = ["location","phone","email"];
 const LANGS = ["fr","en","it"];
 
@@ -665,7 +711,6 @@ const DICT = {
   brandSub:["Éditeur de CV","CV editor","Editor di CV"],
   presetTitle:["Modèles de contenu (5 maximum)","Content templates (5 max)","Modelli di contenuto (max 5)"],
   resetTitle:["Recharger le modèle choisi","Reload the selected template","Ricarica il modello scelto"],
-  delPresetTitle:["Supprimer le modèle sélectionné","Delete the selected template","Elimina il modello selezionato"],
   restoreBuiltin:["Restaurer les modèles d'origine","Restore the original templates","Ripristina i modelli originali"],
   exportPdf:["Exporter PDF","Export PDF","Esporta PDF"],
   exportPdfTitle:["PDF A4 (texte sélectionnable, liens cliquables)","A4 PDF (selectable text, clickable links)","PDF A4 (testo selezionabile, link cliccabili)"],
@@ -709,6 +754,8 @@ const DICT = {
   cardPhoto:["Photo","Photo","Foto"],
   photoNone:["Aucune","None","Nessuna"],
   photoAdd:["Ajouter une photo","Add a photo","Aggiungi una foto"],
+  photoUrl:["Lien de la photo (URL)","Photo link (URL)","Link della foto (URL)"],
+  photoUrlHint:["Enregistré dans le JSON et les presets ; la photo réapparaît à chaque ouverture","Saved in the JSON and presets; the photo shows again every time you open it","Salvato nel JSON e nei preset; la foto riappare a ogni apertura"],
   del:["Supprimer","Delete","Elimina"],
   shape:["Forme","Shape","Forma"],
   round:["Rond","Round","Rotonda"],
@@ -728,7 +775,7 @@ const DICT = {
   avGap:["Espace photo / texte","Photo / text spacing","Spazio foto / testo"],
   avGapHint:["Distance entre la photo et le nom","Distance between the photo and the name","Distanza tra la foto e il nome"],
   avReset:["↺ Réinitialiser les réglages de la photo","↺ Reset photo settings","↺ Reimposta le impostazioni della foto"],
-  photoHint:["La photo reste sur cette page (rien n'est envoyé) et n'apparaît pas dans le JSON. Elle est incluse dans le PDF et dans l'export HTML, mais disparaît si tu recharges la page. Le texte du CV reste lisible par les ATS.","The photo stays on this page (nothing is uploaded) and does not appear in the JSON. It is included in the PDF and the HTML export, but disappears if you reload the page. The CV text stays readable by ATS.","La foto resta su questa pagina (non viene inviato nulla) e non compare nel JSON. È inclusa nel PDF e nell'export HTML, ma sparisce se ricarichi la pagina. Il testo del CV resta leggibile dagli ATS."],
+  photoHint:["La photo importée depuis ton appareil n'est jamais enregistrée (ni dans les presets, ni dans le JSON) et disparaît au rechargement de la page. Un lien (URL) de photo, lui, est conservé dans le JSON et les presets : la photo réapparaît à chaque ouverture. Les deux sont inclus dans le PDF et l'export HTML. Pour le PDF, le site qui héberge l'image doit autoriser son chargement (CORS) ; sinon, importe la photo depuis ton appareil. Le texte du CV reste lisible par les ATS.","A photo imported from your device is never saved (neither in presets nor in the JSON) and disappears when you reload the page. A photo link (URL), on the other hand, is kept in the JSON and presets: the photo shows again every time you open it. Both are included in the PDF and the HTML export. For the PDF, the site hosting the image must allow it to be loaded (CORS); otherwise import the photo from your device. The CV text stays readable by ATS.","La foto caricata dal dispositivo non viene mai salvata (né nei preset né nel JSON) e sparisce se ricarichi la pagina. Un link (URL) alla foto, invece, viene conservato nel JSON e nei preset: la foto riappare a ogni apertura. Entrambe sono incluse nel PDF e nell'export HTML. Per il PDF, il sito che ospita l'immagine deve permetterne il caricamento (CORS); altrimenti carica la foto dal dispositivo. Il testo del CV resta leggibile dagli ATS."],
   cardFont:["Police et mise en page","Font and layout","Carattere e impaginazione"],
   font:["Police","Font","Carattere"],
   fontSize:["Taille du texte","Text size","Dimensione del testo"],
@@ -737,7 +784,7 @@ const DICT = {
   cardSections:["Sections affichées","Visible sections","Sezioni visibili"],
   showUrls:["Afficher l'URL à côté du nom des liens","Show the URL next to link names","Mostra l'URL accanto al nome dei link"],
   showUrlsTitle:["Affiche l'adresse à côté du nom (ex. Portfolio · abib-44.github.io/portfolio), plus lisible pour les ATS","Shows the address next to the name (e.g. Portfolio · abib-44.github.io/portfolio), more readable for ATS","Mostra l'indirizzo accanto al nome (es. Portfolio · abib-44.github.io/portfolio), più leggibile per gli ATS"],
-  onePage:["Tout sur 1 page (réduit si besoin)","Everything on 1 page (shrinks if needed)","Tutto su 1 pagina (riduce se serve)"],
+  onePage:["Tout sur 1 page (réduit si besoin, jamais sous 9 px)","Everything on 1 page (shrinks if needed, never below 9 px)","Tutto su 1 pagina (riduce se serve, mai sotto 9 px)"],
   navEdit:["Éditeur","Editor","Editor"],
   navPrev:["Aperçu","Preview","Anteprima"],
   navSet:["Réglages","Settings","Impostazioni"],
@@ -888,6 +935,7 @@ const DICT = {
   "st.pdfReady":["✅ PDF prêt : {n} ({p})","✅ PDF ready: {n} ({p})","✅ PDF pronto: {n} ({p})"],
   "st.pdfFail":["Impossible de créer le PDF","Could not create the PDF","Impossibile creare il PDF"],
   "st.pdfLibs":["Librairies PDF non chargées : vérifie ta connexion et recharge la page.","PDF libraries not loaded: check your connection and reload the page.","Librerie PDF non caricate: controlla la connessione e ricarica la pagina."],
+  "st.pdfPhotoFail":["⚠️ La photo du lien n'a pas pu être incluse dans le PDF (le site la bloque). Importe-la depuis ton appareil.","⚠️ The linked photo could not be included in the PDF (the site blocks it). Import it from your device.","⚠️ La foto del link non è stata inclusa nel PDF (il sito la blocca). Caricala dal dispositivo."],
   "st.sectionShown":["✅ La section est réaffichée, car tu as coché un de ses éléments","✅ The section is shown again because you ticked one of its items","✅ La sezione è di nuovo visibile perché hai spuntato uno dei suoi elementi"],
   "err.imageType":["❌ Choisis un fichier image (JPG, PNG, WebP)","❌ Choose an image file (JPG, PNG, WebP)","❌ Scegli un file immagine (JPG, PNG, WebP)"],
   "err.readFile":["❌ Impossible de lire ce fichier","❌ Cannot read this file","❌ Impossibile leggere questo file"],
@@ -902,12 +950,26 @@ const DICT = {
   "jerr.hint":["L'aperçu garde la dernière version valide.","The preview keeps the last valid version.","L'anteprima mantiene l'ultima versione valida."],
   undo:["Annuler (Ctrl+Z)","Undo (Ctrl+Z)","Annulla (Ctrl+Z)"],
   redo:["Rétablir (Ctrl+Y)","Redo (Ctrl+Y)","Ripristina (Ctrl+Y)"],
-  personal:["Presets personnels","My presets","Preset personali"],
+  personal:["Gestion des presets","Manage presets","Gestione preset"],
   saveNamePh:["Nom du preset","Preset name","Nome del preset"],
   saveNew:["Enregistrer le CV actuel","Save current CV","Salva il CV attuale"],
-  savedHint:["Enregistrés dans ce navigateur (localStorage), photo incluse.","Stored in this browser (localStorage), photo included.","Salvati in questo browser (localStorage), foto inclusa."],
-  savedEmpty:["Aucun CV enregistré pour l'instant.","No saved CV yet.","Nessun CV salvato per ora."],
+  savedHint:["Enregistrés dans ce navigateur (localStorage). La photo importée n'est jamais enregistrée ; seul un lien de photo l'est.","Stored in this browser (localStorage). An imported photo is never saved; only a photo link is.","Salvati in questo browser (localStorage). La foto caricata non viene mai salvata; solo un link alla foto lo è."],
+  savedEmpty:["Aucun preset pour l'instant.","No presets yet.","Nessun preset per ora."],
   load:["Charger","Load","Carica"],
+  rename:["Renommer","Rename","Rinomina"],
+  confirm:["Valider","Confirm","Conferma"],
+  cancel:["Annuler","Cancel","Annulla"],
+  selectAll:["Tout sélectionner","Select all","Seleziona tutto"],
+  delSelected:["Supprimer la sélection ({n})","Delete selected ({n})","Elimina selezionati ({n})"],
+  delManyConfirm:["Supprimer {n} élément(s) ?","Delete {n} item(s)?","Eliminare {n} elemento/i?"],
+  builtinBadge:["Modèle d'origine","Original template","Modello originale"],
+  exportSaved:["Exporter (JSON)","Export (JSON)","Esporta (JSON)"],
+  importSaved:["Importer (JSON)","Import (JSON)","Importa (JSON)"],
+  "st.renamed":["✅ Renommé : {n}","✅ Renamed: {n}","✅ Rinominato: {n}"],
+  "st.imported":["✅ {n} preset importé(s)","✅ {n} preset imported","✅ {n} preset importati"],
+  "err.nameUsed":["❌ Ce nom existe déjà","❌ This name is already used","❌ Questo nome esiste già"],
+  "err.nameEmpty":["❌ Le nom ne peut pas être vide","❌ The name cannot be empty","❌ Il nome non può essere vuoto"],
+  "err.importBad":["❌ Fichier invalide","❌ Invalid file","❌ File non valido"],
   delConfirm:["Supprimer « {n} » ?","Delete “{n}”?","Eliminare «{n}»?"],
   docLetter:["Lettre de motivation","Cover letter","Lettera di motivazione"],
   okTitle:["Valider ce champ","Confirm this field","Conferma questo campo"],
@@ -928,7 +990,32 @@ const DICT = {
   "f.l.body":["Corps de la lettre (ligne vide = nouveau paragraphe)","Letter body (blank line = new paragraph)","Corpo della lettera (riga vuota = nuovo paragrafo)"],
   "f.l.closing":["Formule de politesse (vide = par défaut)","Closing (empty = default)","Chiusura (vuota = predefinita)"],
   "f.l.enclosure":["Pièce jointe (vide = aucune)","Enclosure (empty = none)","Allegato (vuoto = nessuno)"],
-  "f.l.signature":["Signature (vide = ton nom)","Signature (empty = your name)","Firma (vuota = il tuo nome)"]
+  "f.l.signature":["Signature (vide = ton nom)","Signature (empty = your name)","Firma (vuota = il tuo nome)"],
+  cardAts:["Contrôles ATS et qualité","ATS and quality checks","Controlli ATS e qualità"],
+  atsJobLabel:["Texte de l'offre d'emploi (colle-le ici)","Job posting text (paste it here)","Testo dell'offerta (incollalo qui)"],
+  atsJobHint:["Analyse locale, sans IA : montre quels termes de l'offre apparaissent dans ton CV (sections visibles). Elle mesure la présence, pas la qualité : n'en fais pas un score à maximiser.","Local analysis, no AI: shows which terms of the posting appear in your CV (visible sections). It measures presence, not quality: don't treat it as a score to maximize.","Analisi locale, senza IA: mostra quali termini dell'offerta compaiono nel CV (sezioni visibili). Misura la presenza, non la qualità: non trattarla come un punteggio da massimizzare."],
+  atsKwEmpty:["Colle une offre pour comparer les mots-clés.","Paste a posting to compare keywords.","Incolla un'offerta per confrontare le parole chiave."],
+  atsKwSummary:["{f} termes sur {n} de l'offre présents dans le CV","{f} of {n} posting terms present in the CV","{f} termini su {n} dell'offerta presenti nel CV"],
+  atsMissing:["Absents du CV ({n})","Missing from the CV ({n})","Assenti dal CV ({n})"],
+  atsFound:["Présents ({n})","Present ({n})","Presenti ({n})"],
+  "ats.layoutOk":["Mise en page : une colonne, généralement bien lue par les ATS","Layout: single column, generally read well by ATS","Layout: colonna singola, in genere letto bene dagli ATS"],
+  "ats.layoutAts":["Design conçu pour les ATS : une colonne, sans décoration","ATS-oriented design: single column, no decoration","Design pensato per gli ATS: colonna singola, senza decorazioni"],
+  "ats.layoutWarn":["Design à deux colonnes : certains parseurs ATS lisent mal l'ordre du texte. Pour les candidatures en ligne, préfère un design marqué ATS.","Two-column design: some ATS parsers misread the text order. For online applications, prefer an ATS-marked design.","Design a due colonne: alcuni parser ATS leggono male l'ordine del testo. Per le candidature online preferisci un design marcato ATS."],
+  "ats.contrastOk":["Contraste des couleurs suffisant","Color contrast is sufficient","Contrasto dei colori sufficiente"],
+  "ats.contrastBad":["Contraste insuffisant : {l}","Insufficient contrast: {l}","Contrasto insufficiente: {l}"],
+  "ctr.body":["texte courant / fond","body text / background","testo corrente / sfondo"],
+  "ctr.ink":["titres / fond","headings / background","titoli / sfondo"],
+  "ctr.accent":["accent / fond","accent / background","accento / sfondo"],
+  "ctr.band":["texte / bandeau","text / banner","testo / banda"],
+  "ctr.accentBand":["accent / bandeau","accent / banner","accento / banda"],
+  "ats.sizeOk":["Taille du texte lisible : {px} px","Readable text size: {px} px","Dimensione del testo leggibile: {px} px"],
+  "ats.sizeWarn":["Texte petit : {px} px. Vise {m} px ou plus.","Small text: {px} px. Aim for {m} px or more.","Testo piccolo: {px} px. Punta a {m} px o più."],
+  "ats.sizeBad":["Texte trop petit : {px} px (minimum conseillé {m} px). Réduis le contenu ou augmente la taille du texte.","Text too small: {px} px (recommended minimum {m} px). Trim the content or raise the text size.","Testo troppo piccolo: {px} px (minimo consigliato {m} px). Riduci il contenuto o aumenta la dimensione del testo."],
+  "ats.pagesWarn":["Le CV fait {n} pages : vise 1 à 2 pages.","The CV is {n} pages long: aim for 1 to 2 pages.","Il CV è di {n} pagine: punta a 1-2 pagine."],
+  "ats.contactBad":["Coordonnées incomplètes : email ou téléphone manquant (ou masqué).","Incomplete contact details: email or phone missing (or hidden).","Contatti incompleti: email o telefono mancanti (o nascosti)."],
+  "ats.placeholder":["Texte provisoire à remplacer : {l}","Placeholder text to replace: {l}","Testo segnaposto da sostituire: {l}"],
+  "ats.photoAts":["Photo avec un design ATS : inutile pour les parseurs et déconseillée dans certains pays.","Photo with an ATS design: useless for parsers and discouraged in some countries.","Foto con un design ATS: inutile per i parser e sconsigliata in alcuni paesi."],
+  "ats.profileLong":["Profil long ({n} caractères) : 400 à 600 sont plus efficaces.","Long profile ({n} characters): 400 to 600 work better.","Profilo lungo ({n} caratteri): 400-600 funzionano meglio."]
 };
 const I18N = Object.fromEntries(LANGS.map((l,i)=>[l,Object.fromEntries(Object.entries(DICT).map(([k,v])=>[k,v[i]]))]));
 
@@ -1003,12 +1090,14 @@ const clone = o => JSON.parse(JSON.stringify(o));
 const esc = v => String(v ?? "").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
 const has = v => typeof v === "string" && v.trim().length > 0;
 const arr = v => Array.isArray(v) ? v : [];
+// Copia dei dati senza mai includere foto in base64 (la foto caricata non viene mai salvata)
+function lite(d){ const c=clone(d); if(typeof c.avatarUrl==="string"&&/^data:/i.test(c.avatarUrl)) c.avatarUrl=""; return c; }
 let docMode = "cv";
 let currentData = clone(PRESETS.elivie.data), currentPreset = "elivie";
 applyCategory(currentData, currentData.category);
 try{
   const a=JSON.parse(localStorage.getItem("cv-autosave")||"null");
-  if(a&&a.d&&typeof a.d==="object"&&!Array.isArray(a.d)){currentData=a.d;if(PRESETS[a.p]||String(a.p).startsWith("u:"))currentPreset=a.p}
+  if(a&&a.d&&typeof a.d==="object"&&!Array.isArray(a.d)){currentData=lite(a.d);if(PRESETS[a.p]||String(a.p).startsWith("u:"))currentPreset=a.p}
 }catch(e){}
 
 const SK = "cv-saved";
@@ -1018,12 +1107,13 @@ const HIDDEN_KEY = "cv-hidden-presets";
 const getHidden = () => { try{ const a=JSON.parse(localStorage.getItem(HIDDEN_KEY)||"[]"); return Array.isArray(a)?a:[]; }catch(e){ return []; } };
 const putHidden = a => { try{ localStorage.setItem(HIDDEN_KEY,JSON.stringify(a)); return true; }catch(e){ showToast(t("err.quota"),4000); return false; } };
 const builtinKeys = () => Object.keys(PRESETS).slice(0,MAX_PRESETS).filter(k=>!getHidden().includes(k));
+const allKeys = () => [...builtinKeys(), ...getSaved().map(x=>"u:"+x.id)];
 const presetLabel = k => PRESETS[k] ? PRESETS[k].label : ((getSaved().find(x=>"u:"+x.id===k)||{}).name || k);
 function loadPreset(k){
   let src = PRESETS[k] && PRESETS[k].data, builtin = !!src;
-  if(!src && String(k).startsWith("u:")){ const x=getSaved().find(v=>"u:"+v.id===k); if(x){ src=x.data; photoData=x.photo||""; } }
+  if(!src && String(k).startsWith("u:")){ const x=getSaved().find(v=>"u:"+v.id===k); if(x) src=x.data; }
   if(!src){ k="elivie"; src=PRESETS.elivie.data; builtin=true; }
-  currentPreset=k; currentData=clone(src);
+  currentPreset=k; currentData=lite(src);
   if(builtin) applyCategory(currentData,currentData.category);
 }
 function buildPresetSel(){
@@ -1095,8 +1185,11 @@ const sectionAttr = key => DEFAULT_ORDER.includes(key) ? ` data-sec="${key}"` : 
 const sec = (d,key,title,body) => (body && show(d,key)) ? `<section class="section"${sectionAttr(key)}><div class="section-title">${esc(title)}</div>${body}</section>` : "";
 const roleHtml = d => (has(d.role)&&show(d,"role"))?`<div class="role">${esc(d.role)}</div>`:"";
 const headerHtml = d => `<h1>${esc(FIXED.fullName)}</h1>${roleHtml(d)}${(has(d.availability)&&show(d,"availability"))?`<div class="availability">${esc(d.availability)}</div>`:""}`;
+// photoData: foto caricata dal dispositivo, solo in memoria, mai salvata.
+// avatarUrl: link alla foto, salvato nel JSON e nei preset.
 let photoData = "";
-const photoSrc = d => photoData || (has(d.avatarUrl) ? d.avatarUrl : "");
+let pdfPhotoOverride = null;
+const photoSrc = d => pdfPhotoOverride!==null ? pdfPhotoOverride : (photoData || ((has(d.avatarUrl)&&/^(https?:|data:image\/)/i.test(d.avatarUrl.trim())) ? d.avatarUrl.trim() : ""));
 const posOf = d => { const v = Number(d.avatarPos); return (d.avatarPos === undefined || d.avatarPos === "" || !isFinite(v)) ? 30 : Math.max(0, Math.min(100, v)); };
 const imgStyle = d => `object-position:50% ${posOf(d)}%;transform:scale(${zoomOf(d)/100});transform-origin:50% ${posOf(d)}%`;
 const avatarHtml = d => (photoSrc(d) && show(d,"avatar")) ? `<div class="avatar${d.avatarShape==="square"?" sq":""}"><img src="${esc(photoSrc(d))}" alt="" style="${imgStyle(d)}"></div>` : "";
@@ -1202,7 +1295,7 @@ const showToast=(m,ms)=>{clearTimeout(toastTimer);toastEl.textContent=m;toastEl.
 
 let hist=[], hi=-1, histLock=false, histTimer;
 const updUndo=()=>{$("btnUndo").disabled=hi<=0;$("btnRedo").disabled=hi>=hist.length-1};
-function persist(){ try{ localStorage.setItem("cv-autosave",JSON.stringify({d:currentData,p:currentPreset})); }catch(e){} }
+function persist(){ try{ localStorage.setItem("cv-autosave",JSON.stringify({d:lite(currentData),p:currentPreset})); }catch(e){} }
 function histPush(){
   if(histLock)return;
   const s=JSON.stringify(currentData); if(hist[hi]===s)return;
@@ -1219,17 +1312,20 @@ function histGo(n){
 }
 
 const PAGE_W_PX=210*96/25.4, PAGE_H_PX=297*96/25.4;
+let lastK=1, lastPages=1;
 const onePageOn=()=>docMode==="cv"&&currentData.onePage!==false;
 function fitPage(el,enabled){
   el.style.transform="none"; el.style.width=PAGE_W_PX+"px"; el.style.minHeight=PAGE_H_PX+"px";
   let k=1;
+  // Il testo non scende mai sotto MIN_BODY_PX: se non basta, il CV passa a 2 pagine
+  const minK=Math.min(1,Math.max(.70,MIN_BODY_PX/styleOf(currentData).size));
   if(enabled && el.offsetHeight>PAGE_H_PX+1){
     let ok=false;
-    for(let s=.98;s>=.70;s-=.02){
+    for(let s=.98;s>=minK-1e-9;s-=.02){
       el.style.width=(PAGE_W_PX/s)+"px"; el.style.minHeight=(PAGE_H_PX/s)+"px";
       if(el.offsetHeight<=PAGE_H_PX/s+1){k=s;ok=true;break}
     }
-    if(!ok){k=.70;el.style.width=(PAGE_W_PX/k)+"px";el.style.minHeight=(PAGE_H_PX/k)+"px"}
+    if(!ok){k=minK;el.style.width=(PAGE_W_PX/k)+"px";el.style.minHeight=(PAGE_H_PX/k)+"px"}
   }
   return k;
 }
@@ -1241,6 +1337,7 @@ function updatePreviewLayout(){
   pageBox.style.transformOrigin="0 0"; pageBox.style.transform=m<1?`scale(${m})`:"none";
   pageBox.style.marginRight=m<1?`${-PAGE_W_PX*(1-m)}px`:"0"; pageBox.style.marginBottom=m<1?`${-h*(1-m)}px`:"0";
   const pages=Math.max(1,Math.ceil((h-2)/PAGE_H_PX));
+  lastK=k; lastPages=pages;
   pageInfo.textContent=pages+" "+t(pages>1?"pageMany":"pageOne")+(k<1?" · "+Math.round(k*100)+"%":"");
   pageInfo.className=pages>1?"warn":"";
 }
@@ -1274,16 +1371,6 @@ function buildLists(){
 }
 $("presetSel").onchange=e=>{loadPreset(e.target.value);dirtyPaths.clear();buildForm();refresh(true);setStatus(t("st.preset",{n:presetLabel(currentPreset)}),false)};
 $("btnReset").onclick=()=>{loadPreset(currentPreset);dirtyPaths.clear();buildForm();refresh(true);setStatus(t("st.presetReload"),false)};
-$("btnPresetDel").onclick=()=>{
-  const k=currentPreset;
-  if(!confirm(t("delConfirm",{n:presetLabel(k)})))return;
-  if(k.startsWith("u:"))putSaved(getSaved().filter(v=>"u:"+v.id!==k));
-  else putHidden([...getHidden(),k]);
-  const rest=[...builtinKeys(),...getSaved().map(x=>"u:"+x.id)];
-  if(rest.length){loadPreset(rest[0]);dirtyPaths.clear();buildForm();refresh(true)}
-  buildPresetSel();
-  setStatus(t("st.deleted"),false);
-};
 $("btnRestorePresets").onclick=()=>{putHidden([]);buildPresetSel();renderSaved()};
 $("btnUndo").onclick=()=>histGo(-1);
 $("btnRedo").onclick=()=>histGo(1);
@@ -1298,31 +1385,123 @@ function setDoc(m){
 }
 document.querySelectorAll("#docSw .lang-btn").forEach(b=>b.onclick=()=>setDoc(b.dataset.doc));
 
+/* ---------- Gestione preset: selezione multipla, rinomina, backup ---------- */
+const selSv = new Set();
+let renameKey = null;
 function saveCurrent(name){
   const a=getSaved(), nm=(name||"").trim()||"CV "+(a.length+1), ex=a.find(x=>x.name===nm);
-  const item={id:ex?ex.id:Date.now().toString(36),name:nm,ts:Date.now(),data:clone(currentData),photo:photoData};
+  const item={id:ex?ex.id:Date.now().toString(36),name:nm,ts:Date.now(),data:lite(currentData)};
   if(ex)Object.assign(ex,item);else a.unshift(item);
   if(putSaved(a)){currentPreset="u:"+item.id;buildPresetSel();renderSaved();persist();setStatus(t("st.saved",{n:nm}),false)}
 }
 function renderSaved(){
   $("btnRestorePresets").hidden=!getHidden().length;
-  const a=getSaved();
-  $("savedList").innerHTML=a.length?a.map(x=>`<div class="sv-item${"u:"+x.id===currentPreset?" cur":""}"><div class="sv-info"><b>${esc(x.name)}</b><small>${esc(t("theme."+themeOf(x.data||{})))} · ${esc(new Date(x.ts).toLocaleString(uiLang))}</small></div><button type="button" data-sv="load" data-id="${esc(x.id)}">${esc(t("load"))}</button><button type="button" class="sv-del" data-sv="del" data-id="${esc(x.id)}">${esc(t("del"))}</button></div>`).join(""):`<p class="hint">${esc(t("savedEmpty"))}</p>`;
+  const keys=allKeys();
+  [...selSv].forEach(k=>{if(!keys.includes(k))selSv.delete(k)});
+  const sv=getSaved();
+  $("savedList").innerHTML=keys.length?keys.map(k=>{
+    const b=!!PRESETS[k], x=b?null:sv.find(v=>"u:"+v.id===k);
+    if(!b&&!x)return "";
+    const name=b?PRESETS[k].label:x.name;
+    const sub=b?t("builtinBadge"):`${t("theme."+themeOf(x.data||{}))} · ${new Date(x.ts).toLocaleString(uiLang)}`;
+    const editing=renameKey===k&&!b;
+    const nm=editing?`<input type="text" class="sv-rename" data-k="${esc(k)}" value="${esc(name)}" autocomplete="off">`:`<b>${esc(name)}</b>`;
+    const acts=editing
+      ?`<button type="button" class="primary" data-sv="rnok" data-k="${esc(k)}">${esc(t("confirm"))}</button><button type="button" data-sv="rncancel" data-k="${esc(k)}">${esc(t("cancel"))}</button>`
+      :`<button type="button" data-sv="load" data-k="${esc(k)}">${esc(t("load"))}</button>${b?"":`<button type="button" data-sv="rn" data-k="${esc(k)}">${esc(t("rename"))}</button>`}<button type="button" class="sv-del" data-sv="del" data-k="${esc(k)}">${esc(t("del"))}</button>`;
+    return `<div class="sv-item${k===currentPreset?" cur":""}${selSv.has(k)?" sel":""}"><input type="checkbox" data-sel="${esc(k)}" ${selSv.has(k)?"checked":""}><div class="sv-info">${nm}<small>${esc(sub)}</small></div><div class="sv-acts">${acts}</div></div>`;
+  }).join(""):`<p class="hint">${esc(t("savedEmpty"))}</p>`;
+  $("svAll").checked=keys.length>0&&keys.every(k=>selSv.has(k));
+  $("svAll").disabled=!keys.length;
+  $("btnSvDelSel").disabled=!selSv.size;
+  $("btnSvDelSel").textContent=t("delSelected",{n:selSv.size});
+  const inp=$("savedList").querySelector(".sv-rename");
+  if(inp){inp.focus();inp.select()}
 }
-$("btnSaved").onclick=()=>{renderSaved();$("saveName").value="";$("savedModal").hidden=false};
+function deleteKeys(keys){
+  const wasCur=keys.includes(currentPreset);
+  const us=keys.filter(k=>k.startsWith("u:")), bs=keys.filter(k=>!k.startsWith("u:"));
+  if(us.length)putSaved(getSaved().filter(v=>!us.includes("u:"+v.id)));
+  if(bs.length)putHidden([...new Set([...getHidden(),...bs])]);
+  keys.forEach(k=>selSv.delete(k));
+  if(renameKey&&keys.includes(renameKey))renameKey=null;
+  if(wasCur){const rest=allKeys();loadPreset(rest[0]||"elivie");dirtyPaths.clear();buildForm();refresh(true)}
+  buildPresetSel();renderSaved();setStatus(t("st.deleted"),false);
+}
+function commitRename(){
+  const inp=$("savedList").querySelector(".sv-rename"); if(!inp)return;
+  const k=inp.dataset.k, nm=inp.value.trim();
+  if(!nm){showToast(t("err.nameEmpty"),2500);return}
+  const a=getSaved(), x=a.find(v=>"u:"+v.id===k);
+  if(!x){renameKey=null;renderSaved();return}
+  if(a.some(v=>v!==x&&v.name===nm)){showToast(t("err.nameUsed"),2500);return}
+  x.name=nm;
+  if(putSaved(a)){renameKey=null;buildPresetSel();renderSaved();setStatus(t("st.renamed",{n:nm}),false)}
+}
+$("btnSaved").onclick=()=>{renameKey=null;selSv.clear();renderSaved();$("saveName").value="";$("savedModal").hidden=false};
 $("btnSavedClose").onclick=()=>{$("savedModal").hidden=true};
 $("btnSaveNew").onclick=()=>{saveCurrent($("saveName").value);$("saveName").value=""};
 $("saveName").addEventListener("keydown",e=>{if(e.key==="Enter")$("btnSaveNew").click()});
+$("btnSvDelSel").onclick=()=>{
+  const keys=[...selSv]; if(!keys.length)return;
+  if(confirm(t("delManyConfirm",{n:keys.length})))deleteKeys(keys);
+};
+$("svAll").addEventListener("change",e=>{
+  selSv.clear();
+  if(e.target.checked)allKeys().forEach(k=>selSv.add(k));
+  renderSaved();
+});
+$("savedModal").addEventListener("change",e=>{
+  const k=e.target.dataset&&e.target.dataset.sel; if(!k)return;
+  e.target.checked?selSv.add(k):selSv.delete(k);
+  renderSaved();
+});
+$("savedModal").addEventListener("keydown",e=>{
+  if(!e.target.classList||!e.target.classList.contains("sv-rename"))return;
+  if(e.key==="Enter"){e.preventDefault();commitRename()}
+  else if(e.key==="Escape"){e.stopPropagation();renameKey=null;renderSaved()}
+});
 $("savedModal").addEventListener("click",e=>{
   if(e.target.id==="savedModal"){e.target.hidden=true;return}
   const b=e.target.closest("[data-sv]"); if(!b)return;
-  const id=b.dataset.id, x=getSaved().find(v=>v.id===id); if(!x)return;
-  if(b.dataset.sv==="load"){loadPreset("u:"+id);dirtyPaths.clear();buildPresetSel();buildForm();refresh(true);$("savedModal").hidden=true;setStatus(t("st.preset",{n:x.name}),false)}
-  else if(confirm(t("delConfirm",{n:x.name}))){
-    putSaved(getSaved().filter(v=>v.id!==id));
-    if(currentPreset==="u:"+id)currentPreset="elivie";
-    buildPresetSel();renderSaved();setStatus(t("st.deleted"),false);
-  }
+  const k=b.dataset.k, act=b.dataset.sv;
+  if(act==="load"){loadPreset(k);dirtyPaths.clear();buildPresetSel();buildForm();refresh(true);$("savedModal").hidden=true;setStatus(t("st.preset",{n:presetLabel(k)}),false)}
+  else if(act==="rn"){renameKey=k;renderSaved()}
+  else if(act==="rncancel"){renameKey=null;renderSaved()}
+  else if(act==="rnok")commitRename();
+  else if(act==="del"&&confirm(t("delConfirm",{n:presetLabel(k)})))deleteKeys([k]);
+});
+$("btnSvExport").onclick=()=>{
+  const payload={app:"cv-studio",v:1,presets:getSaved().map(x=>({id:x.id,name:x.name,ts:x.ts,data:lite(x.data||{})}))};
+  const a=document.createElement("a");
+  a.href=URL.createObjectURL(new Blob([JSON.stringify(payload,null,2)],{type:"application/json"}));
+  a.download="cv-studio-presets.json";a.click();
+  setTimeout(()=>URL.revokeObjectURL(a.href),1000);
+};
+$("btnSvImport").onclick=()=>$("svImportFile").click();
+$("svImportFile").addEventListener("change",e=>{
+  const f=e.target.files&&e.target.files[0]; e.target.value="";
+  if(!f)return;
+  const fr=new FileReader();
+  fr.onerror=()=>showToast(t("err.readFile"),3500);
+  fr.onload=()=>{
+    try{
+      const p=JSON.parse(fr.result), list=Array.isArray(p)?p:p&&p.presets;
+      if(!Array.isArray(list))throw 0;
+      const a=getSaved(), names=new Set(a.map(x=>x.name));
+      let n=0;
+      list.forEach((x,i)=>{
+        if(!x||typeof x.data!=="object"||x.data===null||Array.isArray(x.data))return;
+        let nm=String(x.name||"CV "+(a.length+1)).trim()||"CV", base=nm, c=2;
+        while(names.has(nm))nm=base+" ("+(c++)+")";
+        names.add(nm);
+        a.unshift({id:Date.now().toString(36)+i+n,name:nm,ts:Number(x.ts)||Date.now(),data:lite(x.data)});n++;
+      });
+      if(!n)throw 0;
+      if(putSaved(a)){buildPresetSel();renderSaved();setStatus(t("st.imported",{n}),false)}
+    }catch(err){showToast(t("err.importBad"),3500)}
+  };
+  fr.readAsText(f);
 });
 document.addEventListener("keydown",e=>{
   if(e.key==="Escape"&&!$("savedModal").hidden){$("savedModal").hidden=true;return}
@@ -1356,6 +1535,12 @@ $("photoFile").addEventListener("change",e=>{
   fr.readAsDataURL(f);
 });
 $("btnPhotoDel").onclick=()=>{photoData="";currentData.avatarUrl="";refresh(true);setStatus(t("st.photoRemoved"),false)};
+$("photoUrl").addEventListener("input",e=>{
+  const v=e.target.value.trim();
+  currentData.avatarUrl=v;
+  if(v){photoData="";currentData.hide=arr(currentData.hide).filter(h=>h!=="avatar")}
+  refresh(true);
+});
 $("headPhoto").onclick=()=>{
   if(!photoSrc(currentData)){$("photoFile").click();return}
   setView("set");
@@ -1420,6 +1605,78 @@ $("sectionChecks").addEventListener("change",e=>{
   currentData.hide=[...h]; refresh(true);
 });
 
+/* ---------- Controlli ATS e qualità (deterministici, senza IA) ---------- */
+const STOP=new Set(("les des une aux par pour dans sur avec sans que qui quoi dont est sont etre avoir ont plus tres vous nous notre votre vos nos leur leurs cette cet ces ainsi aussi mais donc car comme entre chez vers sous lors afin tout tous toute toutes pouvez serez sera fait faire etc poste offre entreprise profil missions mission annees years anni "+
+"the and for with that this you your are our will have has from not but all can their they who what which about into over more other such also able within between through any may must should would could been being were was than then them its his her she him how when where while both each per via "+
+"gli delle degli della dei del dal dalla dalle nel nella nelle sul sulla con che chi non una uno sono essere avere abbiamo siamo come anche piu molto ogni tra fra suo sua suoi loro nostro nostra vostro vostra presso questa questo questi queste cui dove quando oltre sulle alla alle agli nei nell dell all sull").split(" "));
+const norm=s=>String(s||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");
+const toks=s=>norm(s).split(/[^a-z0-9+#]+/).filter(w=>w.length>=3||(w.length===2&&/[+#]/.test(w)));
+const stem=w=>w.length>3?w.replace(/(s|x)$/,""):w;
+function keywordsOf(txt){
+  const m=new Map();let i=0;
+  toks(txt).forEach(w=>{
+    if(STOP.has(w)||/^\d+$/.test(w))return;
+    const s=stem(w),e=m.get(s);
+    if(e)e.n++;else m.set(s,{s,w,n:1,i:i++});
+  });
+  return [...m.values()].sort((a,b)=>b.n-a.n||a.i-b.i).slice(0,30);
+}
+function cvPlain(d){
+  const tmp=document.createElement("div");
+  tmp.innerHTML=RENDERERS[themeOf(d)](d).replace(/<img[^>]*>/g,"");
+  return tmp.textContent||"";
+}
+const hexOk=h=>/^#[0-9a-f]{6}$/i.test(h||"");
+const lum=h=>{const n=parseInt(h.slice(1),16);return [n>>16,(n>>8)&255,n&255].map(v=>{v/=255;return v<=.03928?v/12.92:Math.pow((v+.055)/1.055,2.4)}).reduce((a,v,i)=>a+v*[.2126,.7152,.0722][i],0)};
+const ratio=(a,b)=>{const x=lum(a),y=lum(b);return (Math.max(x,y)+.05)/(Math.min(x,y)+.05)};
+function strs(o,out){
+  if(typeof o==="string")out.push(o);
+  else if(Array.isArray(o))o.forEach(x=>strs(x,out));
+  else if(o&&typeof o==="object")Object.values(o).forEach(x=>strs(x,out));
+  return out;
+}
+function renderAts(){
+  const rep=$("atsReport"),kw=$("atsKw"); if(!rep||!kw)return;
+  const d=currentData,th=themeOf(d),s=styleOf(d),a=accentOf(d),it=[];
+  const two=th==="sidebar"||th==="modern", atsTh=["ats","editorial","compact"].includes(th);
+  // layout
+  it.push(two?["warn",t("ats.layoutWarn")]:atsTh?["ok",t("ats.layoutAts")]:["ok",t("ats.layoutOk")]);
+  // contrasto
+  const pairs=[["ctr.body",s.text,s.bg,4.5],["ctr.ink",s.ink,s.bg,4.5],["ctr.accent",a,s.bg,3]];
+  if(["sidebar","bold","modern"].includes(th)){
+    pairs.push(["ctr.band",s.bandText,s.band,4.5]);
+    pairs.push(["ctr.accentBand",th==="sidebar"?a:mix(a,.5),s.band,3]);
+  }
+  const bad=pairs.filter(p=>hexOk(p[1])&&hexOk(p[2])&&ratio(p[1],p[2])<p[3]);
+  it.push(bad.length?["bad",t("ats.contrastBad",{l:bad.map(p=>`${t(p[0])} ${ratio(p[1],p[2]).toFixed(1)}:1 (min ${p[3]}:1)`).join(" ; ")})]:["ok",t("ats.contrastOk")]);
+  // dimensione effettiva del corpo testo
+  const px=s.size*lastK, pxs=(Math.round(px*10)/10).toString();
+  it.push(px<8.5?["bad",t("ats.sizeBad",{px:pxs,m:MIN_BODY_PX})]:px<MIN_BODY_PX?["warn",t("ats.sizeWarn",{px:pxs,m:MIN_BODY_PX})]:["ok",t("ats.sizeOk",{px:pxs})]);
+  // pagine
+  if(lastPages>2)it.push(["warn",t("ats.pagesWarn",{n:lastPages})]);
+  // contatti
+  const c=contactObj(d), okC=k=>show(d,"contact")&&show(d,"c:"+k)&&has(cval(c[k]));
+  if(!(okC("email")&&okC("phone")))it.push(["warn",t("ats.contactBad")]);
+  // segnaposto [..] rimasti
+  const found=[...new Set((strs([d.role,d.profile,d.experience,d.projects,d.skills,d.formation,d.letter],[]).join("\n").match(/\[[^\]\n]{1,40}\]/g))||[])];
+  if(found.length)it.push(["warn",t("ats.placeholder",{l:found.slice(0,4).join(" ")})]);
+  // foto con design ATS
+  if(atsTh&&photoSrc(d)&&show(d,"avatar"))it.push(["warn",t("ats.photoAts")]);
+  // profilo troppo lungo
+  if(has(d.profile)&&d.profile.length>650)it.push(["warn",t("ats.profileLong",{n:d.profile.length})]);
+  rep.innerHTML=it.map(([l,m])=>`<div class="ats-item ${l}"><i>${l==="ok"?"✓":l==="warn"?"!":"✕"}</i><span>${esc(m)}</span></div>`).join("");
+  // parole chiave dell'offerta
+  const ks=keywordsOf($("jobText").value);
+  if(!ks.length){kw.innerHTML=`<p class="hint">${esc(t("atsKwEmpty"))}</p>`;return}
+  const have=new Set(toks(cvPlain(d)).map(stem));
+  const f=ks.filter(k=>have.has(k.s)), m=ks.filter(k=>!have.has(k.s));
+  const chips=(l,c)=>l.map(k=>`<span class="kw-chip ${c}">${esc(k.w)}</span>`).join("");
+  kw.innerHTML=`<div class="kw-sum">${esc(t("atsKwSummary",{f:f.length,n:ks.length}))}</div>`
+    +(m.length?`<div class="kw-h">${esc(t("atsMissing",{n:m.length}))}</div><div class="kw-chips">${chips(m,"no")}</div>`:"")
+    +(f.length?`<div class="kw-h">${esc(t("atsFound",{n:f.length}))}</div><div class="kw-chips">${chips(f,"ok")}</div>`:"");
+}
+$("jobText").addEventListener("input",e=>{try{localStorage.setItem("cv-job",e.target.value)}catch(_){}renderAts()});
+
 function refresh(writeJson){
   preview.innerHTML=renderCV(currentData);
   updatePreviewLayout();
@@ -1434,6 +1691,8 @@ function refresh(writeJson){
   $("photoThumb").innerHTML=src?`<img src="${esc(src)}" alt="" style="${imgStyle(currentData)}">`:`<span>${esc(t("photoNone"))}</span>`;
   $("headPhoto").innerHTML=src?`<img src="${esc(src)}" alt="" style="width:100%;height:100%;object-fit:cover">`:CAMERA_SVG;
   $("btnPhotoDel").disabled=!src;
+  const pu=$("photoUrl");
+  if(document.activeElement!==pu)pu.value=/^data:/i.test(currentData.avatarUrl||"")?"":(currentData.avatarUrl||"");
   $("avatarShape").value=currentData.avatarShape==="square"?"square":"round";
   $("avatarSide").value=currentData.avatarSide==="left"?"left":"right";
   $("avSize").value=Math.round(avkOf(currentData)*100);$("vAvSize").textContent=Math.round(avkOf(currentData)*100)+" %";
@@ -1455,6 +1714,7 @@ function refresh(writeJson){
   document.querySelectorAll(".theme-btn").forEach(b=>b.classList.toggle("active",b.dataset.theme===themeOf(currentData)));
   $("favicon").href=faviconUrl(accentOf(currentData));
   updateFoldLabels();
+  renderAts();
   histSched();
 }
 
@@ -1584,15 +1844,33 @@ function addLayer(pdf,layer,k,y0,y1){
   });
   layer.links.forEach(l=>{const mid=l.top+l.h/2;if(mid<y0||mid>=y1)return;pdf.link(l.x*k,(l.top-y0)*k,l.w*k,l.h*k,{url:l.url})});
 }
+// Foto da link: la scarico e la converto in base64 solo per il PDF (serve CORS sul sito che la ospita)
+let urlPhotoCache={u:"",d:""};
+async function pdfPhoto(){
+  if(photoData)return photoData;
+  const u=(currentData.avatarUrl||"").trim();
+  if(!/^https?:\/\//i.test(u)||!show(currentData,"avatar"))return /^data:image\//i.test(u)?u:"";
+  if(urlPhotoCache.u===u&&urlPhotoCache.d)return urlPhotoCache.d;
+  try{
+    const r=await fetch(u,{mode:"cors"});if(!r.ok)throw new Error("http");
+    const b=await r.blob();
+    const d=await new Promise((res,rej)=>{const f=new FileReader();f.onload=()=>res(f.result);f.onerror=rej;f.readAsDataURL(b)});
+    urlPhotoCache={u,d};return d;
+  }catch(e){showToast(t("st.pdfPhotoFail"),5500);return ""}
+}
 async function exportPdf(){
   const btn=$("btnPdf");btn.disabled=true;setStatus(t("st.pdfBuilding"),false);let holder=null;
   try{
     if(!window.html2canvas||!window.jspdf)throw new Error(t("st.pdfLibs"));
     const PW=210,PH=297,W=Math.ceil(PW*MM);
+    const photo=await pdfPhoto();
     holder=document.createElement("iframe");
     holder.setAttribute("sandbox","allow-same-origin");holder.setAttribute("aria-hidden","true");
     holder.style.cssText=`position:fixed;left:-20000px;top:0;border:0;width:${W}px;height:10px`;
-    await new Promise((res,rej)=>{holder.onload=res;holder.onerror=rej;holder.srcdoc=buildStandaloneHtml(currentData,true);document.body.appendChild(holder)});
+    let pdfHtml;
+    pdfPhotoOverride=photo;
+    try{pdfHtml=buildStandaloneHtml(currentData,true)}finally{pdfPhotoOverride=null}
+    await new Promise((res,rej)=>{holder.onload=res;holder.onerror=rej;holder.srcdoc=pdfHtml;document.body.appendChild(holder)});
     const doc=holder.contentDocument;
     if(doc.fonts&&doc.fonts.ready)await doc.fonts.ready;
     await Promise.all(Array.from(doc.images).map(i=>i.decode?i.decode().catch(()=>{}):Promise.resolve()));
@@ -1622,7 +1900,7 @@ async function exportPdf(){
     setStatus(t("st.pdfReady",{n:name,p:pages+" "+t(pages>1?"pageMany":"pageOne")}),false);
   }catch(err){
     const m=err&&err.message?err.message:t("st.pdfFail");setStatus("❌ "+m,true);showToast("❌ "+m,4000);
-  }finally{if(holder&&holder.parentNode)holder.parentNode.removeChild(holder);btn.disabled=false}
+  }finally{pdfPhotoOverride=null;if(holder&&holder.parentNode)holder.parentNode.removeChild(holder);btn.disabled=false}
 }
 $("btnPdf").onclick=exportPdf;
 $("docTitleInput").addEventListener("input",e=>{currentData[fileKey()]=e.target.value;refresh(true)});
@@ -1882,6 +2160,7 @@ function relocalize(){
   buildForm();
   refresh(false);
   renderErr();
+  if(!$("savedModal").hidden)renderSaved();
 }
 document.querySelectorAll(".lang-btn[data-lang]").forEach(b=>b.onclick=()=>{
   uiLang=b.dataset.lang;
@@ -1889,6 +2168,18 @@ document.querySelectorAll(".lang-btn[data-lang]").forEach(b=>b.onclick=()=>{
   relocalize();
   setStatus(t("ready"),false);
 });
+
+// Pulizia: elimina eventuali foto in base64 salvate dalle versioni precedenti
+(function purgeOldPhotos(){
+  const a=getSaved();
+  const dirty=a.some(x=>x&&(x.photo||(x.data&&/^data:/i.test(x.data.avatarUrl||""))));
+  if(!dirty)return;
+  putSaved(a.map(x=>{
+    if(x){delete x.photo;if(x.data&&/^data:/i.test(x.data.avatarUrl||""))x.data.avatarUrl=""}
+    return x;
+  }));
+})();
+try{$("jobText").value=localStorage.getItem("cv-job")||""}catch(e){}
 
 relocalize();
 setTab("json");
