@@ -276,6 +276,7 @@ button:disabled{opacity:.45;cursor:not-allowed}
 .chk-group summary:before{content:'';width:5px;height:5px;border-right:2px solid #e9eef0;border-bottom:2px solid #e9eef0;transform:rotate(-45deg);margin:0 4px 0 2px;transition:transform .15s}
 .chk-group[open] summary:before{transform:rotate(45deg)}
 .chk-group summary span{flex:1}
+.chk-group summary input{flex:none}
 .chk-group summary em.off{color:#ffb3a8;background:rgba(255,138,122,.18)}
 .chk-group summary em{font-style:normal;font-weight:700;font-size:12px;color:#ffd9a0;background:rgba(232,179,112,.2);padding:2px 10px;border-radius:99px}
 .chk-group .checks{margin:0 0 12px;padding-left:17px}
@@ -324,11 +325,13 @@ button:disabled{opacity:.45;cursor:not-allowed}
 .fe-item-head{display:flex;align-items:center;justify-content:space-between;font-size:12px;font-weight:700;color:#ffd9a0}
 .fe-acts{display:flex;gap:4px}
 .fe-del{padding:3px 9px;font-size:12px}
-.fe-ord{display:flex;align-items:center;justify-content:flex-start;gap:10px;padding:8px 10px;border:1px solid #46545c;border-radius:9px;background:#1c2328;font-size:14px;user-select:none;-webkit-user-select:none}
+.fe-ord{display:flex;align-items:center;justify-content:flex-start;gap:10px;padding:8px 10px;border:1px solid #46545c;border-radius:9px;background:#1c2328;font-size:14px;user-select:none;-webkit-user-select:none;cursor:grab;touch-action:none}
 #ordList{display:flex;flex-direction:column;gap:6px}
 .fe-grip{cursor:grab;font-size:18px;line-height:1;color:#e8b370;padding:4px 6px;touch-action:none}
-.fe-ord.drag{opacity:.9;border-color:#e8b370;box-shadow:0 6px 18px rgba(0,0,0,.45)}
+.fe-ord.drag{opacity:.9;border-color:#e8b370;box-shadow:0 6px 18px rgba(0,0,0,.45);cursor:grabbing}
 .fe-ord.drag .fe-grip{cursor:grabbing}
+#preview [data-sec]{cursor:grab;user-select:none;-webkit-user-select:none}
+#preview .sec-drag{opacity:.55;outline:2px dashed #e8b370;outline-offset:3px;cursor:grabbing}
 .fe-extra{display:flex;gap:8px;align-items:flex-end}.fe-extra .fe-f{flex:1;min-width:0}.fe-extra>input{flex:1;min-width:0;background:#161c20;color:#fff;border:1px solid #56656d;border-radius:7px;padding:8px 10px;font-family:inherit;font-size:14px}.fe-extra>input:focus{outline:none;border-color:#e8b370}.fe-extra .fe-add{flex:none}
 .fe-add{padding:9px;font-weight:600;border-style:dashed}
 .modal{position:fixed;inset:0;z-index:2000;background:rgba(0,0,0,.6);display:grid;place-items:center;padding:16px}
@@ -473,6 +476,7 @@ button{background:#313c43;color:#ffffff;border:1px solid #56656d;border-radius:7
         <div class="head-row">
           <select id="presetSel" data-i18n-title="presetTitle"></select>
           <button id="btnReset" class="icon-btn" data-i18n-title="resetTitle">↺</button>
+          <button id="btnPresetDel" class="icon-btn" data-i18n-title="delPresetTitle">🗑</button>
           <button id="btnUndo" class="icon-btn" data-i18n-title="undo" disabled>↶</button>
           <button id="btnRedo" class="icon-btn" data-i18n-title="redo" disabled>↷</button>
           <button id="btnSaved" class="icon-btn" data-i18n-title="personal">💾</button>
@@ -583,6 +587,13 @@ button{background:#313c43;color:#ffffff;border:1px solid #56656d;border-radius:7
       <div class="card-body"><div id="sectionChecks"></div></div>
     </details>
 
+    <details class="card" id="cardOrder"><summary data-i18n="fs.order"></summary>
+      <div class="card-body">
+        <p class="hint" data-i18n="f.orderHint"></p>
+        <div id="ordList"></div>
+      </div>
+    </details>
+
     <section class="opts">
       <div class="check-row"><input type="checkbox" id="showUrls"><label for="showUrls" data-i18n="showUrls" data-i18n-title="showUrlsTitle"></label></div>
       <div class="check-row"><input type="checkbox" id="onePage"><label for="onePage" data-i18n="onePage"></label><span id="pageInfo"></span></div>
@@ -600,6 +611,7 @@ button{background:#313c43;color:#ffffff;border:1px solid #56656d;border-radius:7
     <div class="modal-head"><h3 data-i18n="personal"></h3><button id="btnSavedClose" type="button">✕</button></div>
     <div class="modal-save"><input type="text" id="saveName" data-i18n-ph="saveNamePh" autocomplete="off"><button id="btnSaveNew" class="primary" type="button" data-i18n="saveNew"></button></div>
     <p class="hint" data-i18n="savedHint"></p>
+    <button id="btnRestorePresets" type="button" data-i18n="restoreBuiltin" hidden></button>
     <div id="savedList"></div>
   </div>
 </div>
@@ -627,6 +639,7 @@ const TEXT_PRESETS = [
 ];
 const SECTION_KEYS = ["contact","stats","profil","experience","tags","projets","competences","formation","certifs","langues","softskills","loisirs","infos","liens"];
 const DEFAULT_ORDER = ["profil","experience","projets","competences","formation","certifs","langues","softskills","loisirs","infos"];
+const HEADER_KEYS = ["role","availability","avatar"];
 const STYLE_DEF = {ink:"#1b2430",text:"#4a5563",band:"#14202b",bandText:"#ffffff",bg:"#ffffff",font:"Inter",size:12,space:1,margin:15};
 const THEME_STYLE = {sidebar:{band:"#1f2e26",bg:"#f7f3ec"},ats:{font:"Arial",ink:"#111111",text:"#333333"},editorial:{font:"Georgia",ink:"#1a1a1a",text:"#3d3d3d"},compact:{size:11.5,space:.85,margin:13}};
 const MAX_PRESETS = 5;
@@ -652,6 +665,8 @@ const DICT = {
   brandSub:["Éditeur de CV","CV editor","Editor di CV"],
   presetTitle:["Modèles de contenu (5 maximum)","Content templates (5 max)","Modelli di contenuto (max 5)"],
   resetTitle:["Recharger le modèle choisi","Reload the selected template","Ricarica il modello scelto"],
+  delPresetTitle:["Supprimer le modèle sélectionné","Delete the selected template","Elimina il modello selezionato"],
+  restoreBuiltin:["Restaurer les modèles d'origine","Restore the original templates","Ripristina i modelli originali"],
   exportPdf:["Exporter PDF","Export PDF","Esporta PDF"],
   exportPdfTitle:["PDF A4 (texte sélectionnable, liens cliquables)","A4 PDF (selectable text, clickable links)","PDF A4 (testo selezionabile, link cliccabili)"],
   html:["HTML","HTML","HTML"],
@@ -901,7 +916,7 @@ const DICT = {
   "st.deleted":["Supprimé","Deleted","Eliminato"],
   "err.quota":["❌ Stockage local plein","❌ Local storage full","❌ Archivio locale pieno"],
   "fs.order":["Ordre des sections","Section order","Ordine delle sezioni"],
-  "f.orderHint":["Glisse les sections avec la poignée ⠿ pour changer l'ordre. Avec les designs Élégant et Moderne, l'ordre s'applique dans chaque colonne.","Drag the sections by the ⠿ handle to change the order. With the Elegant and Modern designs, the order applies within each column.","Trascina le sezioni con la maniglia ⠿ per cambiare l'ordine. Con i design Elegante e Moderno, l'ordine vale all'interno di ogni colonna."],
+  "f.orderHint":["Glisse les sections (n'importe où sur la ligne) pour changer l'ordre, ou directement dans l'aperçu. Avec les designs Élégant et Moderne, l'ordre s'applique dans chaque colonne.","Drag the sections (anywhere on the row) to change the order, or directly in the preview. With the Elegant and Modern designs, the order applies within each column.","Trascina le sezioni (in qualsiasi punto della riga) per cambiare l'ordine, oppure direttamente nell'anteprima. Con i design Elegante e Moderno, l'ordine vale all'interno di ogni colonna."],
   "fs.letter":["Lettre de motivation","Cover letter","Lettera di motivazione"],
   "f.l.recipient":["Destinataire","Recipient","Destinatario"],
   "f.l.company":["Entreprise (vide = entreprise visée)","Company (empty = target company)","Azienda (vuota = azienda target)"],
@@ -999,6 +1014,10 @@ try{
 const SK = "cv-saved";
 const getSaved = () => { try{ const a=JSON.parse(localStorage.getItem(SK)||"[]"); return Array.isArray(a)?a:[]; }catch(e){ return []; } };
 const putSaved = a => { try{ localStorage.setItem(SK,JSON.stringify(a)); return true; }catch(e){ showToast(t("err.quota"),4000); return false; } };
+const HIDDEN_KEY = "cv-hidden-presets";
+const getHidden = () => { try{ const a=JSON.parse(localStorage.getItem(HIDDEN_KEY)||"[]"); return Array.isArray(a)?a:[]; }catch(e){ return []; } };
+const putHidden = a => { try{ localStorage.setItem(HIDDEN_KEY,JSON.stringify(a)); return true; }catch(e){ showToast(t("err.quota"),4000); return false; } };
+const builtinKeys = () => Object.keys(PRESETS).slice(0,MAX_PRESETS).filter(k=>!getHidden().includes(k));
 const presetLabel = k => PRESETS[k] ? PRESETS[k].label : ((getSaved().find(x=>"u:"+x.id===k)||{}).name || k);
 function loadPreset(k){
   let src = PRESETS[k] && PRESETS[k].data, builtin = !!src;
@@ -1009,7 +1028,7 @@ function loadPreset(k){
 }
 function buildPresetSel(){
   const s=$("presetSel"); s.innerHTML="";
-  Object.entries(PRESETS).slice(0,MAX_PRESETS).forEach(([k,p])=>{const o=document.createElement("option");o.value=k;o.textContent=p.label;s.appendChild(o)});
+  builtinKeys().forEach(k=>{const o=document.createElement("option");o.value=k;o.textContent=PRESETS[k].label;s.appendChild(o)});
   const sv=getSaved();
   if(sv.length){const g=document.createElement("optgroup");g.label=t("personal");sv.forEach(x=>{const o=document.createElement("option");o.value="u:"+x.id;o.textContent=x.name;g.appendChild(o)});s.appendChild(g)}
   if([...s.options].some(o=>o.value===currentPreset)) s.value=currentPreset;
@@ -1072,7 +1091,8 @@ const certHtml = d => vis(d,"cert:",d.certifications).filter(x=>x&&has(x.title))
 const dotLine = (d,p,l) => { const s=vis(d,p,l).filter(has); return s.length ? `<p class="plain-line">${s.map(esc).join(" · ")}</p>` : ""; };
 const dotList = (d,p,l) => { const s=vis(d,p,l).filter(has); return s.length ? `<ul class="side-list">${s.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>` : ""; };
 const profileHtml = d => has(d.profile) ? `<p class="profil-text">${esc(d.profile)}</p>` : "";
-const sec = (d,key,title,body) => (body && show(d,key)) ? `<section class="section"><div class="section-title">${esc(title)}</div>${body}</section>` : "";
+const sectionAttr = key => DEFAULT_ORDER.includes(key) ? ` data-sec="${key}"` : "";
+const sec = (d,key,title,body) => (body && show(d,key)) ? `<section class="section"${sectionAttr(key)}><div class="section-title">${esc(title)}</div>${body}</section>` : "";
 const roleHtml = d => (has(d.role)&&show(d,"role"))?`<div class="role">${esc(d.role)}</div>`:"";
 const headerHtml = d => `<h1>${esc(FIXED.fullName)}</h1>${roleHtml(d)}${(has(d.availability)&&show(d,"availability"))?`<div class="availability">${esc(d.availability)}</div>`:""}`;
 let photoData = "";
@@ -1103,7 +1123,7 @@ function renderSingle(d){
 }
 function renderSidebar(d){
   const L=Lc(d);
-  const side = (key,label,body) => (body && show(d,key)) ? `<div class="side-block"><div class="side-label">${esc(label)}</div>${body}</div>` : "";
+  const side = (key,label,body) => (body && show(d,key)) ? `<div class="side-block"${sectionAttr(key)}><div class="side-label">${esc(label)}</div>${body}</div>` : "";
   const l = vis(d,"link:",d.links), cp = contactPairs(d);
   const links = l.map(x=>`<a href="${esc(x.url)}">${linkTxt(d,x)}</a>`).join("");
   const skills = vis(d,"skill:",d.skills).map(s=>`<div class="side-item skill-inline"><strong>${esc(s.name)} :</strong> ${esc(s.value)}</div>`).join("");
@@ -1254,6 +1274,17 @@ function buildLists(){
 }
 $("presetSel").onchange=e=>{loadPreset(e.target.value);dirtyPaths.clear();buildForm();refresh(true);setStatus(t("st.preset",{n:presetLabel(currentPreset)}),false)};
 $("btnReset").onclick=()=>{loadPreset(currentPreset);dirtyPaths.clear();buildForm();refresh(true);setStatus(t("st.presetReload"),false)};
+$("btnPresetDel").onclick=()=>{
+  const k=currentPreset;
+  if(!confirm(t("delConfirm",{n:presetLabel(k)})))return;
+  if(k.startsWith("u:"))putSaved(getSaved().filter(v=>"u:"+v.id!==k));
+  else putHidden([...getHidden(),k]);
+  const rest=[...builtinKeys(),...getSaved().map(x=>"u:"+x.id)];
+  if(rest.length){loadPreset(rest[0]);dirtyPaths.clear();buildForm();refresh(true)}
+  buildPresetSel();
+  setStatus(t("st.deleted"),false);
+};
+$("btnRestorePresets").onclick=()=>{putHidden([]);buildPresetSel();renderSaved()};
 $("btnUndo").onclick=()=>histGo(-1);
 $("btnRedo").onclick=()=>histGo(1);
 $("cvLangSel").onchange=e=>{currentData.lang=e.target.value;refresh(true)};
@@ -1274,6 +1305,7 @@ function saveCurrent(name){
   if(putSaved(a)){currentPreset="u:"+item.id;buildPresetSel();renderSaved();persist();setStatus(t("st.saved",{n:nm}),false)}
 }
 function renderSaved(){
+  $("btnRestorePresets").hidden=!getHidden().length;
   const a=getSaved();
   $("savedList").innerHTML=a.length?a.map(x=>`<div class="sv-item${"u:"+x.id===currentPreset?" cur":""}"><div class="sv-info"><b>${esc(x.name)}</b><small>${esc(t("theme."+themeOf(x.data||{})))} · ${esc(new Date(x.ts).toLocaleString(uiLang))}</small></div><button type="button" data-sv="load" data-id="${esc(x.id)}">${esc(t("load"))}</button><button type="button" class="sv-del" data-sv="del" data-id="${esc(x.id)}">${esc(t("del"))}</button></div>`).join(""):`<p class="hint">${esc(t("savedEmpty"))}</p>`;
 }
@@ -1343,6 +1375,7 @@ if(document.fonts&&document.fonts.ready)document.fonts.ready.then(updatePreviewL
 const openGroups=new Set();
 const GP={contact:"contact",links:"liens",experience:"experience",projects:"projets",skills:"competences",formation:"formation",soft:"softskills",languages:"langues",certifications:"certifs",interests:"loisirs",extra:"infos"};
 const PARENT={"c:":"contact","link:":"liens","exp:":"experience","proj:":"projets","skill:":"competences","form:":"formation","soft:":"softskills","lang:":"langues","cert:":"certifs","int:":"loisirs","info:":"infos"};
+const groupOn = (d,id,items) => GP[id] ? show(d,GP[id]) : items.every(([k])=>show(d,k));
 function buildChecks(){
   const d=currentData, c=contactObj(d);
   const lst=(p,l,f)=>arr(l).map((x,i)=>[p+i,f(x)||("#"+(i+1))]);
@@ -1363,7 +1396,8 @@ function buildChecks(){
   ];
   $("sectionChecks").innerHTML=groups.filter(g=>g[1].length).map(([id,items])=>{
     const on=items.filter(([k])=>show(d,k)).length, off=GP[id]&&!show(d,GP[id]);
-    return `<details class="chk-group" data-g="${id}" ${openGroups.has(id)?"open":""}><summary><span>${esc(t("grp."+id))}</span><em class="${off?"off":""}">${on}/${items.length}${off?" · "+esc(t("sectionHidden")):""}</em></summary><div class="checks">${items.map(([k,l])=>`<label title="${esc(l)}"><input type="checkbox" data-sec="${esc(k)}" ${show(d,k)?"checked":""}><span>${esc(l)}</span></label>`).join("")}</div></details>`;
+    const master=id==="sections"?"":`<input type="checkbox" data-grp="${id}" ${groupOn(d,id,items)?"checked":""}>`;
+    return `<details class="chk-group" data-g="${id}" ${openGroups.has(id)?"open":""}><summary>${master}<span>${esc(t("grp."+id))}</span><em class="${off?"off":""}">${on}/${items.length}${off?" · "+esc(t("sectionHidden")):""}</em></summary><div class="checks">${items.map(([k,l])=>`<label title="${esc(l)}"><input type="checkbox" data-sec="${esc(k)}" ${show(d,k)?"checked":""}><span>${esc(l)}</span></label>`).join("")}</div></details>`;
   }).join("");
 }
 $("sectionChecks").addEventListener("toggle",e=>{
@@ -1371,6 +1405,15 @@ $("sectionChecks").addEventListener("toggle",e=>{
   e.target.open?openGroups.add(g):openGroups.delete(g);
 },true);
 $("sectionChecks").addEventListener("change",e=>{
+  const grp=e.target.dataset&&e.target.dataset.grp;
+  if(grp){
+    const h=new Set(arr(currentData.hide));
+    if(GP[grp])e.target.checked?h.delete(GP[grp]):h.add(GP[grp]);
+    else HEADER_KEYS.forEach(k=>e.target.checked?h.delete(k):h.add(k));
+    currentData.hide=[...h];
+    refresh(true);
+    return;
+  }
   const k=e.target.dataset&&e.target.dataset.sec; if(!k)return;
   const h=new Set(arr(currentData.hide)); e.target.checked?h.delete(k):h.add(k);
   if(e.target.checked){const pf=Object.keys(PARENT).find(x=>k.startsWith(x));if(pf&&h.has(PARENT[pf])){h.delete(PARENT[pf]);setStatus(t("st.sectionShown"),false)}}
@@ -1408,6 +1451,7 @@ function refresh(writeJson){
   $("vSize").textContent=s.size+" px";$("vSpace").textContent="×"+Number(s.space).toFixed(2);$("vMargin").textContent=s.margin+" mm";
   $("cvLangSel").value=cvLang(currentData);
   buildChecks();
+  buildOrder();
   document.querySelectorAll(".theme-btn").forEach(b=>b.classList.toggle("active",b.dataset.theme===themeOf(currentData)));
   $("favicon").href=faviconUrl(accentOf(currentData));
   updateFoldLabels();
@@ -1625,11 +1669,8 @@ function buildForm(){
   const sc=formEl.scrollTop;
   if(docMode==="letter"){formEl.innerHTML=buildLetterForm();formEl.scrollTop=sc;updateFoldLabels();return}
   const extraContact=Object.keys(contactObj(currentData)).filter(k=>!BASE_CONTACT.includes(k));
-  const ord=orderKeys(currentData,DEFAULT_ORDER);
-  const orderBody=`<p class="hint">${esc(t("f.orderHint"))}</p><div id="ordList">`+ord.map(k=>`<div class="fe-ord" data-k="${k}"><span class="fe-grip">⠿</span><span>${esc(t("sec."+k))}</span></div>`).join("")+`</div>`;
   formEl.innerHTML=[
     fSec("identity",fIn(t("f.position"),"position","text")+fIn(t("f.company"),"company","text")+fIn(t("f.role"),"role","text")+fIn(t("f.availability"),"availability","text")),
-    fSec("order",orderBody),
     fSec("contact",BASE_CONTACT.map(k=>fIn(contactName(k,uiLang),"contact."+k,"text")).join("")
       +extraContact.map(k=>`<div class="fe-extra">${fIn(contactName(k,uiLang),"contact."+k,"text")}<button type="button" class="fe-del" data-act="delc" data-k="${esc(k)}">${esc(t("del"))}</button></div>`).join("")
       +`<div class="fe-extra"><input type="text" id="newContactKey" placeholder="${esc(t("f.newContact"))}" autocomplete="off"><button type="button" class="fe-add" data-act="addc">${esc(t("f.add"))}</button></div>`),
@@ -1674,34 +1715,77 @@ function swapHide(prefix,i,j){
   currentData.hide=arr(currentData.hide).map(h=>h===prefix+i?prefix+j:h===prefix+j?prefix+i:h);
 }
 
+function buildOrder(){
+  $("ordList").innerHTML=orderKeys(currentData,DEFAULT_ORDER).map(k=>`<div class="fe-ord" data-k="${k}"><span class="fe-grip">⠿</span><span>${esc(t("sec."+k))}</span></div>`).join("");
+  $("cardOrder").hidden=docMode==="letter";
+}
 let ordDrag=null;
-formEl.addEventListener("pointerdown",e=>{
-  const g=e.target.closest&&e.target.closest(".fe-grip"); if(!g)return;
-  const row=g.closest(".fe-ord"); if(!row)return;
+$("ordList").addEventListener("pointerdown",e=>{
+  const row=e.target.closest(".fe-ord");
+  if(!row||e.button!==0)return;
   e.preventDefault();
-  ordDrag={row,list:row.parentElement,id:e.pointerId};
+  ordDrag={row,id:e.pointerId};
   row.classList.add("drag");
-  try{formEl.setPointerCapture(e.pointerId)}catch(_){}
+  try{$("ordList").setPointerCapture(e.pointerId)}catch(_){}
 });
-formEl.addEventListener("pointermove",e=>{
+$("ordList").addEventListener("pointermove",e=>{
   if(!ordDrag||e.pointerId!==ordDrag.id)return;
-  const {row,list}=ordDrag;
+  const list=$("ordList"),{row}=ordDrag;
   const after=[...list.children].filter(x=>x!==row).find(s=>{const r=s.getBoundingClientRect();return e.clientY<r.top+r.height/2});
-  if(after){ if(row.nextElementSibling!==after)list.insertBefore(row,after); }
+  if(after){if(row.nextElementSibling!==after)list.insertBefore(row,after)}
   else if(list.lastElementChild!==row)list.appendChild(row);
-  const fr=formEl.getBoundingClientRect();
-  if(e.clientY<fr.top+30)formEl.scrollTop-=10; else if(e.clientY>fr.bottom-30)formEl.scrollTop+=10;
+  const fr=panelEl.getBoundingClientRect();
+  if(e.clientY<fr.top+40)panelEl.scrollTop-=10;else if(e.clientY>fr.bottom-40)panelEl.scrollTop+=10;
 });
 function endOrdDrag(e){
-  if(!ordDrag||(e&&e.pointerId!==ordDrag.id))return;
-  const {row,list,id}=ordDrag; ordDrag=null;
+  if(!ordDrag||e.pointerId!==ordDrag.id)return;
+  const {row}=ordDrag;
+  ordDrag=null;
   row.classList.remove("drag");
-  try{formEl.releasePointerCapture(id)}catch(_){}
-  currentData.order=[...list.children].map(x=>x.dataset.k);
+  try{$("ordList").releasePointerCapture(e.pointerId)}catch(_){}
+  currentData.order=[...$("ordList").children].map(x=>x.dataset.k);
   refresh(true);
 }
-formEl.addEventListener("pointerup",endOrdDrag);
-formEl.addEventListener("pointercancel",endOrdDrag);
+$("ordList").addEventListener("pointerup",endOrdDrag);
+$("ordList").addEventListener("pointercancel",endOrdDrag);
+
+let previewDrag=null;
+preview.addEventListener("pointerdown",e=>{
+  if(docMode!=="cv"||e.button!==0||e.target.closest("a"))return;
+  const el=e.target.closest("[data-sec]");
+  if(el)previewDrag={el,id:e.pointerId,x:e.clientX,y:e.clientY,active:false};
+});
+preview.addEventListener("pointermove",e=>{
+  const s=previewDrag;
+  if(!s||e.pointerId!==s.id)return;
+  if(!s.active){
+    if(Math.hypot(e.clientX-s.x,e.clientY-s.y)<6)return;
+    s.active=true;
+    s.el.classList.add("sec-drag");
+    try{preview.setPointerCapture(e.pointerId)}catch(_){}
+  }
+  const siblings=[...s.el.parentElement.children].filter(x=>x!==s.el&&x.dataset.sec);
+  const after=siblings.find(x=>{const r=x.getBoundingClientRect();return e.clientY<r.top+r.height/2});
+  if(after){if(s.el.nextElementSibling!==after)after.before(s.el)}
+  else if(siblings.length)siblings[siblings.length-1].after(s.el);
+});
+function endPreviewDrag(e){
+  const s=previewDrag;
+  if(!s||e.pointerId!==s.id)return;
+  previewDrag=null;
+  if(!s.active)return;
+  s.el.classList.remove("sec-drag");
+  try{preview.releasePointerCapture(e.pointerId)}catch(_){}
+  const keys=[...s.el.parentElement.children].filter(x=>x.dataset.sec).map(x=>x.dataset.sec);
+  const current=orderKeys(currentData,DEFAULT_ORDER);
+  const slots=current.map((k,i)=>keys.includes(k)?i:-1).filter(i=>i>=0);
+  const next=[...current];
+  slots.forEach((slot,n)=>{next[slot]=keys[n]});
+  currentData.order=next;
+  refresh(true);
+}
+preview.addEventListener("pointerup",endPreviewDrag);
+preview.addEventListener("pointercancel",endPreviewDrag);
 
 formEl.addEventListener("click",e=>{
   const b=e.target.closest("button[data-act]"); if(!b)return;
