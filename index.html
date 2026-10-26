@@ -593,6 +593,33 @@ button{background:#313c43;color:#ffffff;border:1px solid #56656d;border-radius:7
   .doc-title-row input{font-size:16px}
   .doc-title-row button{width:44px}
 }
+
+/* ---------- Barra export: più respiro ---------- */
+.head-inner{gap:18px}
+#docSw{gap:24px}
+.export-card{gap:14px;padding:16px 14px 14px;border:1px solid #2f3a41;border-radius:12px;background:rgba(18,24,28,.55)}
+.export-card #scopeSw{padding:3px}
+.export-row{gap:8px}
+@media (min-width:961px){
+  .editor-header{padding:24px 18px 22px}
+  #docSw{padding-top:6px}
+  #docSw .lang-btn{padding:6px 0 12px}
+  .export-card #scopeSw .lang-btn{padding:8px 6px}
+  .export-main{height:42px}
+  .export-alt button{width:42px;height:42px}
+  .doc-title-row{height:42px}
+}
+
+/* ---------- Modulo lettera ---------- */
+.fe-sec[data-g="letter"] .fe-body{gap:16px}
+.fe-grp{display:flex;flex-direction:column;gap:14px;padding:16px 14px 14px;border:1px solid #3d4a52;border-radius:12px;background:#1c2328}
+.fe-grp-t{display:flex;align-items:center;gap:12px;font-family:'Playfair Display',serif;font-style:italic;font-size:16px;color:#ffd9a0}
+.fe-grp-t:after{content:'';flex:1;height:1px;background:linear-gradient(90deg,#e8b370,transparent)}
+.fe-sec[data-g="letter"] .fe-f>span{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#e9eef0}
+.fe-sec[data-g="letter"] .fe-f>span small{display:block;margin-top:2px;font-size:11.5px;font-weight:400;letter-spacing:0;text-transform:none;font-style:italic;color:#9fb0b8}
+.fe-sec[data-g="letter"] .fe-f input,
+.fe-sec[data-g="letter"] .fe-f textarea{padding:10px 12px;border-radius:9px}
+.fe-sec[data-g="letter"] .fe-f textarea[data-p="letter.body"]{min-height:300px;font-family:'Merriweather',Georgia,serif;font-size:14px;line-height:1.75}
 </style>
 </head>
 <body data-view="edit">
@@ -1145,6 +1172,9 @@ const DICT = {
   "f.l.closing":["Formule de politesse (vide = par défaut)","Closing (empty = default)","Chiusura (vuota = predefinita)"],
   "f.l.enclosure":["Pièce jointe (vide = aucune)","Enclosure (empty = none)","Allegato (vuoto = nessuno)"],
   "f.l.signature":["Signature (vide = ton nom)","Signature (empty = your name)","Firma (vuota = il tuo nome)"],
+  "fg.recipient":["Destinataire","Recipient","Destinatario"],
+  "fg.content":["Contenu","Content","Contenuto"],
+  "fg.closing":["Conclusion","Closing","Conclusione"],
   cardAts:["Contrôles ATS et qualité","ATS and quality checks","Controlli ATS e qualità"],
   atsJobLabel:["Texte de l'offre d'emploi (colle-le ici)","Job posting text (paste it here)","Testo dell'offerta (incollalo qui)"],
   atsJobHint:["Analyse locale, sans IA : montre quels termes de l'offre apparaissent dans ton CV (sections visibles). Elle mesure la présence, pas la qualité : n'en fais pas un score à maximiser.","Local analysis, no AI: shows which terms of the posting appear in your CV (visible sections). It measures presence, not quality: don't treat it as a score to maximize.","Analisi locale, senza IA: mostra quali termini dell'offerta compaiono nel CV (sezioni visibili). Misura la presenza, non la qualità: non trattarla come un punteggio da massimizzare."],
@@ -2419,7 +2449,7 @@ function fIn(label,path,kind,rows){
   const el=(kind==="area"||kind==="lines")
     ?`<textarea data-p="${esc(path)}" data-k="${kind}" rows="${rows||4}">${esc(val)}</textarea>`
     :`<input type="text" data-p="${esc(path)}" data-k="${kind||"text"}" value="${esc(val)}">`;
-  return `<label class="fe-f"><span>${esc(label)}</span><div class="fe-in">${el}<button type="button" class="fe-ok${dirtyPaths.has(path)?" dirty":""}" data-act="ok" title="${esc(t("okTitle"))}">✓</button></div></label>`;
+  return `<label class="fe-f"><span>${labHtml(label)}</span><div class="fe-in">${el}<button type="button" class="fe-ok${dirtyPaths.has(path)?" dirty":""}" data-act="ok" title="${esc(t("okTitle"))}">✓</button></div></label>`;
 }
 const fSec=(id,body)=>`<details class="fe-sec" data-g="${id}" ${openForm.has(id)?"open":""}><summary>${esc(t("fs."+id))}</summary><div class="fe-body">${body}</div></details>`;
 const fTwo=(a,b)=>`<div class="fe-row2">${a}${b}</div>`;
@@ -2428,9 +2458,14 @@ function fList(key,item){
   return arr(currentData[key]).map((x,i)=>`<div class="fe-item"><div class="fe-item-head"><span>${esc(t("n."+key))} ${i+1}</span><span class="fe-acts"><button type="button" class="fe-del" data-act="mv" data-l="${key}" data-i="${i}" data-d="-1" ${i?"":"disabled"}>↑</button><button type="button" class="fe-del" data-act="mv" data-l="${key}" data-i="${i}" data-d="1" ${i<n-1?"":"disabled"}>↓</button><button type="button" class="fe-del" data-act="del" data-l="${key}" data-i="${i}">${esc(t("del"))}</button></span></div>${item(i)}</div>`).join("")
     +`<button type="button" class="fe-add" data-act="add" data-l="${key}">${esc(t("add."+key))}</button>`;
 }
+const labHtml=l=>{const m=String(l).match(/^(.*?)\s*\((.+)\)\s*$/);return m?`${esc(m[1])} <small>${esc(m[2])}</small>`:esc(l)};
+const fGrp=(label,body)=>`<div class="fe-grp"><div class="fe-grp-t">${esc(label)}</div>${body}</div>`;
 function buildLetterForm(){
   const F=(k,kind,r)=>fIn(t("f.l."+k),"letter."+k,kind,r);
-  return fSec("letter",fTwo(F("recipient"),F("company"))+F("address")+fTwo(F("city"),F("date"))+F("subject")+F("greeting")+F("body","area",14)+fTwo(F("closing"),F("signature")));
+  return fSec("letter",
+    fGrp(t("fg.recipient"),F("recipient")+F("company")+F("address"))
+   +fGrp(t("fg.content"),fTwo(F("city"),F("date"))+F("subject")+F("greeting")+F("body","area",14))
+   +fGrp(t("fg.closing"),F("closing")+F("signature")));
 }
 function buildForm(){
   const sc=formEl.scrollTop;
