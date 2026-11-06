@@ -1375,6 +1375,7 @@ function faviconUrl(a){
 }
 
 const cval = v => String(v ?? "");
+
 const contactName = (k,lg) => { const m=CV_LABELS[lg]||CV_LABELS.fr; return k==="location"?m.city:k==="phone"?m.phone:k==="email"?m.email:k.charAt(0).toUpperCase()+k.slice(1); };
 const contactObj = d => (d.contact&&typeof d.contact==="object")?d.contact:{};
 const contactPairs = d => { const c=contactObj(d), lg=cvLang(d); return show(d,"contact") ? Object.keys(c).filter(k=>show(d,"c:"+k)&&has(cval(c[k]))).map(k=>[contactName(k,lg),cval(c[k])]) : []; };
