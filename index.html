@@ -1112,6 +1112,7 @@ const DICT = {
   "st.pdfVerifyOff":["✅ PDF prêt : {n} ({p}) · vérification du texte indisponible","✅ PDF ready: {n} ({p}) · text verification unavailable","✅ PDF pronto: {n} ({p}) · verifica del testo non disponibile"],
   "st.pdfLibs":["Librairies PDF non chargées : vérifie ta connexion et recharge la page.","PDF libraries not loaded: check your connection and reload the page.","Librerie PDF non caricate: controlla la connessione e ricarica la pagina."],
   "st.pdfPhotoFail":["⚠️ La photo du lien n'a pas pu être incluse dans le PDF (le site la bloque). Importe-la depuis ton appareil.","⚠️ The linked photo could not be included in the PDF (the site blocks it). Import it from your device.","⚠️ La foto del link non è stata inclusa nel PDF (il sito la blocca). Caricala dal dispositivo."],
+  "st.tagsShown":["✅ Les technologies sont réaffichées","✅ Technologies are shown again","✅ Le tecnologie sono di nuovo visibili"],
   "st.sectionShown":["✅ La section est réaffichée, car tu as coché un de ses éléments","✅ The section is shown again because you ticked one of its items","✅ La sezione è di nuovo visibile perché hai spuntato uno dei suoi elementi"],
   "err.imageType":["❌ Choisis un fichier image (JPG, PNG, WebP)","❌ Choose an image file (JPG, PNG, WebP)","❌ Scegli un file immagine (JPG, PNG, WebP)"],
   "err.readFile":["❌ Impossible de lire ce fichier","❌ Cannot read this file","❌ Impossibile leggere questo file"],
@@ -2529,6 +2530,13 @@ formEl.addEventListener("input",e=>{
   if(el.dataset.k==="lines")v=v.split("\n").map(s=>s.trim()).filter(Boolean);
   else if(el.dataset.k==="csv")v=v.split(",").map(s=>s.trim()).filter(Boolean);
   setP(currentData,p,v);
+  if(/\.tags$/.test(p) && Array.isArray(v) && v.length && arr(currentData.hide).includes("tags")){
+    currentData.hide=arr(currentData.hide).filter(h=>h!=="tags");
+    setStatus(t("st.tagsShown"),false);
+  }
+  if(/^projects\./.test(p) && arr(currentData.hide).includes("projets")){
+    currentData.hide=arr(currentData.hide).filter(h=>h!=="projets");
+  }
   dirtyPaths.add(p);
   const okb=el.closest(".fe-in")&&el.closest(".fe-in").querySelector(".fe-ok");if(okb)okb.classList.add("dirty");
   refresh(true);
