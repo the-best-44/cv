@@ -1275,6 +1275,33 @@ const esc = v => String(v ?? "").replace(/&/g,"&amp;").replace(/</g,"&lt;").repl
 const has = v => typeof v === "string" && v.trim().length > 0;
 const arr = v => Array.isArray(v) ? v : [];
 function lite(d){ const c=clone(d); if(typeof c.avatarUrl==="string"&&/^data:/i.test(c.avatarUrl)) c.avatarUrl=""; return c; }
+const SCHEMA_TOP = {theme:"pdf",category:"info",lang:"fr",company:"",position:"",accent:null,onePage:true,role:"",availability:"",avatarUrl:"",contact:{location:"",phone:"",email:""},links:[],stats:[],profile:"",experience:[],projects:[],skills:[],formation:[],softSkills:[],languages:[],certifications:[],interests:[],extra:[],hide:[]};
+const SCHEMA_ITEM = {
+  links:{label:"",url:""},
+  stats:{value:"",label:""},
+  experience:{date:"",title:"",org:"",bullets:[],tags:[]},
+  projects:{name:"",date:"",bullets:[],tags:[],url:"",linkLabel:""},
+  skills:{name:"",value:""},
+  formation:{year:"",title:"",school:""},
+  languages:{name:"",level:""},
+  certifications:{year:"",title:"",issuer:""}
+};
+function fillKeys(o,tpl){
+  const r={};
+  Object.keys(tpl).forEach(k=>{ r[k]=(k in o)?o[k]:JSON.parse(JSON.stringify(tpl[k])); });
+  Object.keys(o).forEach(k=>{ if(!(k in r)) r[k]=o[k]; });
+  return r;
+}
+function ensureSchema(d){
+  if(!d||typeof d!=="object"||Array.isArray(d)) return d;
+  const top=Object.assign({},SCHEMA_TOP);
+  top.accent=(THEMES[d.theme]||THEMES.pdf).accent;
+  const r=fillKeys(d,top);
+  Object.keys(SCHEMA_ITEM).forEach(k=>{
+    if(Array.isArray(r[k])) r[k]=r[k].map(x=>(x&&typeof x==="object"&&!Array.isArray(x))?fillKeys(x,SCHEMA_ITEM[k]):x);
+  });
+  return r;
+}
 let docMode = "cv";
 let pdfScope = "cv";
 try{ const s=localStorage.getItem("pdf-scope"); if(["cv","both","letter"].includes(s)) pdfScope=s; }catch(e){}
@@ -1436,16 +1463,20 @@ const realCo = v => (has(v)&&!/^\s*\[.*\]\s*$/.test(v)) ? v.trim() : "";
 const companyOf = d => (docMode==="letter"&&realCo(letterDef(d).company)) || realCo(d.company);
 const positionOf = d => realCo(d.position) || realCo(String(d.role||"").split("·")[0]);
 const kindOf = d => docMode==="letter" ? Lc(d).ltDoc : Lc(d).title;
-const titleParts = d => [FIXED.fullName, positionOf(d), companyOf(d), kindOf(d)].filter(has);
+const SHORT_KIND = {
+  fr:{cv:"CV",letter:"Lettre",both:"CV-Lettre"},
+  en:{cv:"CV",letter:"Letter",both:"CV-Letter"},
+  it:{cv:"CV",letter:"Lettera",both:"CV-Lettera"}
+};
+const titleParts = d => [FIXED.fullName, companyOf(d) || positionOf(d), kindOf(d)].filter(has);
 const docTitle = d => titleParts(d).join(" – ");
 const slug = s => String(s).normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^\w\s-]/g,"").trim().replace(/\s+/g,"-");
 const fileKey = () => pdfScope==="both" ? "fileBoth" : pdfScope==="letter" ? "fileLetter" : "fileCv";
 const cleanFile = s => String(s||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[\\\/:*?"<>|]+/g,"").replace(/\.pdf$/i,"").trim().replace(/\s+/g,"-");
-const autoBase = d => withMode(scopeMode(), () => {
-  const parts = titleParts(d);
-  if(pdfScope==="both") parts[parts.length-1] = Lc(d).title + "-" + Lc(d).ltDoc;
-  return parts.map(slug).filter(Boolean).join("_");
-});
+const autoBase = d => withMode(scopeMode(), () =>
+  [FIXED.fullName, companyOf(d) || positionOf(d), SHORT_KIND[cvLang(d)][pdfScope]]
+    .map(slug).filter(Boolean).join("_")
+);
 const fileBase = d => cleanFile(d[fileKey()]) || autoBase(d);
 function renderLetter(d){
   const l=letterDef(d), L=Lc(d), c=contactObj(d);
@@ -1964,7 +1995,7 @@ function refresh(writeJson){
   $("avPos").value=posOf(currentData);$("vPos").textContent=posOf(currentData)+" %";
   const ed=numOr(currentData.avatarEdge,styleOf(currentData).margin), gp=numOr(currentData.avatarGap,3);
   $("avEdge").value=ed;$("vAvEdge").textContent=ed+" mm";$("avGap").value=gp;$("vAvGap").textContent=gp+" mm";
-  if(writeJson)setJson(JSON.stringify(currentData,null,2));
+  if(writeJson){currentData=ensureSchema(currentData);setJson(JSON.stringify(currentData,null,2));}
   const s=styleOf(currentData);
   CTRL.forEach(([id,k])=>{$(id).value=s[k]});
   $("accentInput").value=accentOf(currentData);
