@@ -30,6 +30,7 @@
 .entry-date{font-size:.92em;font-weight:600;color:var(--accent);white-space:nowrap}
 .entry-org{font-style:italic}
 .entry-tags{margin-top:.35em;font-size:.9em;color:var(--soft)}
+.entry-tags-label{font-weight:700;color:var(--text);margin-right:.3em}
 .entry-link{margin-top:.3em}
 .bullets{margin-top:.3em}.bullets li{position:relative;padding-left:1em;margin-bottom:.15em}
 .bullets li:before{content:'';position:absolute;left:0;top:.62em;width:.3em;height:.3em;background:var(--accent)}
@@ -859,9 +860,9 @@ const LANGS = ["fr","en","it"];
 
 const CATEGORIES = {
   info:{hideSections:[],hideTechLinks:false},
-  sante:{hideSections:["projets","tags"],hideTechLinks:true},
-  compta:{hideSections:["projets","tags"],hideTechLinks:true},
-  general:{hideSections:["projets","tags"],hideTechLinks:true}
+  sante:{hideSections:["projets"],hideTechLinks:true},
+  compta:{hideSections:["projets"],hideTechLinks:true},
+  general:{hideSections:["projets"],hideTechLinks:true}
 };
 const TECH_LINK = /github|gitlab|bitbucket|portfolio|stackoverflow/i;
 function categoryHide(d,cat){
@@ -1382,9 +1383,7 @@ const statsHtml = d => arr(d.stats).length ? `<div class="stats" data-f="stats">
 const shortUrl = u => String(u||"").replace(/^https?:\/\/(www\.)?/i,"").replace(/[?#].*$/,"").replace(/\/$/,"");
 const linkTxt = (d,x) => esc(x.label) + (d.showUrls ? " · " + esc(shortUrl(x.url)) : "");
 const linksInline = d => { const l=vis(d,"link:",d.links); return l.length ? `<div class="links-line" data-f="links">${l.map(x=>`<a href="${esc(x.url)}">${linkTxt(d,x)}</a>`).join("")}</div>` : ""; };
-const tagsHtml = (d, e) => arr(e.tags).filter(has).length
-  ? `<div class="entry-tags">${arr(e.tags).filter(has).map(esc).join(" · ")}</div>`
-  : ""; "";
+const tagsHtml = (d,e) => { const tags=arr(e.tags).filter(has); return tags.length ? `<div class="entry-tags"><span class="entry-tags-label">Stack :</span>${tags.map(esc).join(" · ")}</div>` : ""; };
 const bulletsHtml = list => list.length ? `<ul class="bullets">${list.map(b=>`<li>${esc(b)}</li>`).join("")}</ul>` : "";
 const expHtml = d => vis(d,"exp:",d.experience).map(e=>`<div class="entry"><div class="entry-head"><div class="entry-title">${esc(e.title)}</div><div class="entry-date">${esc(e.date)}</div></div>${has(e.org)?`<div class="entry-org">${esc(e.org)}</div>`:""}${bulletsHtml(arr(e.bullets))}${tagsHtml(d,e)}</div>`).join("");
 const projLink = (d,x) => has(x.url) ? `<a class="proj-link" href="${esc(x.url)}">${esc(has(x.linkLabel)?x.linkLabel:Lc(d).viewProject)}${d.showUrls?" · "+esc(shortUrl(x.url)):""}</a>` : "";
